@@ -311,10 +311,7 @@ class Client extends EventEmitter {
 	 */
 	loadLua(script: string) {
 		const length = Buffer.byteLength(script);
-		const p = new ByteArray()
-			.writeUnsignedShort(length >> 8)
-			.writeUnsignedByte(length & 255)
-			.writeUTF(script);
+		const p = new ByteArray().writeUnsignedShort(length >> 8).writeUnsignedByte(length & 255);
 		this.bulle.send(identifiers.loadLua, p);
 	}
 

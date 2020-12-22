@@ -1,8 +1,8 @@
 import fetch from "node-fetch";
 import { EventEmitter } from "events";
 
-import { ByteArray, Connection, SHAKikoo, ValueOf } from "@utils";
-import { Player, Room, Friend, RoomMessage, WhisperMessage } from "@structures";
+import { ByteArray, Connection, SHAKikoo, ValueOf } from "../utils";
+import { Player, Room, Friend, RoomMessage, WhisperMessage } from "../structures";
 import * as enums from "../enums";
 import { cipherMethods, identifiers, languages, oldIdentifiers } from "../enums";
 import ClientEvents from "./Events";

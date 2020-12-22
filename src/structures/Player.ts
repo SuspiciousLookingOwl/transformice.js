@@ -1,4 +1,4 @@
-import ByteArray from "@utils/ByteArray";
+import ByteArray from "../utils/ByteArray";
 
 /** Represents a player from the room. */
 export default class Player {

@@ -1,4 +1,4 @@
-import { Connection, ByteArray, ValueOf } from "@utils";
+import { Connection, ByteArray, ValueOf } from "../utils";
 import { Friend, Player, Room, RoomMessage, WhisperMessage } from "../structures";
 import { languages } from "../enums";
 

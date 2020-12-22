@@ -1,4 +1,4 @@
-import { ValueOf, ByteArray } from "@utils";
+import { ValueOf, ByteArray } from "../utils";
 import { genders } from "../enums";
 
 /** Represents a friend from the friend list */

@@ -1,4 +1,4 @@
-import { ByteArray, ValueOf } from "@utils";
+import { ByteArray, ValueOf } from "../utils";
 import Player from "./Player";
 import Client from "../client";
 import { identifiers, cipherMethods, languages } from "../enums";

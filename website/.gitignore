@@ -4,6 +4,9 @@
 # Production
 /build
 
+# Dynamically generated page
+/docs/api
+
 # Generated files
 .docusaurus
 .cache-loader

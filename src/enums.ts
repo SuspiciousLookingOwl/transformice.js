@@ -63,7 +63,7 @@ export const tribulle = {
 	tribeMessage: 65,
 	tribeMemberConnect: 88,
 	tribeMemberDisconnect: 90,
-};
+} as const;
 
 /**
  * The old identifiers of the packets.

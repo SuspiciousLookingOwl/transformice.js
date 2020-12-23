@@ -41,7 +41,7 @@ export const identifiers = {
 
 /** The old identifiers of the packets. */
 export const oldIdentifiers = {
-	roomPlayerLeft: Identifier(parseInt("08", 8), parseInt("07", 8)),
+	roomPlayerLeft: Identifier(8, 7),
 } as const;
 
 /** The available communities based on the languages. */
@@ -139,16 +139,16 @@ export const languages = {
 
 /** The ids of all emotes */
 export const emotes = {
-	dance: parseInt("00", 8),
-	laugh: parseInt("01", 8),
-	cry: parseInt("02", 8),
-	kiss: parseInt("03", 8),
-	angry: parseInt("04", 8),
-	clap: parseInt("05", 8),
-	sleep: parseInt("06", 8),
-	facepaw: parseInt("07", 8),
-	sit: parseInt("08", 8),
-	confetti: parseInt("09", 8),
+	dance: 0,
+	laugh: 1,
+	cry: 2,
+	kiss: 3,
+	angry: 4,
+	clap: 5,
+	sleep: 6,
+	facepaw: 7,
+	sit: 8,
+	confetti: 9,
 	flag: 10,
 	marshmallow: 11,
 	selfie: 12,
@@ -185,11 +185,11 @@ export const smiles = {
 
 /** The ids of all Atelier801's games. */
 export const games = {
-	unknown: parseInt("00", 8),
-	none: parseInt("01", 8),
-	transformice: parseInt("04", 8),
-	fortoresse: parseInt("06", 8),
-	bouboum: parseInt("07", 8),
+	unknown: 0,
+	none: 1,
+	transformice: 4,
+	fortoresse: 6,
+	bouboum: 7,
 	nekodancer: 15,
 	deadmaze: 17,
 } as const;
@@ -203,8 +203,8 @@ export const genders = {
 
 /** The ids of all the staff roles. */
 export const roles = {
-	normal: parseInt("00", 8),
-	moderator: parseInt("05", 8),
+	normal: 0,
+	moderator: 5,
 	administrator: 10,
 	mapcrew: 11,
 	funcorp: 13,
@@ -212,11 +212,11 @@ export const roles = {
 
 /** The ids of all the room modes. */
 export const roomModes = {
-	normal: parseInt("01", 8),
-	bootcamp: parseInt("02", 8),
-	vanilla: parseInt("03", 8),
-	survivor: parseInt("08", 8),
-	racing: parseInt("09", 8),
+	normal: 1,
+	bootcamp: 2,
+	vanilla: 3,
+	survivor: 8,
+	racing: 9,
 	music: 10,
 	defilante: 11,
 	village: 16,

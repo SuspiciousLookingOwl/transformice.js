@@ -16,8 +16,6 @@ Represents a friend from the friend list
 
 \+ **new Friend**(): [Friend](friend.md)
 
-*Defined in [src/structures/Friend.ts:41](https://github.com/SuspiciousLookingOwl/transformice.js/blob/647a173/src/structures/Friend.ts#L41)*
-
 **Returns:** [Friend](friend.md)
 
 ## Properties
@@ -25,8 +23,6 @@ Represents a friend from the friend list
 ### community
 
 •  **community**: number
-
-*Defined in [src/structures/Friend.ts:33](https://github.com/SuspiciousLookingOwl/transformice.js/blob/647a173/src/structures/Friend.ts#L33)*
 
 The community of the player
 
@@ -36,8 +32,6 @@ ___
 
 •  **gender**: [ValueOf](../globals.md#valueof)<*typeof* genders\>
 
-*Defined in [src/structures/Friend.ts:17](https://github.com/SuspiciousLookingOwl/transformice.js/blob/647a173/src/structures/Friend.ts#L17)*
-
 The player's gender
 
 ___
@@ -45,8 +39,6 @@ ___
 ### hasAddedBack
 
 •  **hasAddedBack**: boolean
-
-*Defined in [src/structures/Friend.ts:25](https://github.com/SuspiciousLookingOwl/transformice.js/blob/647a173/src/structures/Friend.ts#L25)*
 
 If the player has added the client back
 
@@ -56,8 +48,6 @@ ___
 
 •  **id**: number
 
-*Defined in [src/structures/Friend.ts:9](https://github.com/SuspiciousLookingOwl/transformice.js/blob/647a173/src/structures/Friend.ts#L9)*
-
 The player's id
 
 ___
@@ -65,8 +55,6 @@ ___
 ### isConnected
 
 •  **isConnected**: boolean
-
-*Defined in [src/structures/Friend.ts:29](https://github.com/SuspiciousLookingOwl/transformice.js/blob/647a173/src/structures/Friend.ts#L29)*
 
 If the player is connected
 
@@ -76,8 +64,6 @@ ___
 
 •  **isSoulmate**: boolean
 
-*Defined in [src/structures/Friend.ts:21](https://github.com/SuspiciousLookingOwl/transformice.js/blob/647a173/src/structures/Friend.ts#L21)*
-
 If the player is the soulmate of the client
 
 ___
@@ -85,8 +71,6 @@ ___
 ### lastConnection
 
 •  **lastConnection**: number
-
-*Defined in [src/structures/Friend.ts:41](https://github.com/SuspiciousLookingOwl/transformice.js/blob/647a173/src/structures/Friend.ts#L41)*
 
 The player's last connection time
 
@@ -96,8 +80,6 @@ ___
 
 •  **nickname**: string
 
-*Defined in [src/structures/Friend.ts:13](https://github.com/SuspiciousLookingOwl/transformice.js/blob/647a173/src/structures/Friend.ts#L13)*
-
 The player's nickname
 
 ___
@@ -105,7 +87,5 @@ ___
 ### roomName
 
 •  **roomName**: string
-
-*Defined in [src/structures/Friend.ts:37](https://github.com/SuspiciousLookingOwl/transformice.js/blob/647a173/src/structures/Friend.ts#L37)*
 
 The room name of the player (if they are online)

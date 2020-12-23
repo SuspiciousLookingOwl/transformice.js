@@ -48,8 +48,6 @@ sidebar_label: "Globals"
 
 Ƭ  **ValueOf**<T\>: T[keyof T]
 
-*Defined in [src/utils/ValueOf.ts:1](https://github.com/SuspiciousLookingOwl/transformice.js/blob/647a173/src/utils/ValueOf.ts#L1)*
-
 #### Type parameters:
 
 Name |
@@ -61,8 +59,6 @@ Name |
 ### emotes
 
 • `Const` **emotes**: object = { dance: 0, laugh: 1, cry: 2, kiss: 3, angry: 4, clap: 5, sleep: 6, facepaw: 7, sit: 8, confetti: 9, flag: 10, marshmallow: 11, selfie: 12, highfive: 13, highfive\_1: 14, highfive\_2: 15, partyhorn: 16, hug: 17, hug\_1: 18, hug\_2: 19, jigglypuff: 20, kissing: 21, kissing\_1: 22, kissing\_2: 23, carnaval: 24, rockpaperscissors: 25, rockpaperscissors\_1: 26, rockpaperscissor\_2: 27,} as const
-
-*Defined in [src/enums.ts:171](https://github.com/SuspiciousLookingOwl/transformice.js/blob/647a173/src/enums.ts#L171)*
 
 The ids of all emotes
 
@@ -105,8 +101,6 @@ ___
 
 • `Const` **games**: object = { unknown: 0, none: 1, transformice: 4, fortoresse: 6, bouboum: 7, nekodancer: 15, deadmaze: 17,} as const
 
-*Defined in [src/enums.ts:217](https://github.com/SuspiciousLookingOwl/transformice.js/blob/647a173/src/enums.ts#L217)*
-
 The ids of all Atelier801's games.
 
 #### Type declaration:
@@ -127,8 +121,6 @@ ___
 
 • `Const` **genders**: object = { none: 0, female: 1, male: 2,} as const
 
-*Defined in [src/enums.ts:228](https://github.com/SuspiciousLookingOwl/transformice.js/blob/647a173/src/enums.ts#L228)*
-
 The ids of all the genders.
 
 #### Type declaration:
@@ -144,8 +136,6 @@ ___
 ### languages
 
 • `Const` **languages**: object = { es: "es", af: "af", az: "az", id: "id", ms: "ms", bi: "bi", bs: "bs", ca: "ca", ny: "ny", da: "da", de: "de", et: "et", na: "na", en: "en", to: "to", mg: "mg", fr: "fr", sm: "sm", hr: "hr", it: "it", mh: "mh", kl: "kl", rn: "rn", rw: "rw", sw: "sw", ht: "ht", lv: "lv", lt: "lt", lb: "lb", hu: "hu", mt: "mt", nl: "nl", no: "no", uz: "uz", pl: "pl", pt: "pt", br: "br", ro: "ro", qu: "qu", st: "st", tn: "tn", sq: "sq", ss: "ss", sk: "sk", sl: "sl", so: "so", fi: "fi", sv: "sv", tl: "tl", vi: "vi", tk: "tk", tr: "tr", fj: "fj", wo: "wo", yo: "yo", is: "is", cs: "cs", el: "el", be: "be", ky: "ky", mn: "mn", ru: "ru", sr: "sr", tg: "tg", uk: "uk", bg: "bg", kk: "kk", hy: "hy", he: "he", ur: "ur", ar: "ar", fa: "fa", dv: "dv", ne: "ne", hi: "hi", bn: "bn", ta: "ta", th: "th", lo: "lo", dz: "dz", my: "my", ka: "ka", ti: "ti", am: "am", km: "km", cn: "cn", zh: "zh", ja: "ja", ko: "ko",} as const
-
-*Defined in [src/enums.ts:78](https://github.com/SuspiciousLookingOwl/transformice.js/blob/647a173/src/enums.ts#L78)*
 
 The available communities based on the languages.
 
@@ -249,8 +239,6 @@ ___
 
 • `Const` **roles**: object = { normal: 0, moderator: 5, administrator: 10, mapcrew: 11, funcorp: 13,} as const
 
-*Defined in [src/enums.ts:235](https://github.com/SuspiciousLookingOwl/transformice.js/blob/647a173/src/enums.ts#L235)*
-
 The ids of all the staff roles.
 
 #### Type declaration:
@@ -268,8 +256,6 @@ ___
 ### roomModes
 
 • `Const` **roomModes**: object = { normal: 1, bootcamp: 2, vanilla: 3, survivor: 8, racing: 9, music: 10, defilante: 11, village: 16, module: 18,} as const
-
-*Defined in [src/enums.ts:244](https://github.com/SuspiciousLookingOwl/transformice.js/blob/647a173/src/enums.ts#L244)*
 
 The ids of all the room modes.
 
@@ -292,8 +278,6 @@ ___
 ### smiles
 
 • `Const` **smiles**: object = { smiley: 0, sad: 1, tongue: 2, angry: 3, laugh: 4, shades: 5, blush: 6, sweatdrop: 7, derp: 8, OMG: 9,} as const
-
-*Defined in [src/enums.ts:203](https://github.com/SuspiciousLookingOwl/transformice.js/blob/647a173/src/enums.ts#L203)*
 
 the ids of all the smiles.
 
@@ -318,8 +302,6 @@ ___
 
 • `Const` **whisperStates**: object = { enabled: 1, disabledPublic: 2, disabledAll: 3,} as const
 
-*Defined in [src/enums.ts:257](https://github.com/SuspiciousLookingOwl/transformice.js/blob/647a173/src/enums.ts#L257)*
-
 The ids of all the whisper states.
 
 #### Type declaration:
@@ -335,8 +317,6 @@ Name | Type |
 ### Identifier
 
 ▸ `Const`**Identifier**(`c`: number, `cc`: number): number
-
-*Defined in [src/enums.ts:1](https://github.com/SuspiciousLookingOwl/transformice.js/blob/647a173/src/enums.ts#L1)*
 
 #### Parameters:
 

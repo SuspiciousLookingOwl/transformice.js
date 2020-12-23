@@ -20,8 +20,6 @@ Represents a client that connects to Transformice.
 
 *Overrides void*
 
-*Defined in [src/utils/Connection.ts:19](https://github.com/SuspiciousLookingOwl/transformice.js/blob/647a173/src/utils/Connection.ts#L19)*
-
 Constructor.
 
 **`example`** 
@@ -42,15 +40,11 @@ Name | Type |
 
 •  **buffer**: Buffer
 
-*Defined in [src/utils/Connection.ts:15](https://github.com/SuspiciousLookingOwl/transformice.js/blob/647a173/src/utils/Connection.ts#L15)*
-
 ___
 
 ### client
 
 •  **client**: [Client](client.md)
-
-*Defined in [src/utils/Connection.ts:10](https://github.com/SuspiciousLookingOwl/transformice.js/blob/647a173/src/utils/Connection.ts#L10)*
 
 ___
 
@@ -58,15 +52,11 @@ ___
 
 •  **fingerprint**: number
 
-*Defined in [src/utils/Connection.ts:14](https://github.com/SuspiciousLookingOwl/transformice.js/blob/647a173/src/utils/Connection.ts#L14)*
-
 ___
 
 ### host
 
 •  **host**: string
-
-*Defined in [src/utils/Connection.ts:18](https://github.com/SuspiciousLookingOwl/transformice.js/blob/647a173/src/utils/Connection.ts#L18)*
 
 ___
 
@@ -74,15 +64,11 @@ ___
 
 •  **length**: number
 
-*Defined in [src/utils/Connection.ts:16](https://github.com/SuspiciousLookingOwl/transformice.js/blob/647a173/src/utils/Connection.ts#L16)*
-
 ___
 
 ### name
 
 •  **name**: string
-
-*Defined in [src/utils/Connection.ts:11](https://github.com/SuspiciousLookingOwl/transformice.js/blob/647a173/src/utils/Connection.ts#L11)*
 
 ___
 
@@ -90,23 +76,17 @@ ___
 
 •  **open**: boolean
 
-*Defined in [src/utils/Connection.ts:13](https://github.com/SuspiciousLookingOwl/transformice.js/blob/647a173/src/utils/Connection.ts#L13)*
-
 ___
 
 ### port
 
 •  **port**: number
 
-*Defined in [src/utils/Connection.ts:19](https://github.com/SuspiciousLookingOwl/transformice.js/blob/647a173/src/utils/Connection.ts#L19)*
-
 ___
 
 ### socket
 
 •  **socket**: Socket
-
-*Defined in [src/utils/Connection.ts:12](https://github.com/SuspiciousLookingOwl/transformice.js/blob/647a173/src/utils/Connection.ts#L12)*
 
 ___
 
@@ -116,8 +96,6 @@ ___
 
 *Inherited from [Connection](connection.md).[defaultMaxListeners](connection.md#defaultmaxlisteners)*
 
-*Defined in website/node_modules/@types/node/events.d.ts:45*
-
 ___
 
 ### errorMonitor
@@ -125,8 +103,6 @@ ___
 ▪ `Static` `Readonly` **errorMonitor**: unique symbol
 
 *Inherited from [Connection](connection.md).[errorMonitor](connection.md#errormonitor)*
-
-*Defined in website/node_modules/@types/node/events.d.ts:55*
 
 This symbol shall be used to install a listener for only monitoring `'error'`
 events. Listeners installed using this symbol are called before the regular
@@ -144,8 +120,6 @@ regular `'error'` listener is installed.
 
 *Inherited from [Connection](connection.md).[addListener](connection.md#addlistener)*
 
-*Defined in website/node_modules/@types/node/events.d.ts:62*
-
 #### Parameters:
 
 Name | Type |
@@ -161,8 +135,6 @@ ___
 
 ▸ **close**(): void
 
-*Defined in [src/utils/Connection.ts:120](https://github.com/SuspiciousLookingOwl/transformice.js/blob/647a173/src/utils/Connection.ts#L120)*
-
 Close the connection.
 
 **Returns:** void
@@ -172,8 +144,6 @@ ___
 ### connect
 
 ▸ **connect**(`host`: string, `port`: number): void
-
-*Defined in [src/utils/Connection.ts:39](https://github.com/SuspiciousLookingOwl/transformice.js/blob/647a173/src/utils/Connection.ts#L39)*
 
 Connects the socket.
 
@@ -194,8 +164,6 @@ ___
 
 *Inherited from [Connection](connection.md).[emit](connection.md#emit)*
 
-*Defined in website/node_modules/@types/node/events.d.ts:72*
-
 #### Parameters:
 
 Name | Type |
@@ -213,8 +181,6 @@ ___
 
 *Inherited from [Connection](connection.md).[eventNames](connection.md#eventnames)*
 
-*Defined in website/node_modules/@types/node/events.d.ts:77*
-
 **Returns:** Array<string \| symbol\>
 
 ___
@@ -225,8 +191,6 @@ ___
 
 *Inherited from [Connection](connection.md).[getMaxListeners](connection.md#getmaxlisteners)*
 
-*Defined in website/node_modules/@types/node/events.d.ts:69*
-
 **Returns:** number
 
 ___
@@ -236,8 +200,6 @@ ___
 ▸ **listenerCount**(`event`: string \| symbol): number
 
 *Inherited from [Connection](connection.md).[listenerCount](connection.md#listenercount)*
-
-*Defined in website/node_modules/@types/node/events.d.ts:73*
 
 #### Parameters:
 
@@ -255,8 +217,6 @@ ___
 
 *Inherited from [Connection](connection.md).[listeners](connection.md#listeners)*
 
-*Defined in website/node_modules/@types/node/events.d.ts:70*
-
 #### Parameters:
 
 Name | Type |
@@ -272,8 +232,6 @@ ___
 ▸ **off**(`event`: string \| symbol, `listener`: (...args: any[]) => void): this
 
 *Inherited from [Connection](connection.md).[off](connection.md#off)*
-
-*Defined in website/node_modules/@types/node/events.d.ts:66*
 
 #### Parameters:
 
@@ -292,8 +250,6 @@ ___
 
 *Inherited from [Connection](connection.md).[on](connection.md#on)*
 
-*Defined in website/node_modules/@types/node/events.d.ts:63*
-
 #### Parameters:
 
 Name | Type |
@@ -310,8 +266,6 @@ ___
 ▸ **once**(`event`: string \| symbol, `listener`: (...args: any[]) => void): this
 
 *Inherited from [Connection](connection.md).[once](connection.md#once)*
-
-*Defined in website/node_modules/@types/node/events.d.ts:64*
 
 #### Parameters:
 
@@ -330,8 +284,6 @@ ___
 
 *Inherited from [Connection](connection.md).[prependListener](connection.md#prependlistener)*
 
-*Defined in website/node_modules/@types/node/events.d.ts:75*
-
 #### Parameters:
 
 Name | Type |
@@ -348,8 +300,6 @@ ___
 ▸ **prependOnceListener**(`event`: string \| symbol, `listener`: (...args: any[]) => void): this
 
 *Inherited from [Connection](connection.md).[prependOnceListener](connection.md#prependoncelistener)*
-
-*Defined in website/node_modules/@types/node/events.d.ts:76*
 
 #### Parameters:
 
@@ -368,8 +318,6 @@ ___
 
 *Inherited from [Connection](connection.md).[rawListeners](connection.md#rawlisteners)*
 
-*Defined in website/node_modules/@types/node/events.d.ts:71*
-
 #### Parameters:
 
 Name | Type |
@@ -385,8 +333,6 @@ ___
 ▸ **removeAllListeners**(`event?`: string \| symbol): this
 
 *Inherited from [Connection](connection.md).[removeAllListeners](connection.md#removealllisteners)*
-
-*Defined in website/node_modules/@types/node/events.d.ts:67*
 
 #### Parameters:
 
@@ -404,8 +350,6 @@ ___
 
 *Inherited from [Connection](connection.md).[removeListener](connection.md#removelistener)*
 
-*Defined in website/node_modules/@types/node/events.d.ts:65*
-
 #### Parameters:
 
 Name | Type |
@@ -420,8 +364,6 @@ ___
 ### send
 
 ▸ **send**(`identifier`: [ValueOf](../globals.md#valueof)<*typeof* identifiers\>, `packet`: [ByteArray](bytearray.md), `method?`: [ValueOf](../globals.md#valueof)<*typeof* cipherMethods\>): void
-
-*Defined in [src/utils/Connection.ts:90](https://github.com/SuspiciousLookingOwl/transformice.js/blob/647a173/src/utils/Connection.ts#L90)*
 
 Sends a packet to the connection.
 
@@ -443,8 +385,6 @@ ___
 
 *Inherited from [Connection](connection.md).[setMaxListeners](connection.md#setmaxlisteners)*
 
-*Defined in website/node_modules/@types/node/events.d.ts:68*
-
 #### Parameters:
 
 Name | Type |
@@ -460,8 +400,6 @@ ___
 ▸ `Static`**listenerCount**(`emitter`: EventEmitter, `event`: string \| symbol): number
 
 *Inherited from [Connection](connection.md).[listenerCount](connection.md#listenercount)*
-
-*Defined in website/node_modules/@types/node/events.d.ts:44*
 
 **`deprecated`** since v4.0.0
 

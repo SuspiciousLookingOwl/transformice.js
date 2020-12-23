@@ -20,8 +20,6 @@ Represents a whisper message.
 
 *Overrides [Message](message.md).[constructor](message.md#constructor)*
 
-*Defined in [src/structures/WhisperMessage.ts:10](https://github.com/SuspiciousLookingOwl/transformice.js/blob/647a173/src/structures/WhisperMessage.ts#L10)*
-
 #### Parameters:
 
 Name | Type |
@@ -42,8 +40,6 @@ Name | Type |
 
 *Inherited from [Message](message.md).[author](message.md#author)*
 
-*Defined in [src/structures/Message.ts:7](https://github.com/SuspiciousLookingOwl/transformice.js/blob/647a173/src/structures/Message.ts#L7)*
-
 ___
 
 ### client
@@ -52,15 +48,11 @@ ___
 
 *Inherited from [Message](message.md).[client](message.md#client)*
 
-*Defined in [src/structures/Message.ts:5](https://github.com/SuspiciousLookingOwl/transformice.js/blob/647a173/src/structures/Message.ts#L5)*
-
 ___
 
 ### community
 
 •  **community**: number
-
-*Defined in [src/structures/WhisperMessage.ts:10](https://github.com/SuspiciousLookingOwl/transformice.js/blob/647a173/src/structures/WhisperMessage.ts#L10)*
 
 ___
 
@@ -70,15 +62,11 @@ ___
 
 *Inherited from [Message](message.md).[content](message.md#content)*
 
-*Defined in [src/structures/Message.ts:6](https://github.com/SuspiciousLookingOwl/transformice.js/blob/647a173/src/structures/Message.ts#L6)*
-
 ___
 
 ### sentTo
 
 •  **sentTo**: string
-
-*Defined in [src/structures/WhisperMessage.ts:9](https://github.com/SuspiciousLookingOwl/transformice.js/blob/647a173/src/structures/WhisperMessage.ts#L9)*
 
 The player name who sent to them.
 
@@ -87,8 +75,6 @@ The player name who sent to them.
 ### reply
 
 ▸ **reply**(`message`: string): void
-
-*Defined in [src/structures/WhisperMessage.ts:33](https://github.com/SuspiciousLookingOwl/transformice.js/blob/647a173/src/structures/WhisperMessage.ts#L33)*
 
 Reply the author with a whisper message
 

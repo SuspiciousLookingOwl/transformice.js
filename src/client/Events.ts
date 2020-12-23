@@ -6,6 +6,7 @@ import {
 	Player,
 	Room,
 	RoomMessage,
+	RoomPlayer,
 	WhisperMessage,
 } from "../structures";
 import { languages } from "../enums";
@@ -53,15 +54,15 @@ interface ClientEvents {
 	/**
 	 * Emitted when the room playerList is updated.
 	 */
-	roomUpdate: (before: Player[], after: Player[]) => void;
+	roomUpdate: (before: RoomPlayer[], after: RoomPlayer[]) => void;
 	/**
 	 * Emitted when the room playerList is updated.
 	 */
-	roomPlayerUpdate: (before: Player | undefined, after: Player) => void;
+	roomPlayerUpdate: (before: RoomPlayer | undefined, after: RoomPlayer) => void;
 	/**
 	 * Emitted when a new player has joined.
 	 */
-	roomPlayerJoin: (player: Player) => void;
+	roomPlayerJoin: (player: RoomPlayer) => void;
 	/**
 	 * Emitted when a language is changed.characters or not.
 	 */

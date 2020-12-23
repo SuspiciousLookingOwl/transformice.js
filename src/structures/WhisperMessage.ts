@@ -1,8 +1,8 @@
-import { Player, Message } from ".";
+import { Message } from ".";
 import Client from "../client";
 
 /** Represents a whisper message. */
-export default class WhisperMessage extends Message {
+export default class WhisperMessage extends Message<string> {
 	/**
 	 * The player name who sent to them.
 	 */
@@ -11,7 +11,7 @@ export default class WhisperMessage extends Message {
 
 	constructor(
 		client: Client,
-		author: Player | string,
+		author: string,
 		community: number,
 		sentTo: string,
 		content: string

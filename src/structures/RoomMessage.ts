@@ -2,7 +2,7 @@ import { Player, Message } from ".";
 import Client from "../client";
 
 /** Represents a room message. */
-export default class RoomMessage extends Message {
+export default class RoomMessage extends Message<Player> {
 	constructor(client: Client, author: Player, content: string) {
 		super(client, author, content);
 	}
@@ -17,6 +17,6 @@ export default class RoomMessage extends Message {
 	 * }
 	 */
 	reply(message: string) {
-		this.client.sendRoomMessage(`@${(this.author as Player).nickname} ${message}`);
+		this.client.sendRoomMessage(`@${this.author.nickname} ${message}`);
 	}
 }

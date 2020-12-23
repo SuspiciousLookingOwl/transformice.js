@@ -44,6 +44,16 @@ export const identifiers = {
 } as const;
 
 /**
+ * The identifiers of tribulle packet
+ *
+ * @hidden
+ */
+export const tribulle = {
+	whisper: 66,
+	friendList: 34,
+};
+
+/**
  * The old identifiers of the packets.
  *
  * @hidden

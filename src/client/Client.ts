@@ -3,7 +3,7 @@ import { EventEmitter } from "events";
 
 import { ByteArray, Connection, SHAKikoo, ValueOf } from "../utils";
 import { Player, Room, Friend, RoomMessage, WhisperMessage } from "../structures";
-import { cipherMethods, identifiers, languages, oldIdentifiers } from "../enums";
+import { tribulle, cipherMethods, identifiers, languages, oldIdentifiers } from "../enums";
 import ClientEvents from "./Events";
 
 /**
@@ -236,14 +236,14 @@ class Client extends EventEmitter {
 	 * @hidden
 	 */
 	private handleTribulle(code: number, packet: ByteArray) {
-		if (code == 66) {
+		if (code == tribulle.whisper) {
 			const author = packet.readUTF();
 			const community = packet.readUnsignedInt();
 			const sentTo = packet.readUTF();
 			const content = packet.readUTF();
 			const message = new WhisperMessage(this, author, community, sentTo, content);
 			this.emit("whisper", message);
-		} else if (code == 34) {
+		} else if (code == tribulle.friendList) {
 			const friends = [];
 
 			const soulmate = new Friend().read(packet, true); // soulmate

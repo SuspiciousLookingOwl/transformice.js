@@ -1,7 +1,9 @@
+import Client from "../client";
 import ByteArray from "../utils/ByteArray";
+import Base from "./Base";
 
 /** Represents a player from the room. */
-export default class Player {
+export default class Player extends Base {
 	/**
 	 * The player's nickname.
 	 */
@@ -91,7 +93,8 @@ export default class Player {
 	 */
 	isJumping: boolean;
 
-	constructor() {
+	constructor(client: Client) {
+		super(client);
 		this.nickname = "";
 		this.gender = 0;
 		this.look = "";

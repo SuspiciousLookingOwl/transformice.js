@@ -1,8 +1,10 @@
 import { ValueOf, ByteArray } from "../utils";
 import { genders } from "../enums";
+import Client from "../client";
+import Base from "./Base";
 
 /** Represents a friend from the friend list */
-export default class Friend {
+export default class Friend extends Base {
 	/**
 	 * The player's id
 	 */
@@ -40,7 +42,8 @@ export default class Friend {
 	 */
 	lastConnection: number;
 
-	constructor() {
+	constructor(client: Client) {
+		super(client);
 		this.id = 0;
 		this.nickname = "";
 		this.gender = 0;

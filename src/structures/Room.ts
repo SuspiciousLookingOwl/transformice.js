@@ -1,14 +1,10 @@
 import { ByteArray, ValueOf } from "../utils";
-import Player from "./Player";
+import { Player, Base } from ".";
 import Client from "../client";
 import { identifiers, cipherMethods, languages } from "../enums";
 
 /** Represents a room. */
-export default class Room {
-	/**
-	 * The client.
-	 */
-	client: Client;
+export default class Room extends Base {
 	/**
 	 * The room name.
 	 */
@@ -36,6 +32,7 @@ export default class Room {
 		name: string,
 		language: ValueOf<typeof languages>
 	) {
+		super(client);
 		this.client = client;
 		this.name = name;
 		this.playerList = [];

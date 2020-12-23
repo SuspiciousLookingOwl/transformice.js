@@ -221,13 +221,13 @@ class Client extends EventEmitter {
 			this.room.playerList = [];
 			const length = packet.readUnsignedShort();
 			for (let i = 0; i < length; i++) {
-				const player = new Player().read(packet);
+				const player = new Player(this).read(packet);
 				this.room.playerList.push(player);
 			}
 			this.player = this.room.getPlayer(this.pcode) as Player;
 			this.emit("roomUpdate", before, this.room.playerList);
 		} else if (ccc == identifiers.roomNewPlayer) {
-			const player = new Player().read(packet);
+			const player = new Player(this).read(packet);
 			if (this.room.getPlayer(player.pcode)) {
 				this.emit("roomPlayerUpdate", this.room.getPlayer(player.pcode), player);
 			} else {
@@ -262,13 +262,13 @@ class Client extends EventEmitter {
 		} else if (code == tribulle.friendList) {
 			const friends = [];
 
-			const soulmate = new Friend().read(packet, true); // soulmate
+			const soulmate = new Friend(this).read(packet, true); // soulmate
 			const hasSoulmate = !(soulmate.id == 0 && soulmate.nickname == "");
 			if (hasSoulmate) friends.push(soulmate);
 			let totalFriends = packet.readUnsignedShort();
 
 			while (totalFriends--) {
-				friends.push(new Friend().read(packet, false));
+				friends.push(new Friend(this).read(packet, false));
 			}
 			this.emit("friendList", friends, hasSoulmate ? soulmate.nickname : null);
 		} else if (code === tribulle.friendConnect) {
@@ -276,14 +276,14 @@ class Client extends EventEmitter {
 		} else if (code === tribulle.friendDisconnect) {
 			this.emit("friendDisconnect", packet.readUTF());
 		} else if (code === tribulle.friendChange) {
-			this.emit("friendChange", new Friend().read(packet, false));
+			this.emit("friendChange", new Friend(this).read(packet, false));
 		} else if (code === tribulle.channelWho) {
 			packet.readUnsignedInt();
 			packet.readUnsignedByte();
 			const playerCount = packet.readUnsignedShort();
 			const players: Player[] = [];
 			for (let i = 0; i < playerCount; i++) {
-				const player = new Player();
+				const player = new Player(this);
 				player.nickname = packet.readUTF();
 				players.push(player);
 			}
@@ -295,7 +295,7 @@ class Client extends EventEmitter {
 			const channelName = packet.readUTF();
 			this.emit("channelJoin", channelName);
 		} else if (code === tribulle.channelMessage) {
-			const author = new Player();
+			const author = new Player(this);
 			author.nickname = packet.readUTF();
 			const community = packet.readUnsignedInt();
 			const channelName = packet.readUTF();
@@ -303,7 +303,7 @@ class Client extends EventEmitter {
 			const message = new ChannelMessage(this, author, content, community, channelName);
 			this.emit("channelMessage", message);
 		} else if (code === tribulle.tribeMessage) {
-			const author = new Player();
+			const author = new Player(this);
 			author.nickname = packet.readUTF();
 			const message = new Message(this, author, packet.readUTF());
 			this.emit("tribeMessage", message);

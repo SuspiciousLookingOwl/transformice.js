@@ -13,13 +13,13 @@ export default class RoomMessage extends Message {
 	 * @example
 	 * ```js
 	 * client.on('roomMessage', (message) => {
-	 * 	if (client.nickname == message.author.nickname)
+	 * 	if (client.name == message.author.name)
 	 * 		return;
 	 * 	message.reply('Hello');
 	 * ```
 	 * }
 	 */
 	reply(message: string) {
-		this.client.sendRoomMessage(`@${this.author.nickname} ${message}`);
+		this.client.sendRoomMessage(`@${this.author.name} ${message}`);
 	}
 }

@@ -30,7 +30,7 @@ const { Client, enums } = require("transformice.js");
 const client = new Client();
 
 client.on("roomMessage", (message) => {
-	if (client.nickname == message.author.nickname) return;
+	if (client.name == message.author.name) return;
 	client.sendRoomMessage(message.author.look);
 });
 

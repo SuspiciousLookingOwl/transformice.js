@@ -121,7 +121,7 @@ export default class RoomPlayer extends Player {
 	 * @hidden
 	 */
 	read(packet: ByteArray) {
-		this.nickname = packet.readUTF();
+		this.name = packet.readUTF();
 		this.pcode = packet.readUnsignedInt();
 		this.isShaman = packet.readBoolean();
 		this.isDead = packet.readBoolean();

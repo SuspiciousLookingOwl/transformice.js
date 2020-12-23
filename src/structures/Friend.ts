@@ -1,18 +1,14 @@
 import { ValueOf, ByteArray } from "../utils";
 import { genders } from "../enums";
 import Client from "../client";
-import Base from "./Base";
+import Player from "./Player";
 
 /** Represents a friend from the friend list */
-export default class Friend extends Base {
+export default class Friend extends Player {
 	/**
 	 * The player's id
 	 */
 	id: number;
-	/**
-	 * The player's nickname
-	 */
-	nickname: string;
 	/**
 	 * The player's gender
 	 */
@@ -45,7 +41,6 @@ export default class Friend extends Base {
 	constructor(client: Client) {
 		super(client);
 		this.id = 0;
-		this.nickname = "";
 		this.gender = 0;
 		this.isSoulmate = false;
 		this.hasAddedBack = false;
@@ -62,7 +57,7 @@ export default class Friend extends Base {
 	 */
 	read(packet: ByteArray, isSoulmate: boolean) {
 		this.id = packet.readInt();
-		this.nickname = packet.readUTF();
+		this.name = packet.readUTF();
 		this.gender = packet.readByte() as ValueOf<typeof genders>;
 		packet.readInt(); // ?
 		this.isSoulmate = isSoulmate;

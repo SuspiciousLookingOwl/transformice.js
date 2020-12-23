@@ -69,9 +69,9 @@ class Client extends EventEmitter {
 	 */
 	playerID: number;
 	/**
-	 * The client's nickname.
+	 * The client's name.
 	 */
-	nickname: string;
+	name: string;
 	/**
 	 * The client's playing time.
 	 */
@@ -115,7 +115,7 @@ class Client extends EventEmitter {
 		this.tribulleID = 0;
 		this.onlinePlayers = 0;
 		this.playerID = 0;
-		this.nickname = "";
+		this.name = "";
 		this.playingTime = 0;
 		this.connectionTime = 0;
 		this.community = 0;
@@ -188,12 +188,12 @@ class Client extends EventEmitter {
 			});
 		} else if (ccc == identifiers.logged) {
 			this.playerID = packet.readUnsignedInt();
-			this.nickname = packet.readUTF();
+			this.name = packet.readUTF();
 			this.playingTime = packet.readUnsignedInt();
 			this.connectionTime = new Date().getTime();
 			this.community = packet.readByte();
 			this.pcode = packet.readUnsignedInt();
-			this.emit("logged", this.nickname, this.pcode);
+			this.emit("logged", this.name, this.pcode);
 		} else if (ccc == identifiers.bulle) {
 			const code = packet.readUnsignedShort();
 
@@ -270,14 +270,14 @@ class Client extends EventEmitter {
 			const friends = [];
 
 			const soulmate = new Friend(this).read(packet, true); // soulmate
-			const hasSoulmate = !(soulmate.id == 0 && soulmate.nickname == "");
+			const hasSoulmate = !(soulmate.id == 0 && soulmate.name == "");
 			if (hasSoulmate) friends.push(soulmate);
 			let totalFriends = packet.readUnsignedShort();
 
 			while (totalFriends--) {
 				friends.push(new Friend(this).read(packet, false));
 			}
-			this.emit("friendList", friends, hasSoulmate ? soulmate.nickname : null);
+			this.emit("friendList", friends, hasSoulmate ? soulmate.name : null);
 		} else if (code === tribulle.friendConnect) {
 			this.emit("friendConnect", packet.readUTF());
 		} else if (code === tribulle.friendDisconnect) {
@@ -290,8 +290,7 @@ class Client extends EventEmitter {
 			const playerCount = packet.readUnsignedShort();
 			const players: Player[] = [];
 			for (let i = 0; i < playerCount; i++) {
-				const player = new Player(this);
-				player.nickname = packet.readUTF();
+				const player = new Player(this, packet.readUTF());
 				players.push(player);
 			}
 			this.emit("channelWho", players);
@@ -302,16 +301,14 @@ class Client extends EventEmitter {
 			const channelName = packet.readUTF();
 			this.emit("channelJoin", channelName);
 		} else if (code === tribulle.channelMessage) {
-			const author = new Player(this);
-			author.nickname = packet.readUTF();
+			const author = new Player(this, packet.readUTF());
 			const community = packet.readUnsignedInt();
 			const channelName = packet.readUTF();
 			const content = packet.readUTF();
 			const message = new ChannelMessage(this, author, content, community, channelName);
 			this.emit("channelMessage", message);
 		} else if (code === tribulle.tribeMessage) {
-			const author = new Player(this);
-			author.nickname = packet.readUTF();
+			const author = new Player(this, packet.readUTF());
 			const message = new Message(this, author, packet.readUTF());
 			this.emit("tribeMessage", message);
 		} else if (code === tribulle.tribeMemberConnect) {
@@ -335,8 +332,8 @@ class Client extends EventEmitter {
 	/**
 	 * Log in to the game.
 	 */
-	login(nickname: string, password: string, room = "1") {
-		const p = new ByteArray().writeUTF(nickname).writeUTF(SHAKikoo(password));
+	login(name: string, password: string, room = "1") {
+		const p = new ByteArray().writeUTF(name).writeUTF(SHAKikoo(password));
 		p.writeUTF("app:/TransformiceAIR.swf/[[DYNAMIC]]/2/[[DYNAMIC]]/4").writeUTF(room);
 		p.writeUnsignedInt(
 			parseInt((BigInt(this.authServer) ^ BigInt(this.authClient)).toString())
@@ -434,11 +431,8 @@ class Client extends EventEmitter {
 	/**
 	 * Sends a whisper message to a player.
 	 */
-	sendWhisper(nickname: string, message: string) {
-		this.sendTribullePacket(
-			52,
-			new ByteArray().writeUTF(nickname.toLowerCase()).writeUTF(message)
-		);
+	sendWhisper(name: string, message: string) {
+		this.sendTribullePacket(52, new ByteArray().writeUTF(name.toLowerCase()).writeUTF(message));
 	}
 
 	/**
@@ -465,7 +459,7 @@ class Client extends EventEmitter {
 	async run(
 		tfmid: string,
 		token: string,
-		nickname: string,
+		name: string,
 		password: string,
 		language: ValueOf<typeof languages> = languages.en,
 		room = "1"
@@ -491,7 +485,7 @@ class Client extends EventEmitter {
 				});
 				this.on("loginReady", () => {
 					this.setLanguage(language);
-					this.login(nickname, password, room);
+					this.login(name, password, room);
 				});
 			} else {
 				if (result.internal_error_step == 2)

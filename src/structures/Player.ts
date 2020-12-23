@@ -4,12 +4,12 @@ import Base from "./Base";
 /** Represents a player from the room. */
 export default class Player extends Base {
 	/**
-	 * The player's nickname.
+	 * The player's name.
 	 */
-	nickname: string;
+	name: string;
 
-	constructor(client: Client, nickname = "") {
+	constructor(client: Client, name = "") {
 		super(client);
-		this.nickname = nickname;
+		this.name = name;
 	}
 }

@@ -26,7 +26,7 @@ interface ClientEvents {
 	/**
 	 * Emitted when the client has logged in.
 	 */
-	logged: (nickname: string, pcode: number) => void;
+	logged: (name: string, pcode: number) => void;
 	/**
 	 * Emitted when the client is connected to the community platform.
 	 */
@@ -82,11 +82,11 @@ interface ClientEvents {
 	/**
 	 * Emitted when a friend is connected
 	 */
-	friendConnect: (nickname: string) => void;
+	friendConnect: (name: string) => void;
 	/**
 	 * Emitted when a friend is disconnected
 	 */
-	friendDisconnect: (nickname: string) => void;
+	friendDisconnect: (name: string) => void;
 	/**
 	 * Emitted when friend state is changed (e.g. room, gender)
 	 */
@@ -114,11 +114,11 @@ interface ClientEvents {
 	/**
 	 * Emitted when a tribe member connected
 	 */
-	tribeMemberConnect: (nickname: string) => void;
+	tribeMemberConnect: (name: string) => void;
 	/**
 	 * Emitted when a tribe member disconnected
 	 */
-	tribeMemberDisconnect: (nickname: string) => void;
+	tribeMemberDisconnect: (name: string) => void;
 	/**
 	 * Emitted when a player sends a whisper message to the client.
 	 */

@@ -42,7 +42,7 @@ export default class Room extends Base {
 	}
 
 	/**
-	 * Get a player by the pcode or nickname.
+	 * Get a player by the pcode or name.
 	 *
 	 * @example
 	 * ```js
@@ -50,12 +50,11 @@ export default class Room extends Base {
 	 * console.log(player.look);
 	 * ```
 	 */
-	getPlayer(nickName: string): RoomPlayer | undefined;
+	getPlayer(name: string): RoomPlayer | undefined;
 	getPlayer(pcode: number): RoomPlayer | undefined;
 	getPlayer(value: string | number) {
 		if (typeof value === "number") return this.playerList.find((p) => p.pcode === value);
-		else if (typeof value === "string")
-			return this.playerList.find((p) => p.nickname === value);
+		else if (typeof value === "string") return this.playerList.find((p) => p.name === value);
 	}
 
 	/**

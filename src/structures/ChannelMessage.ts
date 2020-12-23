@@ -2,7 +2,7 @@ import { Player, Message } from ".";
 import Client from "../client";
 
 /** Represents a Channel message. */
-export default class ChannelMessage extends Message<Player> {
+export default class ChannelMessage extends Message {
 	/**
 	 * Community of the author that sends the message
 	 */

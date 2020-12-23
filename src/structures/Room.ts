@@ -1,5 +1,5 @@
 import { ByteArray, ValueOf } from "../utils";
-import { Player, Base } from ".";
+import { RoomPlayer, Base } from ".";
 import Client from "../client";
 import { identifiers, cipherMethods, languages } from "../enums";
 
@@ -12,7 +12,7 @@ export default class Room extends Base {
 	/**
 	 * All of the {@link Player} that are in the room.
 	 */
-	playerList: Player[];
+	playerList: RoomPlayer[];
 	/**
 	 * Whether or not the room is a public.
 	 */
@@ -50,8 +50,8 @@ export default class Room extends Base {
 	 * console.log(player.look);
 	 * ```
 	 */
-	getPlayer(nickName: string): Player | undefined;
-	getPlayer(pcode: number): Player | undefined;
+	getPlayer(nickName: string): RoomPlayer | undefined;
+	getPlayer(pcode: number): RoomPlayer | undefined;
 	getPlayer(value: string | number) {
 		if (typeof value === "number") return this.playerList.find((p) => p.pcode === value);
 		else if (typeof value === "string")
@@ -63,7 +63,7 @@ export default class Room extends Base {
 	 *
 	 * @hidden
 	 */
-	removePlayer(player: Player) {
+	removePlayer(player: RoomPlayer) {
 		const index = this.playerList.findIndex((p) => (p.pcode = player.pcode));
 		if (index === -1) return;
 		return this.playerList.splice(index, 1)[0];
@@ -74,7 +74,7 @@ export default class Room extends Base {
 	 *
 	 * @hidden
 	 */
-	updatePlayer(player: Player) {
+	updatePlayer(player: RoomPlayer) {
 		let playerToUpdate = this.getPlayer(player.pcode);
 		playerToUpdate = player;
 		return playerToUpdate;

@@ -10,6 +10,7 @@ import {
 	WhisperMessage,
 	ChannelMessage,
 	Message,
+	RoomPlayer,
 } from "../structures";
 import { tribulle, cipherMethods, identifiers, languages, oldIdentifiers } from "../enums";
 import ClientEvents from "./Events";
@@ -221,13 +222,13 @@ class Client extends EventEmitter {
 			this.room.playerList = [];
 			const length = packet.readUnsignedShort();
 			for (let i = 0; i < length; i++) {
-				const player = new Player(this).read(packet);
+				const player = new RoomPlayer(this).read(packet);
 				this.room.playerList.push(player);
 			}
 			this.player = this.room.getPlayer(this.pcode) as Player;
 			this.emit("roomUpdate", before, this.room.playerList);
 		} else if (ccc == identifiers.roomNewPlayer) {
-			const player = new Player(this).read(packet);
+			const player = new RoomPlayer(this).read(packet);
 			if (this.room.getPlayer(player.pcode)) {
 				this.emit("roomPlayerUpdate", this.room.getPlayer(player.pcode), player);
 			} else {
@@ -257,7 +258,13 @@ class Client extends EventEmitter {
 			const community = packet.readUnsignedInt();
 			const sentTo = packet.readUTF();
 			const content = packet.readUTF();
-			const message = new WhisperMessage(this, author, community, sentTo, content);
+			const message = new WhisperMessage(
+				this,
+				new Player(this, author),
+				community,
+				sentTo,
+				content
+			);
 			this.emit("whisper", message);
 		} else if (code == tribulle.friendList) {
 			const friends = [];

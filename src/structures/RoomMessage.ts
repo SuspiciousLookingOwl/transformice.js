@@ -2,7 +2,7 @@ import { Player, Message } from ".";
 import Client from "../client";
 
 /** Represents a room message. */
-export default class RoomMessage extends Message<Player> {
+export default class RoomMessage extends Message {
 	constructor(client: Client, author: Player, content: string) {
 		super(client, author, content);
 	}

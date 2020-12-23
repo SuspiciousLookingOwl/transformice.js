@@ -110,7 +110,7 @@ interface ClientEvents {
 	/**
 	 * Emitted when a tribe message is received
 	 */
-	tribeMessage: (message: Message<Player>) => void;
+	tribeMessage: (message: Message) => void;
 	/**
 	 * Emitted when a tribe member connected
 	 */

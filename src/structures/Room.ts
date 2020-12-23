@@ -60,6 +60,8 @@ export default class Room {
 
 	/**
 	 * Removes player the player from room playerList.
+	 *
+	 * @hidden
 	 */
 	removePlayer(player: Player) {
 		const index = this.playerList.findIndex((p) => (p.pcode = player.pcode));
@@ -69,6 +71,8 @@ export default class Room {
 
 	/**
 	 * Adds or updates the player in room playerList.
+	 *
+	 * @hidden
 	 */
 	updatePlayer(player: Player) {
 		let playerToUpdate = this.getPlayer(player.pcode);

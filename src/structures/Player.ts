@@ -119,6 +119,8 @@ export default class Player {
 
 	/**
 	 * Reads player data from a packet.
+	 *
+	 * @hidden
 	 */
 	read(packet: ByteArray) {
 		this.nickname = packet.readUTF();

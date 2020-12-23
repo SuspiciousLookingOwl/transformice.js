@@ -24,7 +24,15 @@ class Client extends EventEmitter {
 	private ports: number[];
 	private host: string;
 	private tribulleID: number;
+
+	/**
+	 * @ignore
+	 */
 	identificationKeys: number[];
+
+	/**
+	 * @ignore
+	 */
 	msgKeys: number[];
 
 	/**
@@ -67,7 +75,13 @@ class Client extends EventEmitter {
 	 * The client's temporary code.
 	 */
 	pcode: number;
+	/**
+	 * @ignore
+	 */
 	main: Connection;
+	/**
+	 * @ignore
+	 */
 	bulle: Connection;
 
 	constructor() {
@@ -110,6 +124,8 @@ class Client extends EventEmitter {
 
 	/**
 	 * Handles the known packets and emits events.
+	 *
+	 * @hidden
 	 */
 	handlePacket(conn: Connection, packet: ByteArray) {
 		const ccc = packet.readUnsignedShort();
@@ -216,6 +232,8 @@ class Client extends EventEmitter {
 
 	/**
 	 * Handles the community platform packets and emits events.
+	 *
+	 * @hidden
 	 */
 	private handleTribulle(code: number, packet: ByteArray) {
 		if (code == 66) {

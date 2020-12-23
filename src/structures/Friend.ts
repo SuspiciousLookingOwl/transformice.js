@@ -54,6 +54,8 @@ export default class Friend {
 
 	/**
 	 * Returns friend data from a packet
+	 *
+	 * @hidden
 	 */
 	read(packet: ByteArray, isSoulmate: boolean) {
 		this.id = packet.readInt();

@@ -2,7 +2,11 @@ const Identifier = (c: number, cc: number) => {
 	return (c << 8) | cc;
 };
 
-/** The identifiers of the packets. */
+/**
+ * The identifiers of the packets.
+ *
+ * @hidden
+ * */
 export const identifiers = {
 	oldPacket: Identifier(1, 1),
 	bulle: Identifier(60, 3),
@@ -39,7 +43,11 @@ export const identifiers = {
 	requestLanguage: Identifier(176, 5),
 } as const;
 
-/** The old identifiers of the packets. */
+/**
+ * The old identifiers of the packets.
+ *
+ * @hidden
+ */
 export const oldIdentifiers = {
 	roomPlayerLeft: Identifier(8, 7),
 } as const;
@@ -230,7 +238,11 @@ export const whisperStates = {
 	disabledAll: 3,
 } as const;
 
-/** The ids of the cipher method. */
+/**
+ * The ids of the cipher method.
+ *
+ * @hidden
+ */
 export const cipherMethods = {
 	none: 0,
 	xor: 1,

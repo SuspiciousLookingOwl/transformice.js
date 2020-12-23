@@ -41,9 +41,6 @@ module.exports = {
 			{
 				docs: {
 					sidebarPath: require.resolve("./sidebars.js"),
-					// Please change this to your repo.
-					editUrl:
-						"https://github.com/SuspiciousLookingOwl/transformice.js/documentations",
 				},
 				theme: {
 					customCss: require.resolve("./src/css/custom.css"),

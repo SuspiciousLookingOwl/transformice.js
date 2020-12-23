@@ -5,6 +5,7 @@ module.exports = [
     "type": "category",
     "label": "Classes",
     "items": [
+      "api/classes/base",
       "api/classes/bytearray",
       "api/classes/channelmessage",
       "api/classes/client",
@@ -14,6 +15,7 @@ module.exports = [
       "api/classes/player",
       "api/classes/room",
       "api/classes/roommessage",
+      "api/classes/roomplayer",
       "api/classes/whispermessage"
     ]
   },

@@ -81,7 +81,7 @@ Reply the author with a whisper message
 **`example`** 
 ```js
 client.on('whisper', (message) => {
-	if (client.nickname == message.author)
+	if (client.name == message.author.name)
 		return;
 	message.reply('Hello');
 }

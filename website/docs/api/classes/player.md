@@ -12,13 +12,15 @@ Represents a player from the room.
 
   ↳ **Player**
 
+  ↳↳ [Friend](friend.md)
+
   ↳↳ [RoomPlayer](roomplayer.md)
 
 ## Constructors
 
 ### constructor
 
-\+ **new Player**(`client`: [Client](client.md), `nickname?`: string): [Player](player.md)
+\+ **new Player**(`client`: [Client](client.md), `name?`: string): [Player](player.md)
 
 *Overrides [Base](base.md).[constructor](base.md#constructor)*
 
@@ -27,7 +29,7 @@ Represents a player from the room.
 Name | Type | Default value |
 ------ | ------ | ------ |
 `client` | [Client](client.md) | - |
-`nickname` | string | "" |
+`name` | string | "" |
 
 **Returns:** [Player](player.md)
 
@@ -41,8 +43,8 @@ Name | Type | Default value |
 
 ___
 
-### nickname
+### name
 
-•  **nickname**: string
+•  **name**: string
 
-The player's nickname.
+The player's name.

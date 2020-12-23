@@ -49,11 +49,11 @@ The language suggested by the server.
 
 ___
 
-### nickname
+### name
 
-•  **nickname**: string
+•  **name**: string
 
-The client's nickname.
+The client's name.
 
 ___
 
@@ -160,7 +160,7 @@ ___
 
 ### login
 
-▸ **login**(`nickname`: string, `password`: string, `room?`: string): void
+▸ **login**(`name`: string, `password`: string, `room?`: string): void
 
 Log in to the game.
 
@@ -168,7 +168,7 @@ Log in to the game.
 
 Name | Type | Default value |
 ------ | ------ | ------ |
-`nickname` | string | - |
+`name` | string | - |
 `password` | string | - |
 `room` | string | "1" |
 
@@ -213,7 +213,7 @@ ___
 
 ### run
 
-▸ **run**(`tfmid`: string, `token`: string, `nickname`: string, `password`: string, `language?`: [ValueOf](../globals.md#valueof)<*typeof* languages\>, `room?`: string): Promise<void\>
+▸ **run**(`tfmid`: string, `token`: string, `name`: string, `password`: string, `language?`: [ValueOf](../globals.md#valueof)<*typeof* languages\>, `room?`: string): Promise<void\>
 
 Starts the client.
 
@@ -223,12 +223,29 @@ Name | Type | Default value |
 ------ | ------ | ------ |
 `tfmid` | string | - |
 `token` | string | - |
-`nickname` | string | - |
+`name` | string | - |
 `password` | string | - |
 `language` | [ValueOf](../globals.md#valueof)<*typeof* languages\> | languages.en |
 `room` | string | "1" |
 
 **Returns:** Promise<void\>
+
+___
+
+### sendChannelMessage
+
+▸ **sendChannelMessage**(`channelName`: string, `message`: string): void
+
+Sends a message to a chat channel
+
+#### Parameters:
+
+Name | Type |
+------ | ------ |
+`channelName` | string |
+`message` | string |
+
+**Returns:** void
 
 ___
 
@@ -269,9 +286,25 @@ Name | Type | Description |
 
 ___
 
+### sendTribeMessage
+
+▸ **sendTribeMessage**(`message`: string): void
+
+Sends a message to tribe
+
+#### Parameters:
+
+Name | Type |
+------ | ------ |
+`message` | string |
+
+**Returns:** void
+
+___
+
 ### sendWhisper
 
-▸ **sendWhisper**(`nickname`: string, `message`: string): void
+▸ **sendWhisper**(`name`: string, `message`: string): void
 
 Sends a whisper message to a player.
 
@@ -279,7 +312,7 @@ Sends a whisper message to a player.
 
 Name | Type |
 ------ | ------ |
-`nickname` | string |
+`name` | string |
 `message` | string |
 
 **Returns:** void

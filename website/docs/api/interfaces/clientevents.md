@@ -68,7 +68,7 @@ ___
 
 ### friendConnect
 
-•  **friendConnect**: (nickname: string) => void
+•  **friendConnect**: (name: string) => void
 
 Emitted when a friend is connected
 
@@ -76,7 +76,7 @@ ___
 
 ### friendDisconnect
 
-•  **friendDisconnect**: (nickname: string) => void
+•  **friendDisconnect**: (name: string) => void
 
 Emitted when a friend is disconnected
 
@@ -100,7 +100,7 @@ ___
 
 ### logged
 
-•  **logged**: (nickname: string, pcode: number) => void
+•  **logged**: (name: string, pcode: number) => void
 
 Emitted when the client has logged in.
 
@@ -179,7 +179,7 @@ ___
 
 ### roomPlayerJoin
 
-•  **roomPlayerJoin**: (player: [Player](../classes/player.md)) => void
+•  **roomPlayerJoin**: (player: [RoomPlayer](../classes/roomplayer.md)) => void
 
 Emitted when a new player has joined.
 
@@ -195,7 +195,7 @@ ___
 
 ### roomPlayerUpdate
 
-•  **roomPlayerUpdate**: (before: [Player](../classes/player.md) \| undefined, after: [Player](../classes/player.md)) => void
+•  **roomPlayerUpdate**: (before: [RoomPlayer](../classes/roomplayer.md) \| undefined, after: [RoomPlayer](../classes/roomplayer.md)) => void
 
 Emitted when the room playerList is updated.
 
@@ -203,7 +203,7 @@ ___
 
 ### roomUpdate
 
-•  **roomUpdate**: (before: [Player](../classes/player.md)[], after: [Player](../classes/player.md)[]) => void
+•  **roomUpdate**: (before: [RoomPlayer](../classes/roomplayer.md)[], after: [RoomPlayer](../classes/roomplayer.md)[]) => void
 
 Emitted when the room playerList is updated.
 
@@ -211,7 +211,7 @@ ___
 
 ### tribeMemberConnect
 
-•  **tribeMemberConnect**: (nickname: string) => void
+•  **tribeMemberConnect**: (name: string) => void
 
 Emitted when a tribe member connected
 
@@ -219,7 +219,7 @@ ___
 
 ### tribeMemberDisconnect
 
-•  **tribeMemberDisconnect**: (nickname: string) => void
+•  **tribeMemberDisconnect**: (name: string) => void
 
 Emitted when a tribe member disconnected
 

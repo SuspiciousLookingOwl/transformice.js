@@ -83,9 +83,9 @@ All of the [Player](player.md) that are in the room.
 
 ### getPlayer
 
-▸ **getPlayer**(`nickName`: string): [RoomPlayer](roomplayer.md) \| undefined
+▸ **getPlayer**(`name`: string): [RoomPlayer](roomplayer.md) \| undefined
 
-Get a player by the pcode or nickname.
+Get a player by the pcode or name.
 
 **`example`** 
 ```js
@@ -97,7 +97,7 @@ console.log(player.look);
 
 Name | Type |
 ------ | ------ |
-`nickName` | string |
+`name` | string |
 
 **Returns:** [RoomPlayer](roomplayer.md) \| undefined
 

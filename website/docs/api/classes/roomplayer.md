@@ -126,21 +126,21 @@ Whether or not the player is moving right.
 
 ___
 
+### name
+
+•  **name**: string
+
+*Inherited from [Player](player.md).[name](player.md#name)*
+
+The player's name.
+
+___
+
 ### nameColor
 
 •  **nameColor**: number
 
 The player's name color, By default : `-1`.
-
-___
-
-### nickname
-
-•  **nickname**: string
-
-*Inherited from [Player](player.md).[nickname](player.md#nickname)*
-
-The player's nickname.
 
 ___
 

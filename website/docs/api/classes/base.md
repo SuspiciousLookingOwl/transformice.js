@@ -10,8 +10,6 @@ Represents a Base class that will be inherited by all other structure classes.
 
 * **Base**
 
-  ↳ [Friend](friend.md)
-
   ↳ [Player](player.md)
 
   ↳ [Room](room.md)

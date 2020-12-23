@@ -83,7 +83,7 @@ Reply the author with a message.
 **`example`** 
 ```js
 client.on('roomMessage', (message) => {
-	if (client.nickname == message.author.nickname)
+	if (client.name == message.author.name)
 		return;
 	message.reply('Hello');
 }

@@ -8,7 +8,7 @@ Represents a friend from the friend list
 
 ## Hierarchy
 
-* [Base](base.md)
+* [Player](player.md)
 
   ↳ **Friend**
 
@@ -18,7 +18,7 @@ Represents a friend from the friend list
 
 \+ **new Friend**(`client`: [Client](client.md)): [Friend](friend.md)
 
-*Overrides [Base](base.md).[constructor](base.md#constructor)*
+*Overrides [Player](player.md).[constructor](player.md#constructor)*
 
 #### Parameters:
 
@@ -94,11 +94,13 @@ The player's last connection time
 
 ___
 
-### nickname
+### name
 
-•  **nickname**: string
+•  **name**: string
 
-The player's nickname
+*Inherited from [Player](player.md).[name](player.md#name)*
+
+The player's name.
 
 ___
 

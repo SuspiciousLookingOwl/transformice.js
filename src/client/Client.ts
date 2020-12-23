@@ -375,6 +375,13 @@ class Client extends EventEmitter {
 	}
 
 	/**
+	 * Sends a message to tribe
+	 */
+	sendTribeMessage(message: string) {
+		this.sendTribullePacket(tribulle.tribeSendMessage, new ByteArray().writeUTF(message));
+	}
+
+	/**
 	 * Joins the tribe house.
 	 */
 	joinTribeHouse() {
@@ -388,6 +395,16 @@ class Client extends EventEmitter {
 		const length = Buffer.byteLength(script);
 		const p = new ByteArray().writeUnsignedShort(length >> 8).writeUnsignedByte(length & 255);
 		this.bulle.send(identifiers.loadLua, p);
+	}
+
+	/**
+	 * Sends a message to a chat channel
+	 */
+	sendChannelMessage(channelName: string, message: string) {
+		this.sendTribullePacket(
+			tribulle.channelSendMessage,
+			new ByteArray().writeUTF(channelName).writeUTF(message)
+		);
 	}
 
 	/**

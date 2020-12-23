@@ -161,9 +161,11 @@ ___
 Emitted when the room is changed.
 
 **`example`** 
+```js
 client.on('roomChange', (before, after) => {
 	console.log('The room changed from '+before.name+' to '+after.name);
 })
+```
 
 ___
 

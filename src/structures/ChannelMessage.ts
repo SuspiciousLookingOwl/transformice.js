@@ -26,6 +26,7 @@ export default class ChannelMessage extends Message<Player> {
 
 	/**
 	 * Reply the author with a message.
+	 *
 	 * @example
 	 * ```js
 	 * client.on('roomMessage', (message) => {

@@ -21,7 +21,9 @@ export default class Connection extends EventEmitter {
 	/**
 	 * Constructor.
 	 * @example
+	 * ```js
 	 * const conn = new Connection(client, 'connectionName');
+	 * ```
 	 */
 	constructor(client: Client, name: string) {
 		super();

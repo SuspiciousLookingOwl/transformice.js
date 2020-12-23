@@ -63,10 +63,12 @@ ___
 Reply the author with a message.
 
 **`example`** 
+```js
 client.on('roomMessage', (message) => {
 	if (client.nickname == message.author.nickname)
 		return;
 	message.reply('Hello');
+```
 }
 
 #### Parameters:

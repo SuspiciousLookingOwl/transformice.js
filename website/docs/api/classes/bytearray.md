@@ -17,7 +17,9 @@ sidebar_label: "ByteArray"
 Constructor.
 
 **`example`** 
+```js
 const packet = new ByteArray();
+```
 
 #### Parameters:
 

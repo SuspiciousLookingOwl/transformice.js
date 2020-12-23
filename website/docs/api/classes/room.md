@@ -84,8 +84,10 @@ All of the [Player](player.md) that are in the room.
 Get a player by the pcode or nickname.
 
 **`example`** 
+```js
 const player = client.room.getPlayer('Name#0000');
 console.log(player.look);
+```
 
 #### Parameters:
 

@@ -239,7 +239,9 @@ ___
 Sends a server command.
 
 **`example`** 
+```js
 client.sendCommand('mod');
+```
 
 #### Parameters:
 

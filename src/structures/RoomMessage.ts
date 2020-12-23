@@ -9,11 +9,14 @@ export default class RoomMessage extends Message<Player> {
 
 	/**
 	 * Reply the author with a message.
+	 *
 	 * @example
+	 * ```js
 	 * client.on('roomMessage', (message) => {
 	 * 	if (client.nickname == message.author.nickname)
 	 * 		return;
 	 * 	message.reply('Hello');
+	 * ```
 	 * }
 	 */
 	reply(message: string) {

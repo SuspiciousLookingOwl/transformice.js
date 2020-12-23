@@ -9,7 +9,9 @@ export default class ByteArray {
 	 * Constructor.
 	 *
 	 * @example
+	 * ```js
 	 * const packet = new ByteArray();
+	 * ```
 	 */
 	constructor(buff?: Buffer | number[]) {
 		this.buffer = Buffer.isBuffer(buff)

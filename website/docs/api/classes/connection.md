@@ -23,7 +23,9 @@ Represents a client that connects to Transformice.
 Constructor.
 
 **`example`** 
+```js
 const conn = new Connection(client, 'connectionName');
+```
 
 #### Parameters:
 

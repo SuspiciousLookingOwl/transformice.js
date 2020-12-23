@@ -400,9 +400,12 @@ class Client extends EventEmitter {
 
 	/**
 	 * Sends a server command.
+	 *
 	 * @param message - The command message (without the `/`).
 	 * @example
+	 * ```js
 	 * client.sendCommand('mod');
+	 * ```
 	 */
 	sendCommand(message: string) {
 		this.main.send(identifiers.command, new ByteArray().writeUTF(message), cipherMethods.xor);

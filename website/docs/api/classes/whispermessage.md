@@ -79,11 +79,13 @@ The player name who sent to them.
 Reply the author with a whisper message
 
 **`example`** 
+```js
 client.on('whisper', (message) => {
 	if (client.nickname == message.author)
 		return;
 	message.reply('Hello');
 }
+```
 
 #### Parameters:
 

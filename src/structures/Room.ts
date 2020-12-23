@@ -46,9 +46,12 @@ export default class Room {
 
 	/**
 	 * Get a player by the pcode or nickname.
+	 *
 	 * @example
+	 * ```js
 	 * const player = client.room.getPlayer('Name#0000');
 	 * console.log(player.look);
+	 * ```
 	 */
 	getPlayer(nickName: string): Player | undefined;
 	getPlayer(pcode: number): Player | undefined;

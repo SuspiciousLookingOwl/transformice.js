@@ -23,12 +23,15 @@ export default class WhisperMessage extends Message<string> {
 
 	/**
 	 * Reply the author with a whisper message
+	 *
 	 * @example
+	 * ```js
 	 * client.on('whisper', (message) => {
 	 * 	if (client.nickname == message.author)
 	 * 		return;
 	 * 	message.reply('Hello');
 	 * }
+	 * ```
 	 */
 	reply(message: string) {
 		this.client.sendWhisper(this.author as string, `${message}`);

@@ -50,7 +50,19 @@ export const identifiers = {
  */
 export const tribulle = {
 	whisper: 66,
+	friendConnect: 32,
+	friendDisconnect: 33,
 	friendList: 34,
+	friendChange: 35,
+	friendAdd: 36,
+	friendRemove: 37,
+	channelWho: 59,
+	channelJoin: 62,
+	channelLeave: 63,
+	channelMessage: 64,
+	tribeMessage: 65,
+	tribeMemberConnect: 88,
+	tribeMemberDisconnect: 90,
 };
 
 /**

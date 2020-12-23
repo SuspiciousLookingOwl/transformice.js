@@ -1,5 +1,13 @@
 import { Connection, ByteArray, ValueOf } from "../utils";
-import { Friend, Player, Room, RoomMessage, WhisperMessage } from "../structures";
+import {
+	ChannelMessage,
+	Friend,
+	Message,
+	Player,
+	Room,
+	RoomMessage,
+	WhisperMessage,
+} from "../structures";
 import { languages } from "../enums";
 
 interface ClientEvents {
@@ -68,6 +76,46 @@ interface ClientEvents {
 	 * Emitted when the client received the friend list
 	 */
 	friendList: (friends: Friend[], soulmateName: string | null) => void;
+	/**
+	 * Emitted when a friend is connected
+	 */
+	friendConnect: (nickname: string) => void;
+	/**
+	 * Emitted when a friend is disconnected
+	 */
+	friendDisconnect: (nickname: string) => void;
+	/**
+	 * Emitted when friend state is changed (e.g. room, gender)
+	 */
+	friendChange: (friend: Friend) => void;
+	/**
+	 * Emitted when received /who result
+	 */
+	channelWho: (players: Player[]) => void;
+	/**
+	 * Emitted when client joined a chat channel
+	 */
+	channelJoin: (channelName: string) => void;
+	/**
+	 * Emitted when client left a chat channel
+	 */
+	channelLeave: (channelName: string) => void;
+	/**
+	 * Emitted when a message is sent to a channel
+	 */
+	channelMessage: (channelMessage: ChannelMessage) => void;
+	/**
+	 * Emitted when a tribe message is received
+	 */
+	tribeMessage: (message: Message<Player>) => void;
+	/**
+	 * Emitted when a tribe member connected
+	 */
+	tribeMemberConnect: (nickname: string) => void;
+	/**
+	 * Emitted when a tribe member disconnected
+	 */
+	tribeMemberDisconnect: (nickname: string) => void;
 	/**
 	 * Emitted when a player sends a whisper message to the client.
 	 */

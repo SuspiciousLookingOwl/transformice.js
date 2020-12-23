@@ -2,7 +2,15 @@ import fetch from "node-fetch";
 import { EventEmitter } from "events";
 
 import { ByteArray, Connection, SHAKikoo, ValueOf } from "../utils";
-import { Player, Room, Friend, RoomMessage, WhisperMessage } from "../structures";
+import {
+	Player,
+	Room,
+	Friend,
+	RoomMessage,
+	WhisperMessage,
+	ChannelMessage,
+	Message,
+} from "../structures";
 import { tribulle, cipherMethods, identifiers, languages, oldIdentifiers } from "../enums";
 import ClientEvents from "./Events";
 
@@ -255,6 +263,46 @@ class Client extends EventEmitter {
 				friends.push(new Friend().read(packet, false));
 			}
 			this.emit("friendList", friends, hasSoulmate ? soulmate.nickname : null);
+		} else if (code === tribulle.friendConnect) {
+			this.emit("friendConnect", packet.readUTF());
+		} else if (code === tribulle.friendDisconnect) {
+			this.emit("friendDisconnect", packet.readUTF());
+		} else if (code === tribulle.friendChange) {
+			this.emit("friendChange", new Friend().read(packet, false));
+		} else if (code === tribulle.channelWho) {
+			packet.readUnsignedInt();
+			packet.readUnsignedByte();
+			const playerCount = packet.readUnsignedShort();
+			const players: Player[] = [];
+			for (let i = 0; i < playerCount; i++) {
+				const player = new Player();
+				player.nickname = packet.readUTF();
+				players.push(player);
+			}
+			this.emit("channelWho", players);
+		} else if (code === tribulle.channelLeave) {
+			const channelName = packet.readUTF();
+			this.emit("channelLeave", channelName);
+		} else if (code === tribulle.channelJoin) {
+			const channelName = packet.readUTF();
+			this.emit("channelJoin", channelName);
+		} else if (code === tribulle.channelMessage) {
+			const author = new Player();
+			author.nickname = packet.readUTF();
+			const community = packet.readUnsignedInt();
+			const channelName = packet.readUTF();
+			const content = packet.readUTF();
+			const message = new ChannelMessage(this, author, content, community, channelName);
+			this.emit("channelMessage", message);
+		} else if (code === tribulle.tribeMessage) {
+			const author = new Player();
+			author.nickname = packet.readUTF();
+			const message = new Message(this, author, packet.readUTF());
+			this.emit("tribeMessage", message);
+		} else if (code === tribulle.tribeMemberConnect) {
+			this.emit("tribeMemberConnect", packet.readUTF());
+		} else if (code === tribulle.tribeMemberDisconnect) {
+			this.emit("tribeMemberDisconnect", packet.readUTF());
 		}
 		this.emit("rawTribulle", code, packet);
 	}

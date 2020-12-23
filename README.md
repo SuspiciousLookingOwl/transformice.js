@@ -25,7 +25,7 @@ npm run dev
 ## Example
 
 ```js
-const { Client } = require("transformice.js");
+const { Client, enums } = require("transformice.js");
 
 const client = new Client();
 
@@ -34,5 +34,5 @@ client.on("roomMessage", (message) => {
 	client.sendRoomMessage(message.author.look);
 });
 
-client.run("tfm_id", "token", "username", "password", Client.enums.languages.en, "room_name");
+client.run("tfm_id", "token", "username", "password", enums.languages.en, "room_name");
 ```

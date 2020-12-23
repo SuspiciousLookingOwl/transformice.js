@@ -58,6 +58,7 @@ module.exports = {
 				downlevelIteration: true,
 				allowSyntheticDefaultImports: true,
 				excludePrivate: true,
+				plugin: ["typedoc-plugin-no-inherit"],
 			},
 		],
 		require.resolve("@cmfcmf/docusaurus-search-local"),

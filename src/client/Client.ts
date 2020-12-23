@@ -18,11 +18,19 @@ import ClientEvents from "./Events";
  * Client interface for event intellisense support
  */
 declare interface Client {
+	/**
+	 * Listens to a Client Event
+	 */
 	on<T extends keyof ClientEvents>(event: T, listener: ClientEvents[T]): this;
+	/** @ignore */
 	emit<T extends keyof ClientEvents>(event: T, ...args: Parameters<ClientEvents[T]>): boolean;
 }
 
-/** Represents a client that connects to Transformice. */
+/**
+ * Represents a client that connects to Transformice.
+ *
+ * @noInheritDoc
+ */
 class Client extends EventEmitter {
 	private loops: Partial<{ heartbeat: NodeJS.Timeout }>;
 	private version: number;

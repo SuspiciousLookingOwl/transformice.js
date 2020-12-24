@@ -186,7 +186,7 @@ class Client extends EventEmitter {
 						.writeUnsignedInt(pcode)
 				);
 			});
-		} else if (ccc == identifiers.logged) {
+		} else if (ccc == identifiers.loggedIn) {
 			this.playerID = packet.readUnsignedInt();
 			this.name = packet.readUTF();
 			this.playingTime = packet.readUnsignedInt();

@@ -18,7 +18,7 @@ export const identifiers = {
 	cafeNewTopic: Identifier(30, 44),
 	cafeSendMessage: Identifier(30, 43),
 	command: Identifier(6, 26),
-	logged: Identifier(26, 2),
+	loggedIn: Identifier(26, 2),
 	handshakeOk: Identifier(26, 3),
 	emote: Identifier(8, 1),
 	emoticon: Identifier(8, 5),

@@ -10,6 +10,8 @@ hide_title: true
 
 NodeJs Client for Transformice with full Typescript support.
 
+[Read the docs](https://transformice-js.netlify.app/docs/) 
+
 ## Development
 
 Clone the repository:

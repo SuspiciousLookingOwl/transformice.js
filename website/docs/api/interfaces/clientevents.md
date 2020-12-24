@@ -44,7 +44,7 @@ ___
 
 ### connect
 
-•  **connect**: (connection: [Connection](../classes/connection.md)) => void
+•  **connect**: (connection: Connection) => void
 
 Emitted when a connection is successfully connected.
 
@@ -98,11 +98,19 @@ Emitted when a language is changed.characters or not.
 
 ___
 
-### logged
+### loggedIn
 
-•  **logged**: (name: string, pcode: number) => void
+•  **loggedIn**: (name: string, pcode: number) => void
 
 Emitted when the client has logged in.
+
+___
+
+### loginError
+
+•  **loginError**: (code: number, error1: string, error2: string) => void
+
+Emitted when the client failed to log in.
 
 ___
 
@@ -124,7 +132,7 @@ ___
 
 ### rawOldPacket
 
-•  **rawOldPacket**: (connection: [Connection](../classes/connection.md), ccc: number, data: string[]) => void
+•  **rawOldPacket**: (connection: Connection, ccc: number, data: string[]) => void
 
 Emitted when a new old packet received.
 
@@ -132,7 +140,7 @@ ___
 
 ### rawPacket
 
-•  **rawPacket**: (conn: [Connection](../classes/connection.md), ccc: number, packet: [ByteArray](../classes/bytearray.md)) => void
+•  **rawPacket**: (conn: Connection, ccc: number, packet: ByteArray) => void
 
 Emitted when a new packet received from main or bulle connection.
 
@@ -140,7 +148,7 @@ ___
 
 ### rawTribulle
 
-•  **rawTribulle**: (code: number, packet: [ByteArray](../classes/bytearray.md)) => void
+•  **rawTribulle**: (code: number, packet: ByteArray) => void
 
 Emitted when a new community platform packet received.
 

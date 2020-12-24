@@ -115,6 +115,16 @@ Disconnects the client.
 
 ___
 
+### getFriendList
+
+▸ **getFriendList**(): Promise<[Friend](friend.md)[]\>
+
+Get friend list
+
+**Returns:** Promise<[Friend](friend.md)[]\>
+
+___
+
 ### joinRoom
 
 ▸ **joinRoom**(`name`: string, `isSalonAuto?`: boolean): void
@@ -180,7 +190,7 @@ ___
 
 ▸ **on**<T\>(`event`: T, `listener`: ClientEvents[T]): this
 
-*Overrides [Connection](connection.md).[on](connection.md#on)*
+*Overrides void*
 
 Listens to a Client Event
 

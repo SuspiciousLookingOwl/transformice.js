@@ -9,10 +9,8 @@ sidebar_label: "Globals"
 ### Classes
 
 * [Base](classes/base.md)
-* [ByteArray](classes/bytearray.md)
 * [ChannelMessage](classes/channelmessage.md)
 * [Client](classes/client.md)
-* [Connection](classes/connection.md)
 * [Friend](classes/friend.md)
 * [Message](classes/message.md)
 * [Player](classes/player.md)

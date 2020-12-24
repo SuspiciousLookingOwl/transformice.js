@@ -6,10 +6,8 @@ module.exports = [
     "label": "Classes",
     "items": [
       "api/classes/base",
-      "api/classes/bytearray",
       "api/classes/channelmessage",
       "api/classes/client",
-      "api/classes/connection",
       "api/classes/friend",
       "api/classes/message",
       "api/classes/player",

@@ -1,5 +1,8 @@
 import { decode } from "iconv-lite";
 
+/**
+ * @hidden
+ */
 export default class ByteArray {
 	buffer: Buffer;
 	writePosition: number;

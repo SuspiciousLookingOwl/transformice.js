@@ -5,7 +5,11 @@ import { ByteArray, ValueOf } from ".";
 import { cipherMethods, identifiers } from "../enums";
 import Client from "../client";
 
-/** Represents a client that connects to Transformice. */
+/**
+ * Represents a client that connects to Transformice.
+ *
+ * @hidden
+ */
 export default class Connection extends EventEmitter {
 	client: Client;
 	name: string;

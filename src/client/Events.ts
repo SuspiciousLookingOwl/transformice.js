@@ -29,6 +29,10 @@ interface ClientEvents {
 	 */
 	loggedIn: (name: string, pcode: number) => void;
 	/**
+	 * Emitted when the client failed to log in.
+	 */
+	loginError: (code: number, error1: string, error2: string) => void;
+	/**
 	 * Emitted when the client is connected to the community platform.
 	 */
 	ready: () => void;

@@ -194,6 +194,8 @@ class Client extends EventEmitter {
 			this.community = packet.readByte();
 			this.pcode = packet.readUnsignedInt();
 			this.emit("loggedIn", this.name, this.pcode);
+		} else if (ccc == identifiers.loginError) {
+			this.emit("loginError", packet.readUnsignedByte(), packet.readUTF(), packet.readUTF());
 		} else if (ccc == identifiers.bulle) {
 			const code = packet.readUnsignedShort();
 

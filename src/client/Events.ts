@@ -27,7 +27,7 @@ interface ClientEvents {
 	/**
 	 * Emitted when the client has logged in.
 	 */
-	logged: (name: string, pcode: number) => void;
+	loggedIn: (name: string, pcode: number) => void;
 	/**
 	 * Emitted when the client is connected to the community platform.
 	 */

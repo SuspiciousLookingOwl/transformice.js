@@ -193,7 +193,7 @@ class Client extends EventEmitter {
 			this.connectionTime = new Date().getTime();
 			this.community = packet.readByte();
 			this.pcode = packet.readUnsignedInt();
-			this.emit("logged", this.name, this.pcode);
+			this.emit("loggedIn", this.name, this.pcode);
 		} else if (ccc == identifiers.bulle) {
 			const code = packet.readUnsignedShort();
 

@@ -1,9 +1,3 @@
-import Client from "./client";
-import * as structures from "./structures";
-import * as enums from "./enums";
-
-export = {
-	Client,
-	...structures,
-	enums,
-};
+export { default as Client } from "./client";
+export * from "./structures";
+export * as enums from "./enums";

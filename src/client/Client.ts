@@ -41,16 +41,22 @@ class Client extends EventEmitter {
 	private ports: number[];
 	private host: string;
 	private tribulleID: number;
-
 	/**
 	 * @ignore
 	 */
 	identificationKeys: number[];
-
 	/**
 	 * @ignore
 	 */
 	msgKeys: number[];
+	/**
+	 * @ignore
+	 */
+	main: Connection;
+	/**
+	 * @ignore
+	 */
+	bulle: Connection;
 
 	/**
 	 * The online players when the bot log.
@@ -92,14 +98,6 @@ class Client extends EventEmitter {
 	 * The client's temporary code.
 	 */
 	pcode: number;
-	/**
-	 * @ignore
-	 */
-	main: Connection;
-	/**
-	 * @ignore
-	 */
-	bulle: Connection;
 
 	constructor() {
 		super();
@@ -348,6 +346,61 @@ class Client extends EventEmitter {
 	}
 
 	/**
+	 * Sends a packet every 15 seconds to stay connected to the game.
+	 */
+	startHeartbeat() {
+		this.main.send(identifiers.heartbeat, new ByteArray());
+		this.loops.heartbeat = setInterval(() => {
+			this.main.send(identifiers.heartbeat, new ByteArray());
+			if (this.bulle.open) this.bulle.send(identifiers.heartbeat, new ByteArray());
+		}, 1000 * 15);
+	}
+
+	/**
+	 * Starts the client.
+	 */
+	async run(
+		tfmid: string,
+		token: string,
+		name: string,
+		password: string,
+		language: ValueOf<typeof languages> = languages.en,
+		room = "1"
+	) {
+		const response = await fetch(
+			`https://api.tocuto.tk/get_transformice_keys.php?tfmid=${tfmid}&token=${token}`
+		);
+
+		const result = await response.json();
+		if (result.success) {
+			if (!result.internal_error) {
+				this.version = result.version;
+				this.connectionKey = result.connection_key;
+				this.ports = result.ports;
+				this.host = result.ip;
+				this.authClient = result.auth_key;
+				this.identificationKeys = result.identification_keys;
+				this.msgKeys = result.msg_keys;
+				this.main = new Connection(this, "main");
+				this.main.connect(this.host, this.ports[0]);
+				this.main.on("connect", () => {
+					this.sendHandshake(this.version, this.connectionKey);
+				});
+				this.on("loginReady", () => {
+					this.setLanguage(language);
+					this.login(name, password, room);
+				});
+			} else {
+				if (result.internal_error_step == 2)
+					throw new Error("The game might be in maintenance mode.");
+				throw new Error("An internal error occur: " + result.internal_error_step);
+			}
+		} else {
+			throw new Error("Can't get the keys : " + result.error);
+		}
+	}
+
+	/**
 	 * Log in to the game.
 	 */
 	login(name: string, password: string, room = "1") {
@@ -357,6 +410,16 @@ class Client extends EventEmitter {
 			parseInt((BigInt(this.authServer) ^ BigInt(this.authClient)).toString())
 		);
 		this.main.send(identifiers.loginSend, p, cipherMethods.xxtea);
+	}
+
+	/**
+	 * Disconnects the client.
+	 */
+	disconnect() {
+		clearInterval(this.loops.heartbeat as NodeJS.Timeout);
+		this.main.close();
+		this.bulle.close();
+		this.emit("disconnect");
 	}
 
 	/**
@@ -483,71 +546,6 @@ class Client extends EventEmitter {
 	async getFriendList() {
 		this.requestFriendList();
 		return (await this.waitFor("friendList"))[0];
-	}
-
-	/**
-	 * Sends a packet every 15 seconds to stay connected to the game.
-	 */
-	startHeartbeat() {
-		this.main.send(identifiers.heartbeat, new ByteArray());
-		this.loops.heartbeat = setInterval(() => {
-			this.main.send(identifiers.heartbeat, new ByteArray());
-			if (this.bulle.open) this.bulle.send(identifiers.heartbeat, new ByteArray());
-		}, 1000 * 15);
-	}
-
-	/**
-	 * Starts the client.
-	 */
-	async run(
-		tfmid: string,
-		token: string,
-		name: string,
-		password: string,
-		language: ValueOf<typeof languages> = languages.en,
-		room = "1"
-	) {
-		const response = await fetch(
-			`https://api.tocuto.tk/get_transformice_keys.php?tfmid=${tfmid}&token=${token}`
-		);
-
-		const result = await response.json();
-		if (result.success) {
-			if (!result.internal_error) {
-				this.version = result.version;
-				this.connectionKey = result.connection_key;
-				this.ports = result.ports;
-				this.host = result.ip;
-				this.authClient = result.auth_key;
-				this.identificationKeys = result.identification_keys;
-				this.msgKeys = result.msg_keys;
-				this.main = new Connection(this, "main");
-				this.main.connect(this.host, this.ports[0]);
-				this.main.on("connect", () => {
-					this.sendHandshake(this.version, this.connectionKey);
-				});
-				this.on("loginReady", () => {
-					this.setLanguage(language);
-					this.login(name, password, room);
-				});
-			} else {
-				if (result.internal_error_step == 2)
-					throw new Error("The game might be in maintenance mode.");
-				throw new Error("An internal error occur: " + result.internal_error_step);
-			}
-		} else {
-			throw new Error("Can't get the keys : " + result.error);
-		}
-	}
-
-	/**
-	 * Disconnects the client.
-	 */
-	disconnect() {
-		clearInterval(this.loops.heartbeat as NodeJS.Timeout);
-		this.main.close();
-		this.bulle.close();
-		this.emit("disconnect");
 	}
 }
 

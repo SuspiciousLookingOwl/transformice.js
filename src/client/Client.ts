@@ -478,6 +478,14 @@ class Client extends EventEmitter {
 	}
 
 	/**
+	 * Get friend list
+	 */
+	async getFriendList() {
+		this.requestFriendList();
+		return (await this.waitFor("friendList"))[0];
+	}
+
+	/**
 	 * Sends a packet every 15 seconds to stay connected to the game.
 	 */
 	startHeartbeat() {

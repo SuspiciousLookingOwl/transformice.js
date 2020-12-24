@@ -348,12 +348,45 @@ class Client extends EventEmitter {
 	/**
 	 * Sends a packet every 15 seconds to stay connected to the game.
 	 */
-	startHeartbeat() {
+	private startHeartbeat() {
 		this.main.send(identifiers.heartbeat, new ByteArray());
 		this.loops.heartbeat = setInterval(() => {
 			this.main.send(identifiers.heartbeat, new ByteArray());
 			if (this.bulle.open) this.bulle.send(identifiers.heartbeat, new ByteArray());
 		}, 1000 * 15);
+	}
+
+	/**
+	 * Sends Handshake.
+	 */
+	private sendHandshake(version: number, key: string) {
+		const p = new ByteArray();
+		p.writeShort(version);
+		p.writeUTF("en");
+		p.writeUTF(key);
+		p.writeUTF("Desktop").writeUTF("-").writeInt(0x1fbd);
+		p.writeUTF("");
+		p.writeUTF("ca26ba3ada3fc0aadba7d94e5677bee000333d8f46bab4c3cb32e615587e7212");
+		p.writeUTF(
+			"A=t&SA=t&SV=t&EV=t&MP3=t&AE=t&VE=t&ACC=t&PR=t&SP=f&SB=f&DEB=f&V=LNX 29,0,0,140&M=Adobe Linux&R=1920x1080&COL=color&AR=1.0&OS=Linux&ARCH=x86&L=en&IME=t&PR32=t&PR64=t&LS=en-US&PT=Desktop&AVD=f&LFD=f&WD=f&TLS=t&ML=5.1&DP=72"
+		);
+		p.writeInt(0).writeInt(0x1234).writeUTF("");
+		this.main.send(identifiers.handshake, p);
+	}
+
+	/**
+	 * Sets the language of the client.
+	 * @param {enums.language} [id=enums.language.en] - The language iso code.
+	 */
+	private setLanguage(code: ValueOf<typeof languages> = languages.en) {
+		if (typeof code !== "string") code = languages.en;
+		const p = new ByteArray().writeUTF(code);
+		this.main.send(identifiers.language, p);
+	}
+
+	private setSystemInfo(langue: string, sys: string, version: string) {
+		const p = new ByteArray().writeUTF(langue).writeUTF(sys).writeUTF(version);
+		this.main.send(identifiers.os, p);
 	}
 
 	/**
@@ -420,39 +453,6 @@ class Client extends EventEmitter {
 		this.main.close();
 		this.bulle.close();
 		this.emit("disconnect");
-	}
-
-	/**
-	 * Sends Handshake.
-	 */
-	private sendHandshake(version: number, key: string) {
-		const p = new ByteArray();
-		p.writeShort(version);
-		p.writeUTF("en");
-		p.writeUTF(key);
-		p.writeUTF("Desktop").writeUTF("-").writeInt(0x1fbd);
-		p.writeUTF("");
-		p.writeUTF("ca26ba3ada3fc0aadba7d94e5677bee000333d8f46bab4c3cb32e615587e7212");
-		p.writeUTF(
-			"A=t&SA=t&SV=t&EV=t&MP3=t&AE=t&VE=t&ACC=t&PR=t&SP=f&SB=f&DEB=f&V=LNX 29,0,0,140&M=Adobe Linux&R=1920x1080&COL=color&AR=1.0&OS=Linux&ARCH=x86&L=en&IME=t&PR32=t&PR64=t&LS=en-US&PT=Desktop&AVD=f&LFD=f&WD=f&TLS=t&ML=5.1&DP=72"
-		);
-		p.writeInt(0).writeInt(0x1234).writeUTF("");
-		this.main.send(identifiers.handshake, p);
-	}
-
-	/**
-	 * Sets the language of the client.
-	 * @param {enums.language} [id=enums.language.en] - The language iso code.
-	 */
-	private setLanguage(code: ValueOf<typeof languages> = languages.en) {
-		if (typeof code !== "string") code = languages.en;
-		const p = new ByteArray().writeUTF(code);
-		this.main.send(identifiers.language, p);
-	}
-
-	private setSystemInfo(langue: string, sys: string, version: string) {
-		const p = new ByteArray().writeUTF(langue).writeUTF(sys).writeUTF(version);
-		this.main.send(identifiers.os, p);
 	}
 
 	/**

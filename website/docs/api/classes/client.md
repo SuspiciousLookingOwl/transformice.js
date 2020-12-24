@@ -326,13 +326,3 @@ Name | Type |
 `message` | string |
 
 **Returns:** void
-
-___
-
-### startHeartbeat
-
-▸ **startHeartbeat**(): void
-
-Sends a packet every 15 seconds to stay connected to the game.
-
-**Returns:** void

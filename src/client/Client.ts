@@ -126,6 +126,22 @@ class Client extends EventEmitter {
 	}
 
 	/**
+	 *  Wait for specific event to be emitted
+	 */
+	private waitFor<T extends keyof ClientEvents>(eventName: T, timeout = 5000) {
+		return new Promise<Parameters<ClientEvents[T]>>((resolve, reject) => {
+			setTimeout(() => {
+				reject(new Error("Timed out"));
+			}, timeout);
+			this.once(eventName, (...args) => {
+				// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+				// @ts-ignore
+				resolve(args);
+			});
+		});
+	}
+
+	/**
 	 * Handles the old packets and emits events.
 	 */
 	private handleOldPacket(conn: Connection, ccc: number, data: string[]) {

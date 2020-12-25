@@ -6,6 +6,9 @@ export default class Message extends Base {
 	content: string;
 	author: Player;
 
+	/**
+	 * @hidden
+	 */
 	constructor(client: Client, author: Player, content: string) {
 		super(client);
 		this.content = content;

@@ -17,9 +17,17 @@ Represents a client that connects to Transformice.
 
 ### constructor
 
-\+ **new Client**(): [Client](client.md)
+\+ **new Client**(`name`: string, `password`: string, `options?`: [ClientOptions](../interfaces/clientoptions.md)): [Client](client.md)
 
 *Overrides void*
+
+#### Parameters:
+
+Name | Type |
+------ | ------ |
+`name` | string |
+`password` | string |
+`options?` | [ClientOptions](../interfaces/clientoptions.md) |
 
 **Returns:** [Client](client.md)
 
@@ -43,7 +51,7 @@ ___
 
 ### language
 
-•  **language**: string
+•  **language**: [ValueOf](../globals.md#valueof)<*typeof* languages\>
 
 The language suggested by the server.
 
@@ -168,24 +176,6 @@ Name | Type |
 
 ___
 
-### login
-
-▸ **login**(`name`: string, `password`: string, `room?`: string): void
-
-Log in to the game.
-
-#### Parameters:
-
-Name | Type | Default value |
------- | ------ | ------ |
-`name` | string | - |
-`password` | string | - |
-`room` | string | "1" |
-
-**Returns:** void
-
-___
-
 ### on
 
 ▸ **on**<T\>(`event`: T, `listener`: ClientEvents[T]): this
@@ -221,22 +211,28 @@ Request friend list.
 
 ___
 
+### restart
+
+▸ **restart**(): Promise<void\>
+
+Restart the client
+
+**Returns:** Promise<void\>
+
+___
+
 ### run
 
-▸ **run**(`tfmid`: string, `token`: string, `name`: string, `password`: string, `language?`: [ValueOf](../globals.md#valueof)<*typeof* languages\>, `room?`: string): Promise<void\>
+▸ **run**(`tfmid`: string, `token`: string): Promise<void\>
 
 Starts the client.
 
 #### Parameters:
 
-Name | Type | Default value |
------- | ------ | ------ |
-`tfmid` | string | - |
-`token` | string | - |
-`name` | string | - |
-`password` | string | - |
-`language` | [ValueOf](../globals.md#valueof)<*typeof* languages\> | languages.en |
-`room` | string | "1" |
+Name | Type |
+------ | ------ |
+`tfmid` | string |
+`token` | string |
 
 **Returns:** Promise<void\>
 
@@ -288,9 +284,9 @@ Sends a message to the client's room.
 
 #### Parameters:
 
-Name | Type | Description |
------- | ------ | ------ |
-`message` | string | The message.  |
+Name | Type |
+------ | ------ |
+`message` | string |
 
 **Returns:** void
 

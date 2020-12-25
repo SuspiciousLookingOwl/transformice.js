@@ -27,11 +27,19 @@ interface ClientEvents {
 	/**
 	 * Emitted when the client has logged in.
 	 */
-	loggedIn: (name: string, pcode: number) => void;
+	login: (name: string, pcode: number) => void;
 	/**
 	 * Emitted when the client failed to log in.
 	 */
 	loginError: (code: number, error1: string, error2: string) => void;
+	/**
+	 * Emitted when connection failed
+	 */
+	connectionError: (err: Error) => void;
+	/**
+	 * Emitted when client is attempting to restart the connection
+	 */
+	restart: () => void;
 	/**
 	 * Emitted when the client is connected to the community platform.
 	 */
@@ -95,7 +103,7 @@ interface ClientEvents {
 	/**
 	 * Emitted when friend state is changed (e.g. room, gender)
 	 */
-	friendChange: (friend: Friend) => void;
+	friendUpdate: (friend: Friend) => void;
 	/**
 	 * Emitted when received /who result
 	 */

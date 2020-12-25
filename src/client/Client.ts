@@ -3,17 +3,25 @@ import { EventEmitter } from "events";
 
 import { ByteArray, Connection, SHAKikoo, ValueOf } from "../utils";
 import {
+	ChannelMessage,
+	Friend,
+	Message,
 	Player,
 	Room,
-	Friend,
 	RoomMessage,
-	WhisperMessage,
-	ChannelMessage,
-	Message,
 	RoomPlayer,
+	WhisperMessage,
 } from "../structures";
 import { tribulle, cipherMethods, identifiers, languages, oldIdentifiers } from "../enums";
 import ClientEvents from "./Events";
+
+interface ClientOptions {
+	/**
+	 * Will try to auto reconnect when disconnected if set to true (Default: `true`)
+	 */
+	autoReconnect?: boolean;
+	language?: ValueOf<typeof languages>;
+}
 
 /**
  * Client interface for event intellisense support
@@ -23,7 +31,7 @@ declare interface Client {
 	 * Listens to a Client Event
 	 */
 	on<T extends keyof ClientEvents>(event: T, listener: ClientEvents[T]): this;
-	/** @ignore */
+	/** @hidden */
 	emit<T extends keyof ClientEvents>(event: T, ...args: Parameters<ClientEvents[T]>): boolean;
 }
 
@@ -33,35 +41,27 @@ declare interface Client {
  * @noInheritDoc
  */
 class Client extends EventEmitter {
+	private version!: number;
+	private connectionKey!: string;
+	private authClient!: number;
+	private authServer!: number;
+	private ports!: number[];
+	private host!: string;
+	private tfmID!: string;
+	private token!: string;
+	private identificationKeys!: number[];
+	private messageKeys!: number[];
+	private main!: Connection;
+	private bulle!: Connection;
 	private loops: Partial<{ heartbeat: NodeJS.Timeout }>;
-	private version: number;
-	private connectionKey: string;
-	private authClient: number;
-	private authServer: number;
-	private ports: number[];
-	private host: string;
 	private tribulleID: number;
-	/**
-	 * @ignore
-	 */
-	identificationKeys: number[];
-	/**
-	 * @ignore
-	 */
-	msgKeys: number[];
-	/**
-	 * @ignore
-	 */
-	main: Connection;
-	/**
-	 * @ignore
-	 */
-	bulle: Connection;
+	private password: string;
+	private autoReconnect: boolean;
 
 	/**
 	 * The online players when the bot log.
 	 */
-	onlinePlayers: number;
+	onlinePlayers!: number;
 	/**
 	 * The client's room.
 	 */
@@ -73,7 +73,7 @@ class Client extends EventEmitter {
 	/**
 	 * The client's ID.
 	 */
-	playerID: number;
+	playerID!: number;
 	/**
 	 * The client's name.
 	 */
@@ -81,46 +81,34 @@ class Client extends EventEmitter {
 	/**
 	 * The client's playing time.
 	 */
-	playingTime: number;
+	playingTime!: number;
 	/**
 	 * The connection time.
 	 */
-	connectionTime: number;
+	connectionTime!: number;
 	/**
 	 * The client's community code.
 	 */
-	community: number;
+	community!: number;
 	/**
 	 * The language suggested by the server.
 	 */
-	language: string;
+	language!: ValueOf<typeof languages>;
 	/**
 	 * The client's temporary code.
 	 */
-	pcode: number;
+	pcode!: number;
 
-	constructor() {
+	constructor(name: string, password: string, options?: ClientOptions) {
 		super();
+
+		this.autoReconnect = options?.autoReconnect ?? true;
+		this.language = options?.language || "en";
+
 		this.loops = {};
-		this.version = 0;
-		this.connectionKey = "";
-		this.authClient = 0;
-		this.identificationKeys = [];
-		this.msgKeys = [];
-		this.authServer = 0;
-		this.ports = [];
-		this.host = "";
 		this.tribulleID = 0;
-		this.onlinePlayers = 0;
-		this.playerID = 0;
-		this.name = "";
-		this.playingTime = 0;
-		this.connectionTime = 0;
-		this.community = 0;
-		this.language = "";
-		this.pcode = 0;
-		this.main = new Connection(this, "main");
-		this.bulle = new Connection(this, "bulle");
+		this.name = name;
+		this.password = password;
 	}
 
 	/**
@@ -128,14 +116,18 @@ class Client extends EventEmitter {
 	 */
 	private waitFor<T extends keyof ClientEvents>(eventName: T, timeout = 5000) {
 		return new Promise<Parameters<ClientEvents[T]>>((resolve, reject) => {
-			setTimeout(() => {
-				reject(new Error("Timed out"));
-			}, timeout);
-			this.once(eventName, (...args) => {
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any
+			const listener = (...args: any) => {
 				// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 				// @ts-ignore
 				resolve(args);
-			});
+			};
+
+			this.once(eventName, listener);
+			setTimeout(() => {
+				this.removeListener(eventName, listener);
+				reject(new Error("Timed out"));
+			}, timeout);
 		});
 	}
 
@@ -143,7 +135,7 @@ class Client extends EventEmitter {
 	 * Handles the old packets and emits events.
 	 */
 	private handleOldPacket(conn: Connection, ccc: number, data: string[]) {
-		if (ccc == oldIdentifiers.roomPlayerLeft) {
+		if (ccc === oldIdentifiers.roomPlayerLeft) {
 			const player = this.room.getPlayer(+data[0] as number);
 			if (player) {
 				this.room.removePlayer(player);
@@ -155,10 +147,8 @@ class Client extends EventEmitter {
 
 	/**
 	 * Handles the known packets and emits events.
-	 *
-	 * @hidden
 	 */
-	handlePacket(conn: Connection, packet: ByteArray) {
+	private handlePacket(conn: Connection, packet: ByteArray) {
 		const ccc = packet.readUnsignedShort();
 		if (ccc == identifiers.oldPacket) {
 			const data = packet.readUTF().split(String.fromCharCode(1));
@@ -167,7 +157,7 @@ class Client extends EventEmitter {
 			this.handleOldPacket(conn, ccc, data);
 		} else if (ccc == identifiers.handshakeOk) {
 			this.onlinePlayers = packet.readUnsignedInt();
-			this.language = packet.readUTF();
+			this.language = packet.readUTF() as ValueOf<typeof languages>;
 			packet.readUTF(); // country;
 			this.authServer = packet.readUnsignedInt();
 
@@ -187,9 +177,9 @@ class Client extends EventEmitter {
 				.split("-")
 				.map((port) => ~~port); // port
 
-			if (this.bulle.open) this.bulle.close();
+			if (this.bulle && this.bulle.open) this.bulle.close();
 
-			this.bulle = new Connection(this, "bulle");
+			this.bulle = new Connection(this.identificationKeys, this.messageKeys);
 			this.bulle.connect(host, this.ports[0]);
 			this.bulle.on("connect", () => {
 				this.bulle.send(
@@ -207,7 +197,7 @@ class Client extends EventEmitter {
 			this.connectionTime = new Date().getTime();
 			this.community = packet.readByte();
 			this.pcode = packet.readUnsignedInt();
-			this.emit("loggedIn", this.name, this.pcode);
+			this.emit("login", this.name, this.pcode);
 		} else if (ccc == identifiers.loginError) {
 			this.emit("loginError", packet.readUnsignedByte(), packet.readUTF(), packet.readUTF());
 		} else if (ccc == identifiers.bulle) {
@@ -250,23 +240,12 @@ class Client extends EventEmitter {
 			} else {
 				this.emit("roomPlayerJoin", player);
 			}
-			this.room.updatePlayer(player);
-		} else if (ccc == identifiers.languageChange) {
-			const language = packet.readUTF() as ValueOf<typeof languages>;
-			const country = packet.readUTF();
-			const readRight = packet.readBoolean();
-			const readSpecialChar = packet.readBoolean();
-			this.emit("languageChange", language, country, readRight, readSpecialChar);
-		} else {
-			//console.log(c, cc, packet.buffer);
 		}
 		this.emit("rawPacket", conn, ccc, packet);
 	}
 
 	/**
 	 * Handles the community platform packets and emits events.
-	 *
-	 * @hidden
 	 */
 	private handleTribulle(code: number, packet: ByteArray) {
 		if (code == tribulle.whisper) {
@@ -298,8 +277,8 @@ class Client extends EventEmitter {
 			this.emit("friendConnect", packet.readUTF());
 		} else if (code === tribulle.friendDisconnect) {
 			this.emit("friendDisconnect", packet.readUTF());
-		} else if (code === tribulle.friendChange) {
-			this.emit("friendChange", new Friend(this).read(packet, false));
+		} else if (code === tribulle.friendUpdate) {
+			this.emit("friendUpdate", new Friend(this).read(packet, false));
 		} else if (code === tribulle.channelWho) {
 			packet.readUnsignedInt();
 			packet.readUnsignedByte();
@@ -356,9 +335,6 @@ class Client extends EventEmitter {
 		}, 1000 * 15);
 	}
 
-	/**
-	 * Sends Handshake.
-	 */
 	private sendHandshake(version: number, key: string) {
 		const p = new ByteArray();
 		p.writeShort(version);
@@ -374,10 +350,6 @@ class Client extends EventEmitter {
 		this.main.send(identifiers.handshake, p);
 	}
 
-	/**
-	 * Sets the language of the client.
-	 * @param {enums.language} [id=enums.language.en] - The language iso code.
-	 */
 	private setLanguage(code: ValueOf<typeof languages> = languages.en) {
 		if (typeof code !== "string") code = languages.en;
 		const p = new ByteArray().writeUTF(code);
@@ -390,20 +362,12 @@ class Client extends EventEmitter {
 	}
 
 	/**
-	 * Starts the client.
+	 * Get Transformice API keys
 	 */
-	async run(
-		tfmid: string,
-		token: string,
-		name: string,
-		password: string,
-		language: ValueOf<typeof languages> = languages.en,
-		room = "1"
-	) {
+	private async fetchKeys() {
 		const response = await fetch(
-			`https://api.tocuto.tk/get_transformice_keys.php?tfmid=${tfmid}&token=${token}`
+			`https://api.tocuto.tk/get_transformice_keys.php?tfmid=${this.tfmID}&token=${this.token}`
 		);
-
 		const result = await response.json();
 		if (result.success) {
 			if (!result.internal_error) {
@@ -413,18 +377,9 @@ class Client extends EventEmitter {
 				this.host = result.ip;
 				this.authClient = result.auth_key;
 				this.identificationKeys = result.identification_keys;
-				this.msgKeys = result.msg_keys;
-				this.main = new Connection(this, "main");
-				this.main.connect(this.host, this.ports[0]);
-				this.main.on("connect", () => {
-					this.sendHandshake(this.version, this.connectionKey);
-				});
-				this.on("loginReady", () => {
-					this.setLanguage(language);
-					this.login(name, password, room);
-				});
+				this.messageKeys = result.msg_keys;
 			} else {
-				if (result.internal_error_step == 2)
+				if (result.internal_error_step === 2)
 					throw new Error("The game might be in maintenance mode.");
 				throw new Error("An internal error occur: " + result.internal_error_step);
 			}
@@ -436,7 +391,7 @@ class Client extends EventEmitter {
 	/**
 	 * Log in to the game.
 	 */
-	login(name: string, password: string, room = "1") {
+	private login(name: string, password: string, room = "1") {
 		const p = new ByteArray().writeUTF(name).writeUTF(SHAKikoo(password));
 		p.writeUTF("app:/TransformiceAIR.swf/[[DYNAMIC]]/2/[[DYNAMIC]]/4").writeUTF(room);
 		p.writeUnsignedInt(
@@ -446,13 +401,81 @@ class Client extends EventEmitter {
 	}
 
 	/**
+	 * Connects and do handshake
+	 */
+	private connect() {
+		if (this.main && this.main.open) return;
+		this.main = new Connection(this.identificationKeys, this.messageKeys);
+		this.main.on("data", (conn: Connection, packet: ByteArray) => {
+			this.handlePacket(conn, packet);
+		});
+		this.main.once("connect", () => {
+			this.emit("connect", this.main);
+			this.sendHandshake(this.version, this.connectionKey);
+		});
+		this.main.once("close", () => {
+			this.disconnect();
+		});
+		this.main.on("error", async (err: Error) => {
+			this.emit("connectionError", err);
+			if (this.autoReconnect) {
+				this.restart();
+			} else {
+				throw Error("Connection Closed");
+			}
+		});
+		this.main.connect(this.host, this.ports[0]);
+	}
+
+	/**
 	 * Disconnects the client.
 	 */
 	disconnect() {
 		clearInterval(this.loops.heartbeat as NodeJS.Timeout);
-		this.main.close();
-		this.bulle.close();
+		if (this.main) {
+			this.main.close();
+			this.main.removeAllListeners();
+		}
+		if (this.bulle) {
+			this.bulle.close();
+			this.bulle.removeAllListeners();
+		}
 		this.emit("disconnect");
+	}
+
+	/**
+	 * Starts the client
+	 */
+	private async start() {
+		this.connect();
+		try {
+			await this.waitFor("loginReady");
+			this.setLanguage(this.language);
+			this.login(this.name, this.password);
+		} catch (err) {
+			// failed
+		}
+	}
+
+	/**
+	 * Starts the client.
+	 */
+	async run(tfmid: string, token: string) {
+		this.tfmID = tfmid;
+		this.token = token;
+
+		await this.fetchKeys();
+		this.start();
+	}
+
+	/**
+	 * Restart the client
+	 */
+	async restart() {
+		this.emit("restart");
+		this.disconnect();
+		this.connect();
+		this.start();
 	}
 
 	/**
@@ -490,7 +513,6 @@ class Client extends EventEmitter {
 
 	/**
 	 * Sends a message to the client's room.
-	 * @param {String} message - The message.
 	 */
 	sendRoomMessage(message: string) {
 		this.bulle.send(

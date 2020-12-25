@@ -50,19 +50,19 @@ Emitted when a connection is successfully connected.
 
 ___
 
+### connectionError
+
+•  **connectionError**: (err: Error) => void
+
+Emitted when connection failed
+
+___
+
 ### disconnect
 
 •  **disconnect**: () => void
 
 Emitted when the client has disconnect.
-
-___
-
-### friendChange
-
-•  **friendChange**: (friend: [Friend](../classes/friend.md)) => void
-
-Emitted when friend state is changed (e.g. room, gender)
 
 ___
 
@@ -90,6 +90,14 @@ Emitted when the client received the friend list
 
 ___
 
+### friendUpdate
+
+•  **friendUpdate**: (friend: [Friend](../classes/friend.md)) => void
+
+Emitted when friend state is changed (e.g. room, gender)
+
+___
+
 ### languageChange
 
 •  **languageChange**: (language: [ValueOf](../globals.md#valueof)<*typeof* languages\>, country: string, readRight: boolean, readSpecialChar: boolean) => void
@@ -98,9 +106,9 @@ Emitted when a language is changed.characters or not.
 
 ___
 
-### loggedIn
+### login
 
-•  **loggedIn**: (name: string, pcode: number) => void
+•  **login**: (name: string, pcode: number) => void
 
 Emitted when the client has logged in.
 
@@ -159,6 +167,14 @@ ___
 •  **ready**: () => void
 
 Emitted when the client is connected to the community platform.
+
+___
+
+### restart
+
+•  **restart**: () => void
+
+Emitted when client is attempting to restart the connection
 
 ___
 

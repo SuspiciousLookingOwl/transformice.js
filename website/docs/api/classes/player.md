@@ -16,23 +16,6 @@ Represents a player from the room.
 
   ↳↳ [RoomPlayer](roomplayer.md)
 
-## Constructors
-
-### constructor
-
-\+ **new Player**(`client`: [Client](client.md), `name?`: string): [Player](player.md)
-
-*Overrides [Base](base.md).[constructor](base.md#constructor)*
-
-#### Parameters:
-
-Name | Type | Default value |
------- | ------ | ------ |
-`client` | [Client](client.md) | - |
-`name` | string | "" |
-
-**Returns:** [Player](player.md)
-
 ## Properties
 
 ### client

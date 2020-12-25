@@ -22,6 +22,7 @@ sidebar_label: "Globals"
 ### Interfaces
 
 * [ClientEvents](interfaces/clientevents.md)
+* [ClientOptions](interfaces/clientoptions.md)
 
 ### Type aliases
 

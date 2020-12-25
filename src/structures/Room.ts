@@ -1,7 +1,7 @@
-import { ByteArray, ValueOf } from "../utils";
+import { ValueOf } from "../utils";
 import { RoomPlayer, Base } from ".";
 import Client from "../client";
-import { identifiers, cipherMethods, languages } from "../enums";
+import { languages } from "../enums";
 
 /** Represents a room. */
 export default class Room extends Base {
@@ -26,6 +26,9 @@ export default class Room extends Base {
 	 */
 	isTribeHouse: boolean;
 
+	/**
+	 * @hidden
+	 */
 	constructor(
 		client: Client,
 		isPublic: boolean,
@@ -83,10 +86,6 @@ export default class Room extends Base {
 	 * Sends a message to the room.
 	 */
 	sendMessage(message: string) {
-		this.client.bulle.send(
-			identifiers.roomMessage,
-			new ByteArray().writeUTF(message),
-			cipherMethods.xor
-		);
+		this.client.sendRoomMessage(message);
 	}
 }

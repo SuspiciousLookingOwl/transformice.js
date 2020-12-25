@@ -54,7 +54,7 @@ export const tribulle = {
 	friendConnect: 32,
 	friendDisconnect: 33,
 	friendList: 34,
-	friendChange: 35,
+	friendUpdate: 35,
 	friendAdd: 36,
 	friendRemove: 37,
 	channelSendMessage: 52,

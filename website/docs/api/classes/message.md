@@ -16,24 +16,6 @@ sidebar_label: "Message"
 
   ↳↳ [WhisperMessage](whispermessage.md)
 
-## Constructors
-
-### constructor
-
-\+ **new Message**(`client`: [Client](client.md), `author`: [Player](player.md), `content`: string): [Message](message.md)
-
-*Overrides [Base](base.md).[constructor](base.md#constructor)*
-
-#### Parameters:
-
-Name | Type |
------- | ------ |
-`client` | [Client](client.md) |
-`author` | [Player](player.md) |
-`content` | string |
-
-**Returns:** [Message](message.md)
-
 ## Properties
 
 ### author

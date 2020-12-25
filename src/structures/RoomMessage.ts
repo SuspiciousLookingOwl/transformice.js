@@ -3,6 +3,9 @@ import Client from "../client";
 
 /** Represents a room message. */
 export default class RoomMessage extends Message {
+	/**
+	 * @hidden
+	 */
 	constructor(client: Client, author: Player, content: string) {
 		super(client, author, content);
 	}
@@ -13,7 +16,7 @@ export default class RoomMessage extends Message {
 	 * @example
 	 * ```js
 	 * client.on('roomMessage', (message) => {
-	 * 	if (client.name == message.author.name)
+	 * 	if (client.name === message.author.name)
 	 * 		return;
 	 * 	message.reply('Hello');
 	 * ```

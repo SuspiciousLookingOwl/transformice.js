@@ -12,6 +12,9 @@ export default class ChannelMessage extends Message {
 	 */
 	channelName: string;
 
+	/**
+	 * @hidden
+	 */
 	constructor(
 		client: Client,
 		author: Player,
@@ -30,7 +33,7 @@ export default class ChannelMessage extends Message {
 	 * @example
 	 * ```js
 	 * client.on('roomMessage', (message) => {
-	 * 	if (client.name == message.author.name)
+	 * 	if (client.name === message.author.name)
 	 * 		return;
 	 * 	message.reply('Hello');
 	 * }

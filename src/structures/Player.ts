@@ -8,6 +8,9 @@ export default class Player extends Base {
 	 */
 	name: string;
 
+	/**
+	 * @hidden
+	 */
 	constructor(client: Client, name = "") {
 		super(client);
 		this.name = name;

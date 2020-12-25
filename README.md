@@ -29,12 +29,12 @@ npm run dev
 ```js
 const { Client, enums } = require("transformice.js");
 
-const client = new Client();
+const client = new Client("username", "password");
 
 client.on("roomMessage", (message) => {
-	if (client.name == message.author.name) return;
+	if (client.name === message.author.name) return;
 	client.sendRoomMessage(message.author.look);
 });
 
-client.run("tfm_id", "token", "username", "password", enums.languages.en, "room_name");
+client.run("tfm_id", "token", enums.languages.en, "room_name");
 ```

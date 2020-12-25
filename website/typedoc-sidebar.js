@@ -21,7 +21,8 @@ module.exports = [
     "type": "category",
     "label": "Interfaces",
     "items": [
-      "api/interfaces/clientevents"
+      "api/interfaces/clientevents",
+      "api/interfaces/clientoptions"
     ]
   }
 ];

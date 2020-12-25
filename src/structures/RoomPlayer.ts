@@ -89,6 +89,9 @@ export default class RoomPlayer extends Player {
 	 */
 	isJumping: boolean;
 
+	/**
+	 * @hidden
+	 */
 	constructor(client: Client) {
 		super(client);
 		this.gender = 0;
@@ -138,7 +141,7 @@ export default class RoomPlayer extends Player {
 		this.shamanColor = packet.readUnsignedInt();
 		packet.readUnsignedInt(); // Unknown int
 		const color = packet.readUnsignedInt();
-		this.nameColor = color == 0xffffffff ? -1 : color;
+		this.nameColor = color === 0xffffffff ? -1 : color;
 		return this;
 	}
 }

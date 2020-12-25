@@ -3,7 +3,6 @@ import { EventEmitter } from "events";
 
 import { ByteArray, ValueOf } from ".";
 import { cipherMethods, identifiers } from "../enums";
-import Client from "../client";
 
 /**
  * Represents a client that connects to Transformice.
@@ -11,13 +10,13 @@ import Client from "../client";
  * @hidden
  */
 export default class Connection extends EventEmitter {
-	client: Client;
-	name: string;
 	socket!: net.Socket;
 	open: boolean;
 	fingerprint: number;
 	buffer: Buffer;
 	length: number;
+	private identificationKeys: number[];
+	private messageKeys: number[];
 
 	host!: string;
 	port!: number;
@@ -29,14 +28,14 @@ export default class Connection extends EventEmitter {
 	 * const conn = new Connection(client, 'connectionName');
 	 * ```
 	 */
-	constructor(client: Client, name: string) {
+	constructor(identificationKeys: number[], messageKeys: number[]) {
 		super();
-		this.client = client;
-		this.name = name;
 		this.open = false;
 		this.fingerprint = 0;
 		this.buffer = Buffer.alloc(0);
 		this.length = 0;
+		this.identificationKeys = identificationKeys;
+		this.messageKeys = messageKeys;
 	}
 
 	/**
@@ -47,44 +46,36 @@ export default class Connection extends EventEmitter {
 		this.port = port;
 		this.socket = net.createConnection({ port: port, host: host }, () => {
 			this.open = true;
-			this.socket.on("data", (data) => {
-				this.buffer = Buffer.concat([this.buffer, data]);
-				while (this.buffer.length > this.length) {
-					if (this.length == 0) {
-						for (let i = 0; i < 5; i++) {
-							const byte = this.buffer.slice(0, 1)[0];
-							this.buffer = this.buffer.slice(1);
-							this.length |= (byte & 127) << (i * 7);
+			this.emit("connect");
+		});
 
-							if (!(byte & 0x80)) break;
-						}
-					}
+		this.socket.on("data", (data) => {
+			this.buffer = Buffer.concat([this.buffer, data]);
+			while (this.buffer.length > this.length) {
+				if (this.length === 0) {
+					for (let i = 0; i < 5; i++) {
+						const byte = this.buffer.slice(0, 1)[0];
+						this.buffer = this.buffer.slice(1);
+						this.length |= (byte & 127) << (i * 7);
 
-					if (this.buffer.length >= this.length) {
-						this.client.handlePacket(
-							this,
-							new ByteArray(this.buffer.slice(0, this.length))
-						);
-						this.buffer = this.buffer.slice(this.length);
-						this.length = 0;
+						if (!(byte & 0x80)) break;
 					}
 				}
-			});
 
-			this.socket.on("close", () => {
-				if (this.name == "main") this.client.disconnect();
-			});
+				if (this.buffer.length >= this.length) {
+					this.emit("data", this, new ByteArray(this.buffer.slice(0, this.length)));
+					this.buffer = this.buffer.slice(this.length);
+					this.length = 0;
+				}
+			}
+		});
 
-			this.socket.on("error", (err) => {
-				throw err;
-			});
+		this.socket.once("close", () => {
+			this.emit("close");
+		});
 
-			/**
-			 * Emitted when the connection is successfully connected.
-			 * @event Connection#connect
-			 */
-			this.emit("connect");
-			this.client.emit("connect", this);
+		this.socket.on("error", (err: Error) => {
+			this.emit("error", err);
 		});
 	}
 
@@ -98,10 +89,10 @@ export default class Connection extends EventEmitter {
 		packet: ByteArray,
 		method: ValueOf<typeof cipherMethods> = cipherMethods.none
 	) {
-		if (method == cipherMethods.xor) {
-			packet = packet.xorCipher(this.client.msgKeys, this.fingerprint);
-		} else if (method == cipherMethods.xxtea) {
-			packet = packet.blockCipher(this.client.identificationKeys);
+		if (method === cipherMethods.xor) {
+			packet = packet.xorCipher(this.messageKeys, this.fingerprint);
+		} else if (method === cipherMethods.xxtea) {
+			packet = packet.blockCipher(this.identificationKeys);
 		}
 		packet = new ByteArray().writeUnsignedShort(identifier).writeBytes(packet);
 		const m = new ByteArray();
@@ -126,6 +117,7 @@ export default class Connection extends EventEmitter {
 	close() {
 		if (this.open) {
 			this.open = false;
+			this.socket.removeAllListeners();
 			this.socket.destroy();
 		}
 	}

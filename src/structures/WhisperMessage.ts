@@ -9,6 +9,9 @@ export default class WhisperMessage extends Message {
 	sentTo: string;
 	community: number;
 
+	/**
+	 * @hidden
+	 */
 	constructor(
 		client: Client,
 		author: Player,
@@ -27,7 +30,7 @@ export default class WhisperMessage extends Message {
 	 * @example
 	 * ```js
 	 * client.on('whisper', (message) => {
-	 * 	if (client.name == message.author.name)
+	 * 	if (client.name === message.author.name)
 	 * 		return;
 	 * 	message.reply('Hello');
 	 * }

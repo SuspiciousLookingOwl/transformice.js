@@ -12,24 +12,6 @@ Represents a room message.
 
   ↳ **RoomMessage**
 
-## Constructors
-
-### constructor
-
-\+ **new RoomMessage**(`client`: [Client](client.md), `author`: [Player](player.md), `content`: string): [RoomMessage](roommessage.md)
-
-*Overrides [Message](message.md).[constructor](message.md#constructor)*
-
-#### Parameters:
-
-Name | Type |
------- | ------ |
-`client` | [Client](client.md) |
-`author` | [Player](player.md) |
-`content` | string |
-
-**Returns:** [RoomMessage](roommessage.md)
-
 ## Properties
 
 ### author
@@ -65,7 +47,7 @@ Reply the author with a message.
 **`example`** 
 ```js
 client.on('roomMessage', (message) => {
-	if (client.name == message.author.name)
+	if (client.name === message.author.name)
 		return;
 	message.reply('Hello');
 ```

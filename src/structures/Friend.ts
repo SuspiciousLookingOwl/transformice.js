@@ -38,6 +38,9 @@ export default class Friend extends Player {
 	 */
 	lastConnection: number;
 
+	/**
+	 * @hidden
+	 */
 	constructor(client: Client) {
 		super(client);
 		this.id = 0;

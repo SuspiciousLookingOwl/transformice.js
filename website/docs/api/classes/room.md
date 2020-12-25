@@ -12,25 +12,6 @@ Represents a room.
 
   ↳ **Room**
 
-## Constructors
-
-### constructor
-
-\+ **new Room**(`client`: [Client](client.md), `isPublic`: boolean, `name`: string, `language`: [ValueOf](../globals.md#valueof)<*typeof* languages\>): [Room](room.md)
-
-*Overrides [Base](base.md).[constructor](base.md#constructor)*
-
-#### Parameters:
-
-Name | Type |
------- | ------ |
-`client` | [Client](client.md) |
-`isPublic` | boolean |
-`name` | string |
-`language` | [ValueOf](../globals.md#valueof)<*typeof* languages\> |
-
-**Returns:** [Room](room.md)
-
 ## Properties
 
 ### client

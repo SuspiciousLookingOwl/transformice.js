@@ -12,22 +12,6 @@ Represents a friend from the friend list
 
   ↳ **Friend**
 
-## Constructors
-
-### constructor
-
-\+ **new Friend**(`client`: [Client](client.md)): [Friend](friend.md)
-
-*Overrides [Player](player.md).[constructor](player.md#constructor)*
-
-#### Parameters:
-
-Name | Type |
------- | ------ |
-`client` | [Client](client.md) |
-
-**Returns:** [Friend](friend.md)
-
 ## Properties
 
 ### client

@@ -12,26 +12,6 @@ Represents a Channel message.
 
   ↳ **ChannelMessage**
 
-## Constructors
-
-### constructor
-
-\+ **new ChannelMessage**(`client`: [Client](client.md), `author`: [Player](player.md), `content`: string, `community`: number, `channelName`: string): [ChannelMessage](channelmessage.md)
-
-*Overrides [Message](message.md).[constructor](message.md#constructor)*
-
-#### Parameters:
-
-Name | Type |
------- | ------ |
-`client` | [Client](client.md) |
-`author` | [Player](player.md) |
-`content` | string |
-`community` | number |
-`channelName` | string |
-
-**Returns:** [ChannelMessage](channelmessage.md)
-
 ## Properties
 
 ### author
@@ -83,7 +63,7 @@ Reply the author with a message.
 **`example`** 
 ```js
 client.on('roomMessage', (message) => {
-	if (client.name == message.author.name)
+	if (client.name === message.author.name)
 		return;
 	message.reply('Hello');
 }

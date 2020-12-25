@@ -12,26 +12,6 @@ Represents a whisper message.
 
   ↳ **WhisperMessage**
 
-## Constructors
-
-### constructor
-
-\+ **new WhisperMessage**(`client`: [Client](client.md), `author`: [Player](player.md), `community`: number, `sentTo`: string, `content`: string): [WhisperMessage](whispermessage.md)
-
-*Overrides [Message](message.md).[constructor](message.md#constructor)*
-
-#### Parameters:
-
-Name | Type |
------- | ------ |
-`client` | [Client](client.md) |
-`author` | [Player](player.md) |
-`community` | number |
-`sentTo` | string |
-`content` | string |
-
-**Returns:** [WhisperMessage](whispermessage.md)
-
 ## Properties
 
 ### author
@@ -81,7 +61,7 @@ Reply the author with a whisper message
 **`example`** 
 ```js
 client.on('whisper', (message) => {
-	if (client.name == message.author.name)
+	if (client.name === message.author.name)
 		return;
 	message.reply('Hello');
 }

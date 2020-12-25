@@ -273,7 +273,7 @@ class Client extends EventEmitter {
 			while (totalFriends--) {
 				friends.push(new Friend(this).read(packet, false));
 			}
-			this.emit("friendList", friends, hasSoulmate ? soulmate.name : null);
+			this.emit("friendList", friends);
 		} else if (code === tribulle.friendConnect) {
 			this.emit("friendConnect", packet.readUTF());
 		} else if (code === tribulle.friendDisconnect) {
@@ -338,7 +338,8 @@ class Client extends EventEmitter {
 		this.main.send(identifiers.heartbeat, new ByteArray());
 		this.loops.heartbeat = setInterval(() => {
 			this.main.send(identifiers.heartbeat, new ByteArray());
-			if (this.bulle.open) this.bulle.send(identifiers.heartbeat, new ByteArray());
+			if (this.bulle && this.bulle.open)
+				this.bulle.send(identifiers.heartbeat, new ByteArray());
 		}, 1000 * 15);
 	}
 

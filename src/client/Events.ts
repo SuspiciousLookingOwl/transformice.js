@@ -91,7 +91,7 @@ interface ClientEvents {
 	/**
 	 * Emitted when the client received the friend list
 	 */
-	friendList: (friends: Friend[], soulmateName: string | null) => void;
+	friendList: (friends: Friend[]) => void;
 	/**
 	 * Emitted when a friend is connected
 	 */

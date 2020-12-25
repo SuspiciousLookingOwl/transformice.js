@@ -3,6 +3,7 @@ import { EventEmitter } from "events";
 
 import { ByteArray, Connection, SHAKikoo, ValueOf } from "../utils";
 import {
+	Channel,
 	ChannelMessage,
 	Friend,
 	Message,
@@ -14,7 +15,6 @@ import {
 } from "../structures";
 import { tribulle, cipherMethods, identifiers, languages, oldIdentifiers } from "../enums";
 import ClientEvents from "./Events";
-import Channel from "structures/Channel";
 
 interface ClientOptions {
 	/**

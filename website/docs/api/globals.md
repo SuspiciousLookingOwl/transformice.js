@@ -9,6 +9,7 @@ sidebar_label: "Globals"
 ### Classes
 
 * [Base](classes/base.md)
+* [Channel](classes/channel.md)
 * [ChannelMessage](classes/channelmessage.md)
 * [Client](classes/client.md)
 * [Friend](classes/friend.md)

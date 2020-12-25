@@ -6,6 +6,7 @@ module.exports = [
     "label": "Classes",
     "items": [
       "api/classes/base",
+      "api/classes/channel",
       "api/classes/channelmessage",
       "api/classes/client",
       "api/classes/friend",

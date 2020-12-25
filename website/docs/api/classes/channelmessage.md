@@ -22,11 +22,11 @@ Represents a Channel message.
 
 ___
 
-### channelName
+### channel
 
-•  **channelName**: string
+•  **channel**: [Channel](channel.md)
 
-Channel name the message is sent to
+The Channel the message is sent to
 
 ___
 

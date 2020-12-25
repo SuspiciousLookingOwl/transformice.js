@@ -14,6 +14,8 @@ Represents a Base class that will be inherited by all other structure classes.
 
   ↳ [Room](room.md)
 
+  ↳ [Channel](channel.md)
+
   ↳ [Message](message.md)
 
 ## Constructors

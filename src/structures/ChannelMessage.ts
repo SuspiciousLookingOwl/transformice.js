@@ -1,4 +1,4 @@
-import { Player, Message } from ".";
+import { Player, Message, Channel } from ".";
 import Client from "../client";
 
 /** Represents a Channel message. */
@@ -8,9 +8,9 @@ export default class ChannelMessage extends Message {
 	 */
 	community: number;
 	/**
-	 * Channel name the message is sent to
+	 * The Channel the message is sent to
 	 */
-	channelName: string;
+	channel: Channel;
 
 	/**
 	 * @hidden
@@ -20,11 +20,11 @@ export default class ChannelMessage extends Message {
 		author: Player,
 		content: string,
 		community: number,
-		channelName: string
+		channel: Channel
 	) {
 		super(client, author, content);
 		this.community = community;
-		this.channelName = channelName;
+		this.channel = channel;
 	}
 
 	/**

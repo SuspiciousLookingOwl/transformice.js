@@ -14,6 +14,7 @@ import {
 } from "../structures";
 import { tribulle, cipherMethods, identifiers, languages, oldIdentifiers } from "../enums";
 import ClientEvents from "./Events";
+import Channel from "structures/Channel";
 
 interface ClientOptions {
 	/**
@@ -300,7 +301,13 @@ class Client extends EventEmitter {
 			const community = packet.readUnsignedInt();
 			const channelName = packet.readUTF();
 			const content = packet.readUTF();
-			const message = new ChannelMessage(this, author, content, community, channelName);
+			const message = new ChannelMessage(
+				this,
+				author,
+				content,
+				community,
+				new Channel(this, channelName)
+			);
 			this.emit("channelMessage", message);
 		} else if (code === tribulle.tribeMessage) {
 			const author = new Player(this, packet.readUTF());

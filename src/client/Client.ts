@@ -205,12 +205,7 @@ class Client extends EventEmitter {
 			this.emit("loginError", packet.readUnsignedByte(), packet.readUTF(), packet.readUTF());
 		} else if (ccc == identifiers.bulle) {
 			const code = packet.readUnsignedShort();
-
-			if (code == 3) {
-				this.emit("ready");
-			} else {
-				this.handleTribulle(code, packet);
-			}
+			this.handleTribulle(code, packet);
 		} else if (ccc == identifiers.luaChatLog) {
 			this.emit("luaLog", packet.readUTF());
 		} else if (ccc == identifiers.roomMessage) {
@@ -251,7 +246,10 @@ class Client extends EventEmitter {
 	 * Handles the community platform packets and emits events.
 	 */
 	private handleTribulle(code: number, packet: ByteArray) {
-		if (code == tribulle.whisper) {
+		console.log(code);
+		if (code === tribulle.connect) {
+			this.emit("ready");
+		} else if (code == tribulle.whisper) {
 			const author = packet.readUTF();
 			const community = packet.readUnsignedInt();
 			const sentTo = packet.readUTF();

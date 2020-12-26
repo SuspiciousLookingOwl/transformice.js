@@ -50,6 +50,7 @@ export const identifiers = {
  * @hidden
  */
 export const tribulle = {
+	connect: 3,
 	whisper: 66,
 	friendConnect: 32,
 	friendDisconnect: 33,

@@ -51,14 +51,15 @@ export const identifiers = {
  */
 export const tribulle = {
 	connect: 3,
-	whisper: 66,
+	whisperSend: 52,
+	whisperReceive: 66,
 	friendConnect: 32,
 	friendDisconnect: 33,
 	friendList: 34,
 	friendUpdate: 35,
 	friendAdd: 36,
 	friendRemove: 37,
-	channelSendMessage: 52,
+	channelSendMessage: 48,
 	channelWho: 59,
 	channelJoin: 62,
 	channelLeave: 63,

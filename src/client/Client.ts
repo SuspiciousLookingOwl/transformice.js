@@ -248,7 +248,7 @@ class Client extends EventEmitter {
 	private handleTribulle(code: number, packet: ByteArray) {
 		if (code === tribulle.connect) {
 			this.emit("ready");
-		} else if (code == tribulle.whisper) {
+		} else if (code == tribulle.whisperReceive) {
 			const author = packet.readUTF();
 			const community = packet.readUnsignedInt();
 			const sentTo = packet.readUTF();
@@ -568,7 +568,10 @@ class Client extends EventEmitter {
 	 * Sends a whisper message to a player.
 	 */
 	sendWhisper(name: string, message: string) {
-		this.sendTribullePacket(52, new ByteArray().writeUTF(name.toLowerCase()).writeUTF(message));
+		this.sendTribullePacket(
+			tribulle.whisperSend,
+			new ByteArray().writeUTF(name.toLowerCase()).writeUTF(message)
+		);
 	}
 
 	/**

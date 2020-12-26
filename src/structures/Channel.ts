@@ -12,4 +12,11 @@ export default class Channel extends Base {
 		super(client);
 		this.name = name;
 	}
+
+	/**
+	 * Send a message to this channel
+	 */
+	sendMessage(message: string) {
+		this.client.sendChannelMessage(this.name, message);
+	}
 }

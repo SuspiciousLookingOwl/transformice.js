@@ -320,7 +320,7 @@ class Client extends EventEmitter {
 			this.emit("tribeMemberDisconnect", packet.readUTF());
 		} else if (code === tribulle.tribeInitialReceive) {
 			const result = packet.readByte();
-			if (result !== 1) {
+			if (result == 17) {
 				this.emit("tribe", null);
 			}
 		} else if (code === tribulle.tribeReceive) {

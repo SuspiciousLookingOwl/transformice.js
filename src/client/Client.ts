@@ -246,7 +246,6 @@ class Client extends EventEmitter {
 	 * Handles the community platform packets and emits events.
 	 */
 	private handleTribulle(code: number, packet: ByteArray) {
-		console.log(code);
 		if (code === tribulle.connect) {
 			this.emit("ready");
 		} else if (code == tribulle.whisper) {
@@ -314,7 +313,6 @@ class Client extends EventEmitter {
 			const message = new Message(this, author, packet.readUTF());
 			this.emit("tribeMessage", message);
 		} else if (code === tribulle.tribeMemberUpdate) {
-			console.log("tribe member update");
 			this.emit("tribeMemberUpdate", new Member(this).read(packet));
 		} else if (code === tribulle.tribeMemberConnect) {
 			this.emit("tribeMemberConnect", packet.readUTF());

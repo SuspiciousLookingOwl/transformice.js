@@ -24,6 +24,7 @@
 	},
 	"homepage": "https://github.com/SuspiciousLookingOwl/transformice.js#readme",
 	"devDependencies": {
+		"@types/iconv-lite": "0.0.1",
 		"@types/module-alias": "^2.0.0",
 		"@types/node": "^14.14.14",
 		"@types/node-fetch": "^2.5.7",

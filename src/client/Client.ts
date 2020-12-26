@@ -518,6 +518,23 @@ class Client extends EventEmitter {
 	}
 
 	/**
+	 * Join to a chat channel
+	 */
+	joinChannel(channelName: string) {
+		this.sendTribullePacket(tribulle.channelJoinRequest, new ByteArray().writeUTF(channelName));
+	}
+
+	/**
+	 * Leave a chat channel
+	 */
+	leaveChannel(channelName: string) {
+		this.sendTribullePacket(
+			tribulle.channelLeaveRequest,
+			new ByteArray().writeUTF(channelName)
+		);
+	}
+
+	/**
 	 * Sends a message to a chat channel
 	 */
 	sendChannelMessage(channelName: string, message: string) {

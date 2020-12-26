@@ -520,8 +520,11 @@ class Client extends EventEmitter {
 	/**
 	 * Join to a chat channel
 	 */
-	joinChannel(channelName: string) {
-		this.sendTribullePacket(tribulle.channelJoinRequest, new ByteArray().writeUTF(channelName));
+	joinChannel(channelName: string, permanent = true) {
+		this.sendTribullePacket(
+			tribulle.channelJoinRequest,
+			new ByteArray().writeUTF(channelName).writeBoolean(permanent)
+		);
 	}
 
 	/**

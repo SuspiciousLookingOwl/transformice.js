@@ -7,6 +7,7 @@ import {
 	Room,
 	RoomMessage,
 	RoomPlayer,
+	Tribe,
 	WhisperMessage,
 } from "../structures";
 import { languages } from "../enums";
@@ -132,6 +133,10 @@ interface ClientEvents {
 	 * Emitted when a tribe member disconnected
 	 */
 	tribeMemberDisconnect: (name: string) => void;
+	/**
+	 * Emitted when tribe information received
+	 */
+	tribe: (tribe: Tribe | null) => void;
 	/**
 	 * Emitted when a player sends a whisper message to the client.
 	 */

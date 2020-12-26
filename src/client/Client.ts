@@ -11,6 +11,7 @@ import {
 	Room,
 	RoomMessage,
 	RoomPlayer,
+	Tribe,
 	WhisperMessage,
 } from "../structures";
 import { tribulle, cipherMethods, identifiers, languages, oldIdentifiers } from "../enums";
@@ -317,6 +318,15 @@ class Client extends EventEmitter {
 			this.emit("tribeMemberConnect", packet.readUTF());
 		} else if (code === tribulle.tribeMemberDisconnect) {
 			this.emit("tribeMemberDisconnect", packet.readUTF());
+		} else if (code === tribulle.tribeInitialReceive) {
+			const result = packet.readByte();
+			if (result !== 1) {
+				this.emit("tribe", null);
+			}
+		} else if (code === tribulle.tribeReceive) {
+			this.emit("tribe", new Tribe(this).read(packet));
+		} else {
+			console.log(code);
 		}
 		this.emit("rawTribulle", code, packet);
 	}
@@ -576,6 +586,24 @@ class Client extends EventEmitter {
 	async getFriendList() {
 		this.requestFriendList();
 		return (await this.waitFor("friendList"))[0];
+	}
+
+	/**
+	 * Request tribe data
+	 */
+	requestTribe(includeDisconnectedMember = true) {
+		this.sendTribullePacket(
+			tribulle.tribeRequest,
+			new ByteArray().writeBoolean(includeDisconnectedMember)
+		);
+	}
+
+	/**
+	 * Get tribe data
+	 */
+	async getTribe(includeDisconnectedMember = true) {
+		this.requestTribe(includeDisconnectedMember);
+		return (await this.waitFor("tribe"))[0];
 	}
 }
 

@@ -1,7 +1,7 @@
 import { ValueOf, ByteArray } from "../utils";
 import { genders } from "../enums";
 import Client from "../client";
-import { Tribe, Player, Rank } from ".";
+import { Tribe, Player } from ".";
 
 /** Represents a tribe member */
 export default class Member extends Player {

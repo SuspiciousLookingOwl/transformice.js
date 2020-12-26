@@ -16,6 +16,8 @@ Represents a player from the room.
 
   ↳↳ [RoomPlayer](roomplayer.md)
 
+  ↳↳ [Member](member.md)
+
 ## Properties
 
 ### client

@@ -84,7 +84,7 @@ ___
 
 ### friendList
 
-•  **friendList**: (friends: [Friend](../classes/friend.md)[], soulmateName: string \| null) => void
+•  **friendList**: (friends: [Friend](../classes/friend.md)[]) => void
 
 Emitted when the client received the friend list
 
@@ -233,6 +233,14 @@ Emitted when the room playerList is updated.
 
 ___
 
+### tribe
+
+•  **tribe**: (tribe: [Tribe](../classes/tribe.md) \| null) => void
+
+Emitted when tribe information received
+
+___
+
 ### tribeMemberConnect
 
 •  **tribeMemberConnect**: (name: string) => void
@@ -246,6 +254,14 @@ ___
 •  **tribeMemberDisconnect**: (name: string) => void
 
 Emitted when a tribe member disconnected
+
+___
+
+### tribeMemberUpdate
+
+•  **tribeMemberUpdate**: (member: [Member](../classes/member.md)) => void
+
+Emitted when a tribe member updated
 
 ___
 

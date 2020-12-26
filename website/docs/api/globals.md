@@ -13,11 +13,14 @@ sidebar_label: "Globals"
 * [ChannelMessage](classes/channelmessage.md)
 * [Client](classes/client.md)
 * [Friend](classes/friend.md)
+* [Member](classes/member.md)
 * [Message](classes/message.md)
 * [Player](classes/player.md)
+* [Rank](classes/rank.md)
 * [Room](classes/room.md)
 * [RoomMessage](classes/roommessage.md)
 * [RoomPlayer](classes/roomplayer.md)
+* [Tribe](classes/tribe.md)
 * [WhisperMessage](classes/whispermessage.md)
 
 ### Interfaces

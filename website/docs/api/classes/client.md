@@ -133,6 +133,22 @@ Get friend list
 
 ___
 
+### getTribe
+
+▸ **getTribe**(`includeDisconnectedMember?`: boolean): Promise<[Tribe](tribe.md)\>
+
+Get tribe data
+
+#### Parameters:
+
+Name | Type | Default value |
+------ | ------ | ------ |
+`includeDisconnectedMember` | boolean | true |
+
+**Returns:** Promise<[Tribe](tribe.md)\>
+
+___
+
 ### joinRoom
 
 ▸ **joinRoom**(`name`: string, `isSalonAuto?`: boolean): void
@@ -206,6 +222,22 @@ ___
 ▸ **requestFriendList**(): void
 
 Request friend list.
+
+**Returns:** void
+
+___
+
+### requestTribe
+
+▸ **requestTribe**(`includeDisconnectedMember?`: boolean): void
+
+Request tribe data
+
+#### Parameters:
+
+Name | Type | Default value |
+------ | ------ | ------ |
+`includeDisconnectedMember` | boolean | true |
 
 **Returns:** void
 

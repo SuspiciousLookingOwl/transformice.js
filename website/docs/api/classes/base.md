@@ -18,6 +18,10 @@ Represents a Base class that will be inherited by all other structure classes.
 
   ↳ [Message](message.md)
 
+  ↳ [Tribe](tribe.md)
+
+  ↳ [Rank](rank.md)
+
 ## Constructors
 
 ### constructor

@@ -32,7 +32,7 @@ export default class ChannelMessage extends Message {
 	 *
 	 * @example
 	 * ```js
-	 * client.on('roomMessage', (message) => {
+	 * client.on('channelMessage', (message) => {
 	 * 	if (client.name === message.author.name)
 	 * 		return;
 	 * 	message.reply('Hello');
@@ -40,6 +40,6 @@ export default class ChannelMessage extends Message {
 	 * ```
 	 */
 	reply(message: string) {
-		this.client.sendRoomMessage(`@${this.author.name} ${message}`);
+		this.client.sendChannelMessage(this.channel.name, `@${this.author.name} ${message}`);
 	}
 }

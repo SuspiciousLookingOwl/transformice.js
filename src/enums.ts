@@ -66,6 +66,7 @@ export const tribulle = {
 	tribeMessage: 65,
 	tribeMemberConnect: 88,
 	tribeMemberDisconnect: 90,
+	tribeMemberUpdate: 131,
 	tribeRequest: 108,
 	tribeInitialReceive: 109,
 	tribeReceive: 130,

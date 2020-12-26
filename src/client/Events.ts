@@ -2,6 +2,7 @@ import { Connection, ByteArray, ValueOf } from "../utils";
 import {
 	ChannelMessage,
 	Friend,
+	Member,
 	Message,
 	Player,
 	Room,
@@ -121,6 +122,10 @@ interface ClientEvents {
 	 * Emitted when a message is sent to a channel
 	 */
 	channelMessage: (channelMessage: ChannelMessage) => void;
+	/**
+	 * Emitted when a tribe member updated
+	 */
+	tribeMemberUpdate: (member: Member) => void;
 	/**
 	 * Emitted when a tribe message is received
 	 */

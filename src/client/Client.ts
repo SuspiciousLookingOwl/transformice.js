@@ -6,6 +6,7 @@ import {
 	Channel,
 	ChannelMessage,
 	Friend,
+	Member,
 	Message,
 	Player,
 	Room,
@@ -314,6 +315,9 @@ class Client extends EventEmitter {
 			const author = new Player(this, packet.readUTF());
 			const message = new Message(this, author, packet.readUTF());
 			this.emit("tribeMessage", message);
+		} else if (code === tribulle.tribeMemberUpdate) {
+			console.log("tribe member update");
+			this.emit("tribeMemberUpdate", new Member(this).read(packet));
 		} else if (code === tribulle.tribeMemberConnect) {
 			this.emit("tribeMemberConnect", packet.readUTF());
 		} else if (code === tribulle.tribeMemberDisconnect) {
@@ -325,8 +329,6 @@ class Client extends EventEmitter {
 			}
 		} else if (code === tribulle.tribeReceive) {
 			this.emit("tribe", new Tribe(this).read(packet));
-		} else {
-			console.log(code);
 		}
 		this.emit("rawTribulle", code, packet);
 	}

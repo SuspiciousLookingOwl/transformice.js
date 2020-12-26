@@ -15,4 +15,11 @@ export default class Player extends Base {
 		super(client);
 		this.name = name;
 	}
+
+	/**
+	 * Send a whisper to the player
+	 */
+	whisper(message: string) {
+		this.client.sendWhisper(this.name, message);
+	}
 }

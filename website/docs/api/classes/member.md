@@ -105,3 +105,45 @@ ___
 The rank of the member
 
 **Returns:** unknown
+
+## Methods
+
+### friend
+
+▸ **friend**(): void
+
+*Inherited from [Player](player.md).[friend](player.md#friend)*
+
+Add player to the friend list
+
+**Returns:** void
+
+___
+
+### unfriend
+
+▸ **unfriend**(): void
+
+*Inherited from [Player](player.md).[unfriend](player.md#unfriend)*
+
+Remove player from the friend list
+
+**Returns:** void
+
+___
+
+### whisper
+
+▸ **whisper**(`message`: string): void
+
+*Inherited from [Player](player.md).[whisper](player.md#whisper)*
+
+Send a whisper to the player
+
+#### Parameters:
+
+Name | Type |
+------ | ------ |
+`message` | string |
+
+**Returns:** void

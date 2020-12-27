@@ -33,3 +33,39 @@ ___
 •  **name**: string
 
 The player's name.
+
+## Methods
+
+### friend
+
+▸ **friend**(): void
+
+Add player to the friend list
+
+**Returns:** void
+
+___
+
+### unfriend
+
+▸ **unfriend**(): void
+
+Remove player from the friend list
+
+**Returns:** void
+
+___
+
+### whisper
+
+▸ **whisper**(`message`: string): void
+
+Send a whisper to the player
+
+#### Parameters:
+
+Name | Type |
+------ | ------ |
+`message` | string |
+
+**Returns:** void

@@ -36,7 +36,7 @@ ___
 
 ### channelWho
 
-•  **channelWho**: (players: [Player](../classes/player.md)[]) => void
+•  **channelWho**: (channelName: string, players: [Player](../classes/player.md)[], fingerprint: number) => void
 
 Emitted when received /who result
 
@@ -66,6 +66,14 @@ Emitted when the client has disconnect.
 
 ___
 
+### friendAdd
+
+•  **friendAdd**: (friend: [Player](../classes/player.md)) => void
+
+Emitted when a friend is connected
+
+___
+
 ### friendConnect
 
 •  **friendConnect**: (name: string) => void
@@ -87,6 +95,14 @@ ___
 •  **friendList**: (friends: [Friend](../classes/friend.md)[]) => void
 
 Emitted when the client received the friend list
+
+___
+
+### friendRemove
+
+•  **friendRemove**: (friend: [Player](../classes/player.md)) => void
+
+Emitted when a friend is disconnected
 
 ___
 

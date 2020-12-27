@@ -113,6 +113,22 @@ The client's room.
 
 ## Methods
 
+### addFriend
+
+▸ **addFriend**(`name`: string): Promise<void\>
+
+Add a player to friend list
+
+#### Parameters:
+
+Name | Type |
+------ | ------ |
+`name` | string |
+
+**Returns:** Promise<void\>
+
+___
+
 ### disconnect
 
 ▸ **disconnect**(): void
@@ -120,6 +136,22 @@ The client's room.
 Disconnects the client.
 
 **Returns:** void
+
+___
+
+### getChannelPlayers
+
+▸ **getChannelPlayers**(`channelName`: string): Promise<[Player](player.md)[]\>
+
+Get player list inside a chat channel
+
+#### Parameters:
+
+Name | Type |
+------ | ------ |
+`channelName` | string |
+
+**Returns:** Promise<[Player](player.md)[]\>
 
 ___
 
@@ -149,6 +181,23 @@ Name | Type | Default value |
 
 ___
 
+### joinChannel
+
+▸ **joinChannel**(`channelName`: string, `permanent?`: boolean): void
+
+Join to a chat channel
+
+#### Parameters:
+
+Name | Type | Default value |
+------ | ------ | ------ |
+`channelName` | string | - |
+`permanent` | boolean | true |
+
+**Returns:** void
+
+___
+
 ### joinRoom
 
 ▸ **joinRoom**(`name`: string, `isSalonAuto?`: boolean): void
@@ -171,6 +220,22 @@ ___
 ▸ **joinTribeHouse**(): void
 
 Joins the tribe house.
+
+**Returns:** void
+
+___
+
+### leaveChannel
+
+▸ **leaveChannel**(`channelName`: string): void
+
+Leave a chat channel
+
+#### Parameters:
+
+Name | Type |
+------ | ------ |
+`channelName` | string |
 
 **Returns:** void
 
@@ -217,6 +282,22 @@ Name | Type |
 
 ___
 
+### removeFriend
+
+▸ **removeFriend**(`name`: string): Promise<void\>
+
+Add a player to friend list
+
+#### Parameters:
+
+Name | Type |
+------ | ------ |
+`name` | string |
+
+**Returns:** Promise<void\>
+
+___
+
 ### requestFriendList
 
 ▸ **requestFriendList**(): void
@@ -240,6 +321,22 @@ Name | Type | Default value |
 `includeDisconnectedMember` | boolean | true |
 
 **Returns:** void
+
+___
+
+### requestWho
+
+▸ **requestWho**(`channelName`: string): number
+
+Request /who to a chat channel
+
+#### Parameters:
+
+Name | Type |
+------ | ------ |
+`channelName` | string |
+
+**Returns:** number
 
 ___
 

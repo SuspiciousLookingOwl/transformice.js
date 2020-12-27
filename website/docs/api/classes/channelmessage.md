@@ -62,7 +62,7 @@ Reply the author with a message.
 
 **`example`** 
 ```js
-client.on('roomMessage', (message) => {
+client.on('channelMessage', (message) => {
 	if (client.name === message.author.name)
 		return;
 	message.reply('Hello');

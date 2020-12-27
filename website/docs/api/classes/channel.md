@@ -44,3 +44,19 @@ ___
 •  **name**: string
 
 The channel name
+
+## Methods
+
+### sendMessage
+
+▸ **sendMessage**(`message`: string): void
+
+Send a message to this channel
+
+#### Parameters:
+
+Name | Type |
+------ | ------ |
+`message` | string |
+
+**Returns:** void

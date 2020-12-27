@@ -18,9 +18,6 @@ export default class Connection extends EventEmitter {
 	private identificationKeys: number[];
 	private messageKeys: number[];
 
-	host!: string;
-	port!: number;
-
 	/**
 	 * Constructor.
 	 * @example
@@ -42,9 +39,7 @@ export default class Connection extends EventEmitter {
 	 * Connects the socket.
 	 */
 	connect(host: string, port: number) {
-		this.host = host;
-		this.port = port;
-		this.socket = net.createConnection({ port: port, host: host }, () => {
+		this.socket = net.createConnection({ port, host }, () => {
 			this.open = true;
 			this.emit("connect");
 		});

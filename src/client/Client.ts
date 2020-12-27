@@ -425,9 +425,21 @@ class Client extends EventEmitter {
 		this.main.on("data", (conn: Connection, packet: ByteArray) => {
 			this.handlePacket(conn, packet);
 		});
-		this.main.once("connect", () => {
+		this.main.once("connect", async () => {
 			this.emit("connect", this.main);
 			this.sendHandshake(this.version, this.connectionKey);
+			this.once("loginError", async (code) => {
+				if (code === 1 && this.autoReconnect) {
+					this.restart();
+				}
+			});
+			try {
+				await this.waitFor("loginReady");
+				this.setLanguage(this.language);
+				this.login(this.name, this.password);
+			} catch (err) {
+				this.main.emit("error", err);
+			}
 		});
 		this.main.once("close", () => {
 			this.disconnect();
@@ -435,6 +447,7 @@ class Client extends EventEmitter {
 		this.main.on("error", async (err: Error) => {
 			this.emit("connectionError", err);
 			if (this.autoReconnect) {
+				await new Promise((r) => setTimeout(r, 5 * 1000));
 				this.restart();
 			} else {
 				throw Error("Connection Closed");
@@ -458,21 +471,6 @@ class Client extends EventEmitter {
 		}
 		this.emit("disconnect");
 	}
-
-	/**
-	 * Starts the client
-	 */
-	private async start() {
-		this.connect();
-		try {
-			await this.waitFor("loginReady");
-			this.setLanguage(this.language);
-			this.login(this.name, this.password);
-		} catch (err) {
-			// failed
-		}
-	}
-
 	/**
 	 * Starts the client.
 	 */
@@ -481,7 +479,7 @@ class Client extends EventEmitter {
 		this.token = token;
 
 		await this.fetchKeys();
-		this.start();
+		this.connect();
 	}
 
 	/**
@@ -491,7 +489,6 @@ class Client extends EventEmitter {
 		this.emit("restart");
 		this.disconnect();
 		this.connect();
-		this.start();
 	}
 
 	/**

@@ -22,4 +22,18 @@ export default class Player extends Base {
 	whisper(message: string) {
 		this.client.sendWhisper(this.name, message);
 	}
+
+	/**
+	 * Add player to the friend list
+	 */
+	friend() {
+		this.client.addFriend(this.name);
+	}
+
+	/**
+	 * Remove player from the friend list
+	 */
+	unfriend() {
+		this.client.removeFriend(this.name);
+	}
 }

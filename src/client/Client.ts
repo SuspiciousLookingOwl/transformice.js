@@ -302,6 +302,10 @@ class Client extends EventEmitter {
 				friends.push(new Friend(this).read(packet, false));
 			}
 			this.emit("friendList", friends);
+		} else if (code === tribulle.friendAdd) {
+			this.emit("friendAdd", new Player(this, packet.readUTF()));
+		} else if (code === tribulle.friendRemove) {
+			this.emit("friendRemove", new Player(this, packet.readUTF()));
 		} else if (code === tribulle.friendConnect) {
 			this.emit("friendConnect", packet.readUTF());
 		} else if (code === tribulle.friendDisconnect) {
@@ -649,6 +653,20 @@ class Client extends EventEmitter {
 	async getFriendList() {
 		this.requestFriendList();
 		return (await this.waitFor("friendList"))[0];
+	}
+
+	/**
+	 * Add a player to friend list
+	 */
+	async addFriend(name: string) {
+		this.sendTribullePacket(tribulle.friendAddRequest, new ByteArray().writeUTF(name));
+	}
+
+	/**
+	 * Add a player to friend list
+	 */
+	async removeFriend(name: string) {
+		this.sendTribullePacket(tribulle.friendRemoveRequest, new ByteArray().writeUTF(name));
 	}
 
 	/**

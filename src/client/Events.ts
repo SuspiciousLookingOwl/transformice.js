@@ -97,6 +97,14 @@ interface ClientEvents {
 	/**
 	 * Emitted when a friend is connected
 	 */
+	friendAdd: (friend: Player) => void;
+	/**
+	 * Emitted when a friend is disconnected
+	 */
+	friendRemove: (friend: Player) => void;
+	/**
+	 * Emitted when a friend is connected
+	 */
 	friendConnect: (name: string) => void;
 	/**
 	 * Emitted when a friend is disconnected

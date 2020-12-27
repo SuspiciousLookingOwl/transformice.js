@@ -369,6 +369,8 @@ class Client extends EventEmitter {
 		const p = new ByteArray().writeShort(code).writeUnsignedInt(this.tribulleId);
 		p.writeBytes(packet);
 		this.main.send(identifiers.bulle, p, cipherMethods.xor);
+
+		return this.tribulleId;
 	}
 
 	/**
@@ -570,9 +572,12 @@ class Client extends EventEmitter {
 	 * Request /who to a chat channel
 	 */
 	requestWho(channelName: string) {
-		this.whoList[++this.whoFingerprint] = channelName;
-		this.sendTribullePacket(tribulle.channelWhoRequest, new ByteArray().writeUTF(channelName));
-		return this.whoFingerprint;
+		const fingerprint = this.sendTribullePacket(
+			tribulle.channelWhoRequest,
+			new ByteArray().writeUTF(channelName)
+		);
+		this.whoList[fingerprint] = channelName;
+		return fingerprint;
 	}
 
 	/**

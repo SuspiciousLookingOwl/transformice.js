@@ -109,7 +109,7 @@ interface ClientEvents {
 	/**
 	 * Emitted when received /who result
 	 */
-	channelWho: (players: Player[]) => void;
+	channelWho: (channelName: string, players: Player[], fingerprint: number) => void;
 	/**
 	 * Emitted when client joined a chat channel
 	 */

@@ -60,6 +60,8 @@ class Client extends EventEmitter {
 	private tribulleID: number;
 	private password: string;
 	private autoReconnect: boolean;
+	private whoFingerprint: number;
+	private whoList: Record<number, string>;
 
 	/**
 	 * The online players when the bot log.
@@ -107,6 +109,8 @@ class Client extends EventEmitter {
 
 		this.autoReconnect = options?.autoReconnect ?? true;
 		this.language = options?.language || "en";
+		this.whoFingerprint = 0;
+		this.whoList = {};
 
 		this.loops = {};
 		this.tribulleID = 0;
@@ -117,13 +121,38 @@ class Client extends EventEmitter {
 	/**
 	 *  Wait for specific event to be emitted
 	 */
-	private waitFor<T extends keyof ClientEvents>(eventName: T, timeout = 5000) {
+	private waitFor<T extends keyof ClientEvents>(
+		eventName: T,
+		timeout?: number,
+		condition?: (...args: Parameters<ClientEvents[T]>) => boolean
+	): Promise<Parameters<ClientEvents[T]>>;
+	private waitFor<T extends keyof ClientEvents>(
+		eventName: T,
+		condition?: (...args: Parameters<ClientEvents[T]>) => boolean,
+		timeout?: number
+	): Promise<Parameters<ClientEvents[T]>>;
+	private waitFor<
+		T extends keyof ClientEvents,
+		Callback extends (...args: Parameters<ClientEvents[T]>) => boolean
+	>(
+		eventName: T,
+		timeoutOrCondition: number | Callback = 5000,
+		conditionOrTimeout?: Callback | number
+	) {
+		let timeout = 5000;
+		let condition: Callback | undefined = undefined;
+		if (typeof timeoutOrCondition === "number") timeout = timeoutOrCondition;
+		else if (typeof timeoutOrCondition === "function") condition = timeoutOrCondition;
+		if (typeof conditionOrTimeout === "number") timeout = conditionOrTimeout;
+		else if (typeof conditionOrTimeout === "function") condition = conditionOrTimeout;
+
 		return new Promise<Parameters<ClientEvents[T]>>((resolve, reject) => {
 			// eslint-disable-next-line @typescript-eslint/no-explicit-any
 			const listener = (...args: any) => {
 				// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 				// @ts-ignore
-				resolve(args);
+				if (!condition) resolve(args);
+				else if (condition && condition(...args)) resolve(args);
 			};
 
 			this.once(eventName, listener);
@@ -280,15 +309,14 @@ class Client extends EventEmitter {
 		} else if (code === tribulle.friendUpdate) {
 			this.emit("friendUpdate", new Friend(this).read(packet, false));
 		} else if (code === tribulle.channelWho) {
-			packet.readUnsignedInt();
+			const fingerprint = packet.readUnsignedInt();
 			packet.readUnsignedByte();
 			const playerCount = packet.readUnsignedShort();
 			const players: Player[] = [];
 			for (let i = 0; i < playerCount; i++) {
-				const player = new Player(this, packet.readUTF());
-				players.push(player);
+				players.push(new Player(this, packet.readUTF()));
 			}
-			this.emit("channelWho", players);
+			this.emit("channelWho", this.whoList[fingerprint], players, fingerprint);
 		} else if (code === tribulle.channelLeave) {
 			const channelName = packet.readUTF();
 			this.emit("channelLeave", channelName);
@@ -532,6 +560,23 @@ class Client extends EventEmitter {
 			tribulle.channelLeaveRequest,
 			new ByteArray().writeUTF(channelName)
 		);
+	}
+
+	/**
+	 * Request /who to a chat channel
+	 */
+	requestWho(channelName: string) {
+		this.whoList[++this.whoFingerprint] = channelName;
+		this.sendTribullePacket(tribulle.channelWhoRequest, new ByteArray().writeUTF(channelName));
+		return this.whoFingerprint;
+	}
+
+	/**
+	 * Get player list inside a chat channel
+	 */
+	async getChannelPlayers(channelName: string) {
+		const fingerPrint = this.requestWho(channelName);
+		return (await this.waitFor("channelWho", (n, p, f) => f === fingerPrint))[1];
 	}
 
 	/**

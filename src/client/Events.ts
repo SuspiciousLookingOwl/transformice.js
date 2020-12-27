@@ -95,11 +95,11 @@ interface ClientEvents {
 	 */
 	friendList: (friends: Friend[]) => void;
 	/**
-	 * Emitted when a friend is connected
+	 * Emitted when a friend is added to friend list
 	 */
 	friendAdd: (friend: Player) => void;
 	/**
-	 * Emitted when a friend is disconnected
+	 * Emitted when a friend is removed from friend list
 	 */
 	friendRemove: (friend: Player) => void;
 	/**

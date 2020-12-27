@@ -14,15 +14,27 @@ declare const process: {
 };
 
 describe("Transformice Client", () => {
-	const client = new Client(process.env.USERNAME, process.env.PASSWORD);
+	const client = new Client(process.env.USERNAME, process.env.PASSWORD, {
+		autoReconnect: false,
+	});
 
 	it("should run", async () => {
-		const connectCallback = jest.fn();
-		client.on("connect", connectCallback);
+		const ready = jest.fn();
+		client.on("ready", ready);
 		client.run(process.env.TFM_ID, process.env.TFM_TOKEN);
 
 		await waitForExpect(() => {
-			expect(connectCallback).toHaveBeenCalledTimes(1);
+			expect(ready).toHaveBeenCalledTimes(1);
 		}, 15 * 1000);
+	});
+
+	it("should disconnect", async () => {
+		const disconnectCallback = jest.fn();
+		client.on("disconnect", disconnectCallback);
+		client.disconnect();
+
+		await waitForExpect(() => {
+			expect(disconnectCallback).toHaveBeenCalledTimes(1);
+		});
 	});
 });

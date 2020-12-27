@@ -89,11 +89,11 @@ The client's player.
 
 ___
 
-### playerID
+### playerId
 
-•  **playerID**: number
+•  **playerId**: number
 
-The client's ID.
+The client's Id.
 
 ___
 

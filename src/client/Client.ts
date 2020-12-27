@@ -50,14 +50,14 @@ class Client extends EventEmitter {
 	private authServer!: number;
 	private ports!: number[];
 	private host!: string;
-	private tfmID!: string;
+	private tfmId!: string;
 	private token!: string;
 	private identificationKeys!: number[];
 	private messageKeys!: number[];
 	private main!: Connection;
 	private bulle!: Connection;
 	private loops: Partial<{ heartbeat: NodeJS.Timeout }>;
-	private tribulleID: number;
+	private tribulleId: number;
 	private password: string;
 	private autoReconnect: boolean;
 	private whoFingerprint: number;
@@ -76,9 +76,9 @@ class Client extends EventEmitter {
 	 */
 	player!: Player;
 	/**
-	 * The client's ID.
+	 * The client's Id.
 	 */
-	playerID!: number;
+	playerId!: number;
 	/**
 	 * The client's name.
 	 */
@@ -113,7 +113,7 @@ class Client extends EventEmitter {
 		this.whoList = {};
 
 		this.loops = {};
-		this.tribulleID = 0;
+		this.tribulleId = 0;
 		this.name = name;
 		this.password = password;
 	}
@@ -223,7 +223,7 @@ class Client extends EventEmitter {
 				);
 			});
 		} else if (ccc == identifiers.loggedIn) {
-			this.playerID = packet.readUnsignedInt();
+			this.playerId = packet.readUnsignedInt();
 			this.name = packet.readUTF();
 			this.playingTime = packet.readUnsignedInt();
 			this.connectionTime = new Date().getTime();
@@ -365,8 +365,8 @@ class Client extends EventEmitter {
 	 * Sends a packet to the community platform (tribulle).
 	 */
 	private sendTribullePacket(code: number, packet: ByteArray) {
-		this.tribulleID = (this.tribulleID % 0x100000000) + 1;
-		const p = new ByteArray().writeShort(code).writeUnsignedInt(this.tribulleID);
+		this.tribulleId = (this.tribulleId % 0x100000000) + 1;
+		const p = new ByteArray().writeShort(code).writeUnsignedInt(this.tribulleId);
 		p.writeBytes(packet);
 		this.main.send(identifiers.bulle, p, cipherMethods.xor);
 	}
@@ -414,7 +414,7 @@ class Client extends EventEmitter {
 	 */
 	private async fetchKeys() {
 		const response = await fetch(
-			`https://api.tocuto.tk/get_transformice_keys.php?tfmid=${this.tfmID}&token=${this.token}`
+			`https://api.tocuto.tk/get_transformice_keys.php?tfmid=${this.tfmId}&token=${this.token}`
 		);
 		const result = await response.json();
 		if (result.success) {
@@ -507,7 +507,7 @@ class Client extends EventEmitter {
 	 * Starts the client.
 	 */
 	async run(tfmid: string, token: string) {
-		this.tfmID = tfmid;
+		this.tfmId = tfmid;
 		this.token = token;
 
 		await this.fetchKeys();

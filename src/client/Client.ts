@@ -663,14 +663,14 @@ class Client extends EventEmitter {
 	/**
 	 * Add a player to friend list
 	 */
-	async addFriend(name: string) {
+	addFriend(name: string) {
 		this.sendTribullePacket(tribulle.friendAddRequest, new ByteArray().writeUTF(name));
 	}
 
 	/**
 	 * Add a player to friend list
 	 */
-	async removeFriend(name: string) {
+	removeFriend(name: string) {
 		this.sendTribullePacket(tribulle.friendRemoveRequest, new ByteArray().writeUTF(name));
 	}
 

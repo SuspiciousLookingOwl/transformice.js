@@ -69,7 +69,7 @@ export const tribulle = {
 	channelJoin: 62,
 	channelLeave: 63,
 	channelMessage: 64,
-	tribeSendMessage: 48,
+	tribeSendMessage: 50,
 	tribeMessage: 65,
 	tribeMemberConnect: 88,
 	tribeMemberDisconnect: 90,

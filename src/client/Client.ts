@@ -60,7 +60,6 @@ class Client extends EventEmitter {
 	private tribulleId: number;
 	private password: string;
 	private autoReconnect: boolean;
-	private whoFingerprint: number;
 	private whoList: Record<number, string>;
 
 	/**
@@ -74,7 +73,7 @@ class Client extends EventEmitter {
 	/**
 	 * The client's player.
 	 */
-	player!: Player;
+	player!: RoomPlayer;
 	/**
 	 * The client's Id.
 	 */
@@ -108,8 +107,7 @@ class Client extends EventEmitter {
 		super();
 
 		this.autoReconnect = options?.autoReconnect ?? true;
-		this.language = options?.language || "en";
-		this.whoFingerprint = 0;
+		this.language = options?.language || languages.en;
 		this.whoList = {};
 
 		this.loops = {};
@@ -168,9 +166,9 @@ class Client extends EventEmitter {
 	 */
 	private handleOldPacket(conn: Connection, ccc: number, data: string[]) {
 		if (ccc === oldIdentifiers.roomPlayerLeft) {
-			const player = this.room.getPlayer(+data[0] as number);
+			const player = this.room.getPlayer(+data[0]);
 			if (player) {
-				this.room.removePlayer(player);
+				this.room.removePlayer(+data[0]);
 				this.emit("roomPlayerLeft", player);
 			}
 		}
@@ -212,7 +210,9 @@ class Client extends EventEmitter {
 			if (this.bulle && this.bulle.open) this.bulle.close();
 
 			this.bulle = new Connection(this.identificationKeys, this.messageKeys);
-			this.bulle.connect(host, this.ports[0]);
+			this.bulle.on("data", (conn: Connection, packet: ByteArray) => {
+				this.handlePacket(conn, packet);
+			});
 			this.bulle.on("connect", () => {
 				this.bulle.send(
 					identifiers.bulleConnection,
@@ -222,6 +222,7 @@ class Client extends EventEmitter {
 						.writeUnsignedInt(pcode)
 				);
 			});
+			this.bulle.connect(host, this.ports[0]);
 		} else if (ccc == identifiers.loggedIn) {
 			this.playerId = packet.readUnsignedInt();
 			this.name = packet.readUTF();
@@ -245,9 +246,9 @@ class Client extends EventEmitter {
 			this.emit("roomMessage", message);
 		} else if (ccc == identifiers.roomChange) {
 			const before = this.room;
-			const isPublic = packet.readBoolean(),
-				name = packet.readUTF(),
-				language = packet.readUTF() as ValueOf<typeof languages>;
+			const isPublic = packet.readBoolean();
+			const name = packet.readUTF();
+			const language = packet.readUTF() as ValueOf<typeof languages>;
 			this.room = new Room(this, isPublic, name, language);
 			this.emit("roomChange", before, this.room);
 		} else if (ccc == identifiers.roomPlayerList) {
@@ -258,13 +259,15 @@ class Client extends EventEmitter {
 				const player = new RoomPlayer(this).read(packet);
 				this.room.playerList.push(player);
 			}
-			this.player = this.room.getPlayer(this.pcode) as Player;
+			this.player = this.room.getPlayer(this.pcode) as RoomPlayer;
 			this.emit("roomUpdate", before, this.room.playerList);
 		} else if (ccc == identifiers.roomNewPlayer) {
 			const player = new RoomPlayer(this).read(packet);
 			if (this.room.getPlayer(player.pcode)) {
+				this.room.updatePlayer(player);
 				this.emit("roomPlayerUpdate", this.room.getPlayer(player.pcode), player);
 			} else {
+				this.room.addPlayer(player);
 				this.emit("roomPlayerJoin", player);
 			}
 		}

@@ -15,10 +15,6 @@ import { languages } from "../enums";
 
 interface ClientEvents {
 	/**
-	 * Emitted when a player left the room.
-	 */
-	roomPlayerLeft: (player: Player) => void;
-	/**
 	 * Emitted when a new old packet received.
 	 */
 	rawOldPacket: (connection: Connection, ccc: number, data: string[]) => void;
@@ -73,6 +69,10 @@ interface ClientEvents {
 	 * Emitted when the room playerList is updated.
 	 */
 	roomPlayerUpdate: (before: RoomPlayer | undefined, after: RoomPlayer) => void;
+	/**
+	 * Emitted when a player left the room.
+	 */
+	roomPlayerLeft: (player: Player) => void;
 	/**
 	 * Emitted when a new player has joined.
 	 */

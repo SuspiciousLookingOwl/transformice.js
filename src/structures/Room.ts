@@ -61,14 +61,23 @@ export default class Room extends Base {
 	}
 
 	/**
-	 * Removes player the player from room playerList.
+	 * Removes player from playerList.
 	 *
 	 * @hidden
 	 */
-	removePlayer(player: RoomPlayer) {
-		const index = this.playerList.findIndex((p) => (p.pcode = player.pcode));
+	removePlayer(pcode: number) {
+		const index = this.playerList.findIndex((p) => p.pcode === pcode);
 		if (index === -1) return;
 		return this.playerList.splice(index, 1)[0];
+	}
+
+	/**
+	 * Add player to player list
+	 */
+	addPlayer(player: RoomPlayer) {
+		const exists = this.playerList.some((p) => p.pcode === player.pcode);
+		if (exists) return;
+		this.playerList.push(player);
 	}
 
 	/**

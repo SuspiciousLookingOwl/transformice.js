@@ -58,6 +58,7 @@ module.exports = {
 				downlevelIteration: true,
 				allowSyntheticDefaultImports: true,
 				excludePrivate: true,
+				excludeProtected: true,
 				disableSources: true,
 				plugin: ["typedoc-plugin-no-inherit"],
 			},

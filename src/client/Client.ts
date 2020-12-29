@@ -14,6 +14,9 @@ interface ClientOptions {
 	 * Will try to auto reconnect when disconnected if set to true (Default: `true`)
 	 */
 	autoReconnect?: boolean;
+	/**
+	 * Which community to log in to ([language enum](/docs/api/globals#languages))
+	 */
 	language?: ValueOf<typeof languages>;
 }
 
@@ -31,6 +34,22 @@ declare interface Client {
 
 /**
  * Represents a client that connects to Transformice.
+ *
+ * @example
+ * ```js
+ * const { Client, enums } = require("transformice.js");
+ *
+ * const client = new Client("username", "password", {
+ * 	language: enums.languages.en
+ * });
+ *
+ * client.on("roomMessage", (message) => {
+ * 	if (client.name === message.author.name) return;
+ * 	client.sendRoomMessage(message.author.look);
+ * });
+ *
+ * client.run("tfm_id", "token");
+ * ```
  *
  * @noInheritDoc
  */
@@ -216,10 +235,10 @@ class Client extends EventEmitter {
 		this.main.send(identifiers.handshake, p);
 	}
 
-	private setLanguage(code: ValueOf<typeof languages> = languages.en) {
+	protected setLanguage(code: ValueOf<typeof languages> = languages.en) {
 		if (typeof code !== "string") code = languages.en;
 		const p = new ByteArray().writeUTF(code);
-		this.main.send(identifiers.languageChange, p);
+		this.main.send(identifiers.language, p);
 	}
 
 	protected setSystemInfo(langue: string, sys: string, version: string) {
@@ -285,7 +304,6 @@ class Client extends EventEmitter {
 			});
 			try {
 				await this.waitFor("loginReady");
-				this.setLanguage(this.language);
 				this.login(this.name, this.password);
 			} catch (err) {
 				this.main.emit("error", err);

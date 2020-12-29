@@ -27,9 +27,11 @@ class PacketHandler {
 
 	static [identifiers.handshakeOk](this: Client, _conn: Connection, packet: ByteArray) {
 		this.onlinePlayers = packet.readUnsignedInt();
-		this.language = packet.readUTF() as ValueOf<typeof languages>;
+		packet.readUTF() as ValueOf<typeof languages>; // default language
 		packet.readUTF(); // country;
 		this.authServer = packet.readUnsignedInt();
+
+		this.setLanguage(this.language);
 
 		this.setSystemInfo("en", "Linux", "LNX 29,0,0,140");
 		this.startHeartbeat();

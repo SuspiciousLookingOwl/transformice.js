@@ -7,6 +7,22 @@ sidebar_label: "Client"
 Client interface for event intellisense support
 Represents a client that connects to Transformice.
 
+**`example`** 
+```js
+const { Client, enums } = require("transformice.js");
+
+const client = new Client("username", "password", {
+	language: enums.languages.en
+});
+
+client.on("roomMessage", (message) => {
+	if (client.name === message.author.name) return;
+	client.sendRoomMessage(message.author.look);
+});
+
+client.run("tfm_id", "token");
+```
+
 ## Hierarchy
 
 * EventEmitter
@@ -33,18 +49,6 @@ Name | Type |
 
 ## Properties
 
-### authServer
-
-• `Protected` **authServer**: number
-
-___
-
-### bulle
-
-• `Protected` **bulle**: Connection
-
-___
-
 ### community
 
 •  **community**: number
@@ -61,23 +65,11 @@ The connection time.
 
 ___
 
-### identificationKeys
-
-• `Protected` **identificationKeys**: number[]
-
-___
-
 ### language
 
 •  **language**: [ValueOf](../globals.md#valueof)<*typeof* languages\>
 
 The language suggested by the server.
-
-___
-
-### messageKeys
-
-• `Protected` **messageKeys**: number[]
 
 ___
 
@@ -129,23 +121,11 @@ The client's playing time.
 
 ___
 
-### ports
-
-• `Protected` **ports**: number[]
-
-___
-
 ### room
 
 •  **room**: [Room](room.md)
 
 The client's room.
-
-___
-
-### whoList
-
-• `Protected` **whoList**: Record<number, string\>
 
 ## Methods
 
@@ -214,58 +194,6 @@ Name | Type | Default value |
 `includeDisconnectedMember` | boolean | true |
 
 **Returns:** Promise<[Tribe](tribe.md)\>
-
-___
-
-### handleOldPacket
-
-▸ `Protected`**handleOldPacket**(`conn`: Connection, `ccc`: number, `data`: string[]): void
-
-Handles the old packets and emits events.
-
-#### Parameters:
-
-Name | Type |
------- | ------ |
-`conn` | Connection |
-`ccc` | number |
-`data` | string[] |
-
-**Returns:** void
-
-___
-
-### handlePacket
-
-▸ `Protected`**handlePacket**(`conn`: Connection, `packet`: ByteArray): void
-
-Handles the known packets and emits events.
-
-#### Parameters:
-
-Name | Type |
------- | ------ |
-`conn` | Connection |
-`packet` | ByteArray |
-
-**Returns:** void
-
-___
-
-### handleTribulle
-
-▸ `Protected`**handleTribulle**(`code`: number, `packet`: ByteArray): void
-
-Handles the community platform packets and emits events.
-
-#### Parameters:
-
-Name | Type |
------- | ------ |
-`code` | number |
-`packet` | ByteArray |
-
-**Returns:** void
 
 ___
 
@@ -537,31 +465,5 @@ Name | Type |
 ------ | ------ |
 `name` | string |
 `message` | string |
-
-**Returns:** void
-
-___
-
-### setSystemInfo
-
-▸ `Protected`**setSystemInfo**(`langue`: string, `sys`: string, `version`: string): void
-
-#### Parameters:
-
-Name | Type |
------- | ------ |
-`langue` | string |
-`sys` | string |
-`version` | string |
-
-**Returns:** void
-
-___
-
-### startHeartbeat
-
-▸ `Protected`**startHeartbeat**(): void
-
-Sends a packet every 15 seconds to stay connected to the game.
 
 **Returns:** void

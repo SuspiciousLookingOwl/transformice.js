@@ -21,3 +21,5 @@ ___
 ### language
 
 • `Optional` **language**: [ValueOf](../globals.md#valueof)<*typeof* languages\>
+
+Which community to log in to ([language enum](/docs/api/globals#languages))

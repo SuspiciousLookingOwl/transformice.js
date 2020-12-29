@@ -14,6 +14,10 @@ import {
 import { languages } from "../enums";
 
 interface ClientEvents {
+	/* -------------------------------------------------------------------------- */
+	/*                                   General                                  */
+	/* -------------------------------------------------------------------------- */
+
 	/**
 	 * Emitted when a new old packet received.
 	 */
@@ -42,6 +46,36 @@ interface ClientEvents {
 	 * Emitted when the client is connected to the community platform.
 	 */
 	ready: () => void;
+	/**
+	 * Emitted when a new packet received from main or bulle connection.
+	 */
+	rawPacket: (conn: Connection, ccc: number, packet: ByteArray) => void;
+	/**
+	 * Emitted when a language is changed.characters or not.
+	 */
+	languageChange: (
+		language: ValueOf<typeof languages>,
+		country: string,
+		readRight: boolean,
+		readSpecialChar: boolean
+	) => void;
+	/**
+	 * Emitted when a new community platform packet received.
+	 */
+	rawTribulle: (code: number, packet: ByteArray) => void;
+	/**
+	 * Emitted when the client has disconnect.
+	 */
+	disconnect: () => void;
+	/**
+	 * Emitted when a connection is successfully connected.
+	 */
+	connect: (connection: Connection) => void;
+
+	/* -------------------------------------------------------------------------- */
+	/*                                    Room                                    */
+	/* -------------------------------------------------------------------------- */
+
 	/**
 	 * Emitted when the client receives lua logs or errors from `#Lua` chat.
 	 */
@@ -72,24 +106,28 @@ interface ClientEvents {
 	/**
 	 * Emitted when a player left the room.
 	 */
-	roomPlayerLeft: (player: Player) => void;
+	roomPlayerLeave: (player: Player) => void;
 	/**
 	 * Emitted when a new player has joined.
 	 */
 	roomPlayerJoin: (player: RoomPlayer) => void;
 	/**
-	 * Emitted when a language is changed.characters or not.
+	 * Emitted when a player dies
 	 */
-	languageChange: (
-		language: ValueOf<typeof languages>,
-		country: string,
-		readRight: boolean,
-		readSpecialChar: boolean
-	) => void;
+	roomPlayerDie: (player: RoomPlayer) => void;
 	/**
-	 * Emitted when a new packet received from main or bulle connection.
+	 * Emitted when a player get the cheese
 	 */
-	rawPacket: (conn: Connection, ccc: number, packet: ByteArray) => void;
+	roomPlayerGetCheese: (player: RoomPlayer) => void;
+	/**
+	 * Emitted when a player enters the hole
+	 */
+	roomPlayerEnterHole: (player: RoomPlayer, order: number, time: number) => void;
+
+	/* -------------------------------------------------------------------------- */
+	/*                                   Friend                                   */
+	/* -------------------------------------------------------------------------- */
+
 	/**
 	 * Emitted when the client received the friend list
 	 */
@@ -114,6 +152,11 @@ interface ClientEvents {
 	 * Emitted when friend state is changed (e.g. room, gender)
 	 */
 	friendUpdate: (friend: Friend) => void;
+
+	/* -------------------------------------------------------------------------- */
+	/*                                Chat Channel                                */
+	/* -------------------------------------------------------------------------- */
+
 	/**
 	 * Emitted when received /who result
 	 */
@@ -130,6 +173,11 @@ interface ClientEvents {
 	 * Emitted when a message is sent to a channel
 	 */
 	channelMessage: (channelMessage: ChannelMessage) => void;
+
+	/* -------------------------------------------------------------------------- */
+	/*                                    Tribe                                   */
+	/* -------------------------------------------------------------------------- */
+
 	/**
 	 * Emitted when a tribe member updated
 	 */
@@ -150,22 +198,11 @@ interface ClientEvents {
 	 * Emitted when tribe information received
 	 */
 	tribe: (tribe: Tribe | null) => void;
+
 	/**
 	 * Emitted when a player sends a whisper message to the client.
 	 */
 	whisper: (message: WhisperMessage) => void;
-	/**
-	 * Emitted when a new community platform packet received.
-	 */
-	rawTribulle: (code: number, packet: ByteArray) => void;
-	/**
-	 * Emitted when the client has disconnect.
-	 */
-	disconnect: () => void;
-	/**
-	 * Emitted when a connection is successfully connected.
-	 */
-	connect: (connection: Connection) => void;
 }
 
 export default ClientEvents;

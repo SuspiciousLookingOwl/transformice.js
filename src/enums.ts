@@ -38,7 +38,9 @@ export const identifiers = {
 	roomMessage: Identifier(6, 6),
 	roomChange: Identifier(5, 21),
 	roomPlayerList: Identifier(144, 1),
-	roomNewPlayer: Identifier(144, 2),
+	roomPlayerGetCheese: Identifier(144, 6),
+	roomPlayerWin: Identifier(8, 6),
+	roomPlayerJoin: Identifier(144, 2),
 	language: Identifier(176, 1),
 	languageChange: Identifier(176, 2),
 	requestLanguage: Identifier(176, 5),
@@ -86,7 +88,42 @@ export const tribulle = {
  */
 export const oldIdentifiers = {
 	roomPlayerLeft: Identifier(8, 7),
+	roomPlayerDie: Identifier(8, 5),
 } as const;
+
+/** Game's communities */
+export const communities = {
+	en: 0,
+	int: 0,
+	xx: 0,
+	fr: 1,
+	ru: 2,
+	br: 3,
+	es: 4,
+	cn: 5,
+	tr: 6,
+	vk: 7,
+	pl: 8,
+	hu: 9,
+	nl: 10,
+	ro: 11,
+	id: 12,
+	de: 13,
+	e2: 14,
+	ar: 15,
+	ph: 16,
+	lt: 17,
+	jp: 18,
+	fi: 20,
+	cz: 21,
+	hr: 23,
+	bg: 24,
+	lv: 25,
+	he: 26,
+	it: 27,
+	et: 29,
+	pt: 31,
+};
 
 /** The available communities based on the languages. */
 export const languages = {

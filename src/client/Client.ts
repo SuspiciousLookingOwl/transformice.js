@@ -2,21 +2,12 @@ import fetch from "node-fetch";
 import { EventEmitter } from "events";
 
 import { ByteArray, Connection, SHAKikoo, ValueOf } from "../utils";
-import {
-	Channel,
-	ChannelMessage,
-	Friend,
-	Member,
-	Message,
-	Player,
-	Room,
-	RoomMessage,
-	RoomPlayer,
-	Tribe,
-	WhisperMessage,
-} from "../structures";
-import { tribulle, cipherMethods, identifiers, languages, oldIdentifiers } from "../enums";
+import { Room, RoomPlayer } from "../structures";
+import { tribulle, cipherMethods, identifiers, languages } from "../enums";
+import PacketHandler from "./PacketHandler";
 import ClientEvents from "./Events";
+import TribullePacketHandler from "./TribullePacketHandler";
+import OldPacketHandler from "./OldPacketHandler";
 
 interface ClientOptions {
 	/**
@@ -47,20 +38,20 @@ class Client extends EventEmitter {
 	private version!: number;
 	private connectionKey!: string;
 	private authClient!: number;
-	private authServer!: number;
-	private ports!: number[];
+	protected authServer!: number;
+	protected ports!: number[];
 	private host!: string;
 	private tfmId!: string;
 	private token!: string;
-	private identificationKeys!: number[];
-	private messageKeys!: number[];
+	protected identificationKeys!: number[];
+	protected messageKeys!: number[];
 	private main!: Connection;
-	private bulle!: Connection;
+	protected bulle!: Connection;
 	private loops: Partial<{ heartbeat: NodeJS.Timeout }>;
 	private tribulleId: number;
 	private password: string;
 	private autoReconnect: boolean;
-	private whoList: Record<number, string>;
+	protected whoList: Record<number, string>;
 
 	/**
 	 * The online players when the bot log.
@@ -164,203 +155,25 @@ class Client extends EventEmitter {
 	/**
 	 * Handles the old packets and emits events.
 	 */
-	private handleOldPacket(conn: Connection, ccc: number, data: string[]) {
-		if (ccc === oldIdentifiers.roomPlayerLeft) {
-			const player = this.room.getPlayer(+data[0]);
-			if (player) {
-				this.room.removePlayer(+data[0]);
-				this.emit("roomPlayerLeft", player);
-			}
-		}
+	protected handleOldPacket(conn: Connection, ccc: number, data: string[]) {
+		if (ccc in OldPacketHandler) OldPacketHandler[ccc].call(this, conn, ccc, data);
 		this.emit("rawOldPacket", conn, ccc, data);
 	}
 
 	/**
 	 * Handles the known packets and emits events.
 	 */
-	private handlePacket(conn: Connection, packet: ByteArray) {
+	protected handlePacket(conn: Connection, packet: ByteArray) {
 		const ccc = packet.readUnsignedShort();
-		if (ccc == identifiers.oldPacket) {
-			const data = packet.readUTF().split(String.fromCharCode(1));
-			const a = data.splice(0, 1)[0];
-			const ccc = (a.charCodeAt(0) << 8) | a.charCodeAt(1);
-			this.handleOldPacket(conn, ccc, data);
-		} else if (ccc == identifiers.handshakeOk) {
-			this.onlinePlayers = packet.readUnsignedInt();
-			this.language = packet.readUTF() as ValueOf<typeof languages>;
-			packet.readUTF(); // country;
-			this.authServer = packet.readUnsignedInt();
-
-			this.setSystemInfo("en", "Linux", "LNX 29,0,0,140");
-			this.startHeartbeat();
-		} else if (ccc == identifiers.loginReady) {
-			this.emit("loginReady");
-		} else if (ccc == identifiers.fingerprint) {
-			conn.fingerprint = packet.readByte();
-		} else if (ccc == identifiers.bulleConnection) {
-			const timestamp = packet.readUnsignedInt();
-			const playerId = packet.readUnsignedInt();
-			const pcode = packet.readUnsignedInt();
-			const host = packet.readUTF();
-			packet
-				.readUTF()
-				.split("-")
-				.map((port) => ~~port); // port
-
-			if (this.bulle && this.bulle.open) this.bulle.close();
-
-			this.bulle = new Connection(this.identificationKeys, this.messageKeys);
-			this.bulle.on("data", (conn: Connection, packet: ByteArray) => {
-				this.handlePacket(conn, packet);
-			});
-			this.bulle.on("connect", () => {
-				this.bulle.send(
-					identifiers.bulleConnection,
-					new ByteArray()
-						.writeUnsignedInt(timestamp)
-						.writeUnsignedInt(playerId)
-						.writeUnsignedInt(pcode)
-				);
-			});
-			this.bulle.connect(host, this.ports[0]);
-		} else if (ccc == identifiers.loggedIn) {
-			this.playerId = packet.readUnsignedInt();
-			this.name = packet.readUTF();
-			this.playingTime = packet.readUnsignedInt();
-			this.connectionTime = new Date().getTime();
-			this.community = packet.readByte();
-			this.pcode = packet.readUnsignedInt();
-			this.emit("login", this.name, this.pcode);
-		} else if (ccc == identifiers.loginError) {
-			this.emit("loginError", packet.readUnsignedByte(), packet.readUTF(), packet.readUTF());
-		} else if (ccc == identifiers.bulle) {
-			const code = packet.readUnsignedShort();
-			this.handleTribulle(code, packet);
-		} else if (ccc == identifiers.luaChatLog) {
-			this.emit("luaLog", packet.readUTF());
-		} else if (ccc == identifiers.roomMessage) {
-			const player = this.room.getPlayer(packet.readUTF());
-			if (!player) return;
-			const content = packet.readUTF();
-			const message = new RoomMessage(this, player, content);
-			this.emit("roomMessage", message);
-		} else if (ccc == identifiers.roomChange) {
-			const before = this.room;
-			const isPublic = packet.readBoolean();
-			const name = packet.readUTF();
-			const language = packet.readUTF() as ValueOf<typeof languages>;
-			this.room = new Room(this, isPublic, name, language);
-			this.emit("roomChange", before, this.room);
-		} else if (ccc == identifiers.roomPlayerList) {
-			const before = this.room.playerList;
-			this.room.playerList = [];
-			const length = packet.readUnsignedShort();
-			for (let i = 0; i < length; i++) {
-				const player = new RoomPlayer(this).read(packet);
-				this.room.playerList.push(player);
-			}
-			this.player = this.room.getPlayer(this.pcode) as RoomPlayer;
-			this.emit("roomUpdate", before, this.room.playerList);
-		} else if (ccc == identifiers.roomNewPlayer) {
-			const player = new RoomPlayer(this).read(packet);
-			if (this.room.getPlayer(player.pcode)) {
-				this.room.updatePlayer(player);
-				this.emit("roomPlayerUpdate", this.room.getPlayer(player.pcode), player);
-			} else {
-				this.room.addPlayer(player);
-				this.emit("roomPlayerJoin", player);
-			}
-		}
+		if (ccc in PacketHandler) PacketHandler[ccc].call(this, conn, packet);
 		this.emit("rawPacket", conn, ccc, packet);
 	}
 
 	/**
 	 * Handles the community platform packets and emits events.
 	 */
-	private handleTribulle(code: number, packet: ByteArray) {
-		if (code === tribulle.connect) {
-			this.emit("ready");
-		} else if (code == tribulle.whisperReceive) {
-			const author = packet.readUTF();
-			const community = packet.readUnsignedInt();
-			const sentTo = packet.readUTF();
-			const content = packet.readUTF();
-			const message = new WhisperMessage(
-				this,
-				new Player(this, author),
-				community,
-				sentTo,
-				content
-			);
-			this.emit("whisper", message);
-		} else if (code == tribulle.friendList) {
-			const friends = [];
-
-			const soulmate = new Friend(this).read(packet, true); // soulmate
-			const hasSoulmate = !(soulmate.id == 0 && soulmate.name == "");
-			if (hasSoulmate) friends.push(soulmate);
-			let totalFriends = packet.readUnsignedShort();
-
-			while (totalFriends--) {
-				friends.push(new Friend(this).read(packet, false));
-			}
-			this.emit("friendList", friends);
-		} else if (code === tribulle.friendAdd) {
-			this.emit("friendAdd", new Player(this, packet.readUTF()));
-		} else if (code === tribulle.friendRemove) {
-			this.emit("friendRemove", new Player(this, packet.readUTF()));
-		} else if (code === tribulle.friendConnect) {
-			this.emit("friendConnect", packet.readUTF());
-		} else if (code === tribulle.friendDisconnect) {
-			this.emit("friendDisconnect", packet.readUTF());
-		} else if (code === tribulle.friendUpdate) {
-			this.emit("friendUpdate", new Friend(this).read(packet, false));
-		} else if (code === tribulle.channelWho) {
-			const fingerprint = packet.readUnsignedInt();
-			packet.readUnsignedByte();
-			const playerCount = packet.readUnsignedShort();
-			const players: Player[] = [];
-			for (let i = 0; i < playerCount; i++) {
-				players.push(new Player(this, packet.readUTF()));
-			}
-			this.emit("channelWho", this.whoList[fingerprint], players, fingerprint);
-		} else if (code === tribulle.channelLeave) {
-			const channelName = packet.readUTF();
-			this.emit("channelLeave", channelName);
-		} else if (code === tribulle.channelJoin) {
-			const channelName = packet.readUTF();
-			this.emit("channelJoin", channelName);
-		} else if (code === tribulle.channelMessage) {
-			const author = new Player(this, packet.readUTF());
-			const community = packet.readUnsignedInt();
-			const channelName = packet.readUTF();
-			const content = packet.readUTF();
-			const message = new ChannelMessage(
-				this,
-				author,
-				content,
-				community,
-				new Channel(this, channelName)
-			);
-			this.emit("channelMessage", message);
-		} else if (code === tribulle.tribeMessage) {
-			const author = new Player(this, packet.readUTF());
-			const message = new Message(this, author, packet.readUTF());
-			this.emit("tribeMessage", message);
-		} else if (code === tribulle.tribeMemberUpdate) {
-			this.emit("tribeMemberUpdate", new Member(this).read(packet));
-		} else if (code === tribulle.tribeMemberConnect) {
-			this.emit("tribeMemberConnect", packet.readUTF());
-		} else if (code === tribulle.tribeMemberDisconnect) {
-			this.emit("tribeMemberDisconnect", packet.readUTF());
-		} else if (code === tribulle.tribeInitialReceive) {
-			const result = packet.readByte();
-			if (result == 17) {
-				this.emit("tribe", null);
-			}
-		} else if (code === tribulle.tribeReceive) {
-			this.emit("tribe", new Tribe(this).read(packet));
-		}
+	protected handleTribulle(code: number, packet: ByteArray) {
+		if (code in TribullePacketHandler) TribullePacketHandler[code].call(this, packet);
 		this.emit("rawTribulle", code, packet);
 	}
 
@@ -379,7 +192,7 @@ class Client extends EventEmitter {
 	/**
 	 * Sends a packet every 15 seconds to stay connected to the game.
 	 */
-	private startHeartbeat() {
+	protected startHeartbeat() {
 		this.main.send(identifiers.heartbeat, new ByteArray());
 		this.loops.heartbeat = setInterval(() => {
 			this.main.send(identifiers.heartbeat, new ByteArray());
@@ -406,10 +219,10 @@ class Client extends EventEmitter {
 	private setLanguage(code: ValueOf<typeof languages> = languages.en) {
 		if (typeof code !== "string") code = languages.en;
 		const p = new ByteArray().writeUTF(code);
-		this.main.send(identifiers.language, p);
+		this.main.send(identifiers.languageChange, p);
 	}
 
-	private setSystemInfo(langue: string, sys: string, version: string) {
+	protected setSystemInfo(langue: string, sys: string, version: string) {
 		const p = new ByteArray().writeUTF(langue).writeUTF(sys).writeUTF(version);
 		this.main.send(identifiers.os, p);
 	}
@@ -628,13 +441,19 @@ class Client extends EventEmitter {
 	/**
 	 * Sends a request to the server to join a room with specific name.
 	 */
-	joinRoom(name: string, isSalonAuto = false) {
+	joinRoom(name: string, options: { auto?: boolean; community?: number; password?: string }) {
+		options = {
+			auto: false,
+			password: undefined,
+			...options,
+		};
+
 		this.main.send(
 			identifiers.room,
 			new ByteArray()
 				.writeUTF("")
 				.writeUTF(name)
-				.writeByte(isSalonAuto ? 1 : 0)
+				.writeBoolean(options.auto ?? false)
 		);
 	}
 

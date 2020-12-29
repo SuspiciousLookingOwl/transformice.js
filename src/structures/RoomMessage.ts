@@ -1,4 +1,4 @@
-import { Player, Message } from ".";
+import { RoomPlayer, Message } from ".";
 import Client from "../client";
 
 /** Represents a room message. */
@@ -6,7 +6,7 @@ export default class RoomMessage extends Message {
 	/**
 	 * @hidden
 	 */
-	constructor(client: Client, author: Player, content: string) {
+	constructor(client: Client, author: RoomPlayer, content: string) {
 		super(client, author, content);
 	}
 

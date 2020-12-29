@@ -62,6 +62,22 @@ All of the [Player](player.md) that are in the room.
 
 ## Methods
 
+### addPlayer
+
+▸ **addPlayer**(`player`: [RoomPlayer](roomplayer.md)): void
+
+Add player to player list
+
+#### Parameters:
+
+Name | Type |
+------ | ------ |
+`player` | [RoomPlayer](roomplayer.md) |
+
+**Returns:** void
+
+___
+
 ### getPlayer
 
 ▸ **getPlayer**(`name`: string): [RoomPlayer](roomplayer.md) \| undefined

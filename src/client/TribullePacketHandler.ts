@@ -12,10 +12,16 @@ import {
 import { tribulle } from "../enums";
 import { ByteArray } from "../utils";
 
+/**
+ * @hidden
+ */
 interface TribullePacketIndex {
 	[index: number]: (this: Client, packet: ByteArray) => void;
 }
 
+/**
+ * @hidden
+ */
 class TribullePacketHandler {
 	/* -------------------------------------------------------------------------- */
 	/*                                   General                                  */

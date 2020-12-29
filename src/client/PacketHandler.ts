@@ -3,10 +3,16 @@ import Client from "./Client";
 import { Room, RoomMessage, RoomPlayer } from "../structures";
 import { ByteArray, Connection, ValueOf } from "../utils";
 
+/**
+ * @hidden
+ */
 interface PacketHandlerIndex {
 	[index: number]: (this: Client, conn: Connection, packet: ByteArray) => void;
 }
 
+/**
+ * @hidden
+ */
 class PacketHandler {
 	/* -------------------------------------------------------------------------- */
 	/*                                   General                                  */

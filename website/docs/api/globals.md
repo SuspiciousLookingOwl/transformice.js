@@ -47,6 +47,10 @@ sidebar_label: "Globals"
 
 * [Identifier](globals.md#identifier)
 
+### Object literals
+
+* [communities](globals.md#communities)
+
 ## Type aliases
 
 ### ValueOf
@@ -331,3 +335,46 @@ Name | Type |
 `cc` | number |
 
 **Returns:** number
+
+## Object literals
+
+### communities
+
+▪ `Const` **communities**: object
+
+Game's communities
+
+#### Properties:
+
+Name | Type | Value |
+------ | ------ | ------ |
+`ar` | number | 15 |
+`bg` | number | 24 |
+`br` | number | 3 |
+`cn` | number | 5 |
+`cz` | number | 21 |
+`de` | number | 13 |
+`e2` | number | 14 |
+`en` | number | 0 |
+`es` | number | 4 |
+`et` | number | 29 |
+`fi` | number | 20 |
+`fr` | number | 1 |
+`he` | number | 26 |
+`hr` | number | 23 |
+`hu` | number | 9 |
+`id` | number | 12 |
+`int` | number | 0 |
+`it` | number | 27 |
+`jp` | number | 18 |
+`lt` | number | 17 |
+`lv` | number | 25 |
+`nl` | number | 10 |
+`ph` | number | 16 |
+`pl` | number | 8 |
+`pt` | number | 31 |
+`ro` | number | 11 |
+`ru` | number | 2 |
+`tr` | number | 6 |
+`vk` | number | 7 |
+`xx` | number | 0 |

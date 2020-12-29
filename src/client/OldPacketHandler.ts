@@ -2,10 +2,16 @@ import Client from "./Client";
 import { Connection } from "../utils";
 import { oldIdentifiers } from "../enums";
 
+/**
+ * @hidden
+ */
 interface OldPacketHandlerIndex {
 	[index: number]: (this: Client, conn: Connection, ccc: number, data: string[]) => void;
 }
 
+/**
+ * @hidden
+ */
 class OldPacketHandler {
 	static [oldIdentifiers.roomPlayerLeft](
 		this: Client,

@@ -70,7 +70,7 @@ ___
 
 •  **friendAdd**: (friend: [Player](../classes/player.md)) => void
 
-Emitted when a friend is connected
+Emitted when a friend is added to friend list
 
 ___
 
@@ -102,7 +102,7 @@ ___
 
 •  **friendRemove**: (friend: [Player](../classes/player.md)) => void
 
-Emitted when a friend is disconnected
+Emitted when a friend is removed from friend list
 
 ___
 
@@ -217,6 +217,30 @@ Emitted when a player sends a message in the room.
 
 ___
 
+### roomPlayerDie
+
+•  **roomPlayerDie**: (player: [RoomPlayer](../classes/roomplayer.md)) => void
+
+Emitted when a player dies
+
+___
+
+### roomPlayerEnterHole
+
+•  **roomPlayerEnterHole**: (player: [RoomPlayer](../classes/roomplayer.md), order: number, time: number) => void
+
+Emitted when a player enters the hole
+
+___
+
+### roomPlayerGetCheese
+
+•  **roomPlayerGetCheese**: (player: [RoomPlayer](../classes/roomplayer.md)) => void
+
+Emitted when a player get the cheese
+
+___
+
 ### roomPlayerJoin
 
 •  **roomPlayerJoin**: (player: [RoomPlayer](../classes/roomplayer.md)) => void
@@ -225,9 +249,9 @@ Emitted when a new player has joined.
 
 ___
 
-### roomPlayerLeft
+### roomPlayerLeave
 
-•  **roomPlayerLeft**: (player: [Player](../classes/player.md)) => void
+•  **roomPlayerLeave**: (player: [Player](../classes/player.md)) => void
 
 Emitted when a player left the room.
 

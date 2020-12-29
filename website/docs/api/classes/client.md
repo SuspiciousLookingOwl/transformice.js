@@ -33,6 +33,18 @@ Name | Type |
 
 ## Properties
 
+### authServer
+
+• `Protected` **authServer**: number
+
+___
+
+### bulle
+
+• `Protected` **bulle**: Connection
+
+___
+
 ### community
 
 •  **community**: number
@@ -49,11 +61,23 @@ The connection time.
 
 ___
 
+### identificationKeys
+
+• `Protected` **identificationKeys**: number[]
+
+___
+
 ### language
 
 •  **language**: [ValueOf](../globals.md#valueof)<*typeof* languages\>
 
 The language suggested by the server.
+
+___
+
+### messageKeys
+
+• `Protected` **messageKeys**: number[]
 
 ___
 
@@ -83,7 +107,7 @@ ___
 
 ### player
 
-•  **player**: [Player](player.md)
+•  **player**: [RoomPlayer](roomplayer.md)
 
 The client's player.
 
@@ -105,17 +129,29 @@ The client's playing time.
 
 ___
 
+### ports
+
+• `Protected` **ports**: number[]
+
+___
+
 ### room
 
 •  **room**: [Room](room.md)
 
 The client's room.
 
+___
+
+### whoList
+
+• `Protected` **whoList**: Record<number, string\>
+
 ## Methods
 
 ### addFriend
 
-▸ **addFriend**(`name`: string): Promise<void\>
+▸ **addFriend**(`name`: string): void
 
 Add a player to friend list
 
@@ -125,7 +161,7 @@ Name | Type |
 ------ | ------ |
 `name` | string |
 
-**Returns:** Promise<void\>
+**Returns:** void
 
 ___
 
@@ -181,6 +217,58 @@ Name | Type | Default value |
 
 ___
 
+### handleOldPacket
+
+▸ `Protected`**handleOldPacket**(`conn`: Connection, `ccc`: number, `data`: string[]): void
+
+Handles the old packets and emits events.
+
+#### Parameters:
+
+Name | Type |
+------ | ------ |
+`conn` | Connection |
+`ccc` | number |
+`data` | string[] |
+
+**Returns:** void
+
+___
+
+### handlePacket
+
+▸ `Protected`**handlePacket**(`conn`: Connection, `packet`: ByteArray): void
+
+Handles the known packets and emits events.
+
+#### Parameters:
+
+Name | Type |
+------ | ------ |
+`conn` | Connection |
+`packet` | ByteArray |
+
+**Returns:** void
+
+___
+
+### handleTribulle
+
+▸ `Protected`**handleTribulle**(`code`: number, `packet`: ByteArray): void
+
+Handles the community platform packets and emits events.
+
+#### Parameters:
+
+Name | Type |
+------ | ------ |
+`code` | number |
+`packet` | ByteArray |
+
+**Returns:** void
+
+___
+
 ### joinChannel
 
 ▸ **joinChannel**(`channelName`: string, `permanent?`: boolean): void
@@ -200,16 +288,16 @@ ___
 
 ### joinRoom
 
-▸ **joinRoom**(`name`: string, `isSalonAuto?`: boolean): void
+▸ **joinRoom**(`name`: string, `options`: { auto?: boolean ; community?: number ; password?: string  }): void
 
 Sends a request to the server to join a room with specific name.
 
 #### Parameters:
 
-Name | Type | Default value |
------- | ------ | ------ |
-`name` | string | - |
-`isSalonAuto` | boolean | false |
+Name | Type |
+------ | ------ |
+`name` | string |
+`options` | { auto?: boolean ; community?: number ; password?: string  } |
 
 **Returns:** void
 
@@ -284,7 +372,7 @@ ___
 
 ### removeFriend
 
-▸ **removeFriend**(`name`: string): Promise<void\>
+▸ **removeFriend**(`name`: string): void
 
 Add a player to friend list
 
@@ -294,7 +382,7 @@ Name | Type |
 ------ | ------ |
 `name` | string |
 
-**Returns:** Promise<void\>
+**Returns:** void
 
 ___
 
@@ -449,5 +537,31 @@ Name | Type |
 ------ | ------ |
 `name` | string |
 `message` | string |
+
+**Returns:** void
+
+___
+
+### setSystemInfo
+
+▸ `Protected`**setSystemInfo**(`langue`: string, `sys`: string, `version`: string): void
+
+#### Parameters:
+
+Name | Type |
+------ | ------ |
+`langue` | string |
+`sys` | string |
+`version` | string |
+
+**Returns:** void
+
+___
+
+### startHeartbeat
+
+▸ `Protected`**startHeartbeat**(): void
+
+Sends a packet every 15 seconds to stay connected to the game.
 
 **Returns:** void

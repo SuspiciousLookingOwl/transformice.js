@@ -340,6 +340,24 @@ Request friend list.
 
 ___
 
+### requestProfile
+
+▸ **requestProfile**(`username`: string): Promise<void\>
+
+Request profile
+
+Alias for: `client.sendCommand("profile")`
+
+#### Parameters:
+
+Name | Type |
+------ | ------ |
+`username` | string |
+
+**Returns:** Promise<void\>
+
+___
+
 ### requestTribe
 
 ▸ **requestTribe**(`includeDisconnectedMember?`: boolean): void

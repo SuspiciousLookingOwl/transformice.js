@@ -196,13 +196,13 @@ ___
 
 ### roomChange
 
-•  **roomChange**: (before: [Room](../classes/room.md), after: [Room](../classes/room.md)) => void
+•  **roomChange**: (after: [Room](../classes/room.md), before: [Room](../classes/room.md)) => void
 
 Emitted when the room is changed.
 
 **`example`** 
 ```js
-client.on('roomChange', (before, after) => {
+client.on('roomChange', (after, before) => {
 	console.log('The room changed from '+before.name+' to '+after.name);
 })
 ```
@@ -259,15 +259,15 @@ ___
 
 ### roomPlayerUpdate
 
-•  **roomPlayerUpdate**: (before: [RoomPlayer](../classes/roomplayer.md) \| undefined, after: [RoomPlayer](../classes/roomplayer.md)) => void
+•  **roomPlayerUpdate**: (after: [RoomPlayer](../classes/roomplayer.md), before: [RoomPlayer](../classes/roomplayer.md) \| undefined) => void
 
 Emitted when the room playerList is updated.
 
 ___
 
-### roomUpdate
+### roomPlayersUpdate
 
-•  **roomUpdate**: (before: [RoomPlayer](../classes/roomplayer.md)[], after: [RoomPlayer](../classes/roomplayer.md)[]) => void
+•  **roomPlayersUpdate**: (after: [RoomPlayer](../classes/roomplayer.md)[], before: [RoomPlayer](../classes/roomplayer.md)[]) => void
 
 Emitted when the room playerList is updated.
 

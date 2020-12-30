@@ -118,7 +118,7 @@ class PacketHandler {
 		const name = packet.readUTF();
 		const language = packet.readUTF() as ValueOf<typeof languages>;
 		this.room = new Room(this, isPublic, name, language);
-		this.emit("roomChange", before, this.room);
+		this.emit("roomChange", this.room, before);
 	}
 
 	static [identifiers.roomPlayerList](this: Client, _conn: Connection, packet: ByteArray) {
@@ -130,14 +130,14 @@ class PacketHandler {
 			this.room.playerList.push(player);
 		}
 		this.player = this.room.getPlayer(this.pcode) as RoomPlayer;
-		this.emit("roomUpdate", before, this.room.playerList);
+		this.emit("roomPlayersUpdate", this.room.playerList, before);
 	}
 
 	static [identifiers.roomPlayerJoin](this: Client, _conn: Connection, packet: ByteArray) {
 		const player = new RoomPlayer(this).read(packet);
 		if (this.room.getPlayer(player.pcode)) {
 			this.room.updatePlayer(player);
-			this.emit("roomPlayerUpdate", this.room.getPlayer(player.pcode), player);
+			this.emit("roomPlayerUpdate", player, this.room.getPlayer(player.pcode));
 		} else {
 			this.room.addPlayer(player);
 			this.emit("roomPlayerJoin", player);

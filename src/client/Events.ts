@@ -89,20 +89,20 @@ interface ClientEvents {
 	 *
 	 * @example
 	 * ```js
-	 * client.on('roomChange', (before, after) => {
+	 * client.on('roomChange', (after, before) => {
 	 * 	console.log('The room changed from '+before.name+' to '+after.name);
 	 * })
 	 * ```
 	 */
-	roomChange: (before: Room, after: Room) => void;
+	roomChange: (after: Room, before: Room) => void;
 	/**
 	 * Emitted when the room playerList is updated.
 	 */
-	roomUpdate: (before: RoomPlayer[], after: RoomPlayer[]) => void;
+	roomPlayersUpdate: (after: RoomPlayer[], before: RoomPlayer[]) => void;
 	/**
 	 * Emitted when the room playerList is updated.
 	 */
-	roomPlayerUpdate: (before: RoomPlayer | undefined, after: RoomPlayer) => void;
+	roomPlayerUpdate: (after: RoomPlayer, before: RoomPlayer | undefined) => void;
 	/**
 	 * Emitted when a player left the room.
 	 */

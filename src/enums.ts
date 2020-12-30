@@ -11,6 +11,7 @@ export const identifiers = {
 	oldPacket: Identifier(1, 1),
 	bulle: Identifier(60, 3),
 	bulleConnection: Identifier(44, 1),
+	profile: Identifier(8, 16),
 	cafeData: Identifier(30, 40),
 	cafeState: Identifier(30, 45),
 	cafeLike: Identifier(30, 46),

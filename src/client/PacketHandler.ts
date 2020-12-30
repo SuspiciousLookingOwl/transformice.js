@@ -1,6 +1,6 @@
 import { identifiers, languages } from "../enums";
 import Client from "./Client";
-import { Room, RoomMessage, RoomPlayer } from "../structures";
+import { Room, RoomMessage, RoomPlayer, Profile } from "../structures";
 import { ByteArray, Connection, ValueOf } from "../utils";
 
 /**
@@ -76,6 +76,10 @@ class PacketHandler {
 			);
 		});
 		this.bulle.connect(host, this.ports[0]);
+	}
+
+	static [identifiers.profile](this: Client, _conn: Connection, packet: ByteArray) {
+		this.emit("profile", new Profile(this).read(packet));
 	}
 
 	/* -------------------------------------------------------------------------- */

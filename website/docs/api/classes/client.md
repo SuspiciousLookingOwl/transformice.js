@@ -181,6 +181,22 @@ Get friend list
 
 ___
 
+### getProfile
+
+▸ **getProfile**(`username`: string): Promise<[Profile](profile.md)\>
+
+Get user profile
+
+#### Parameters:
+
+Name | Type |
+------ | ------ |
+`username` | string |
+
+**Returns:** Promise<[Profile](profile.md)\>
+
+___
+
 ### getTribe
 
 ▸ **getTribe**(`includeDisconnectedMember?`: boolean): Promise<[Tribe](tribe.md)\>

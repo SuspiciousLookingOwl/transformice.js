@@ -531,6 +531,14 @@ class Client extends EventEmitter {
 		this.requestTribe(includeDisconnectedMember);
 		return (await this.waitFor("tribe"))[0];
 	}
+
+	/**
+	 * Get user profile
+	 */
+	async getProfile(username: string) {
+		this.sendCommand(`profile ${username}`);
+		return (await this.waitFor("profile"))[0];
+	}
 }
 
 export default Client;

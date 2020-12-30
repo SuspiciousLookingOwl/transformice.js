@@ -13,6 +13,7 @@ module.exports = [
       "api/classes/member",
       "api/classes/message",
       "api/classes/player",
+      "api/classes/profile",
       "api/classes/rank",
       "api/classes/room",
       "api/classes/roommessage",

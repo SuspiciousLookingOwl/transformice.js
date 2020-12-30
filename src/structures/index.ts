@@ -9,5 +9,6 @@ export { default as ChannelMessage } from "./ChannelMessage";
 export { default as RoomMessage } from "./RoomMessage";
 export { default as WhisperMessage } from "./WhisperMessage";
 export { default as Tribe } from "./Tribe";
+export { default as Profile } from "./Profile";
 export { default as Member } from "./Member";
 export { default as Rank } from "./Rank";

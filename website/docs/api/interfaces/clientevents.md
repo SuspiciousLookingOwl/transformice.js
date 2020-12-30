@@ -154,6 +154,14 @@ Emitted when the client receives lua logs or errors from `#Lua` chat.
 
 ___
 
+### profile
+
+•  **profile**: (profile: [Profile](../classes/profile.md)) => void
+
+Emitted when data received from /profile
+
+___
+
 ### rawOldPacket
 
 •  **rawOldPacket**: (connection: Connection, ccc: number, data: string[]) => void

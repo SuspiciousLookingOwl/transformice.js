@@ -5,6 +5,7 @@ import {
 	Member,
 	Message,
 	Player,
+	Profile,
 	Room,
 	RoomMessage,
 	RoomPlayer,
@@ -71,6 +72,10 @@ interface ClientEvents {
 	 * Emitted when a connection is successfully connected.
 	 */
 	connect: (connection: Connection) => void;
+	/**
+	 * Emitted when data received from /profile
+	 */
+	profile: (profile: Profile) => void;
 
 	/* -------------------------------------------------------------------------- */
 	/*                                    Room                                    */

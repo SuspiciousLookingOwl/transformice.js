@@ -16,6 +16,7 @@ sidebar_label: "Globals"
 * [Member](classes/member.md)
 * [Message](classes/message.md)
 * [Player](classes/player.md)
+* [Profile](classes/profile.md)
 * [Rank](classes/rank.md)
 * [Room](classes/room.md)
 * [RoomMessage](classes/roommessage.md)

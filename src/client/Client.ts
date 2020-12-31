@@ -537,7 +537,7 @@ class Client extends EventEmitter {
 	 *
 	 * Alias for: `client.sendCommand("profile")`
 	 */
-	async requestProfile(username: string) {
+	requestProfile(username: string) {
 		this.sendCommand(`profile ${username}`);
 	}
 

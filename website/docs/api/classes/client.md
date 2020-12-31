@@ -155,6 +155,33 @@ Disconnects the client.
 
 ___
 
+### enterRoom
+
+▸ **enterRoom**(`name`: string, `options`: { auto?: boolean ; community?: number ; password?: string  }): void
+
+Sends a request to the server to join a room with specific name.
+
+#### Parameters:
+
+Name | Type |
+------ | ------ |
+`name` | string |
+`options` | { auto?: boolean ; community?: number ; password?: string  } |
+
+**Returns:** void
+
+___
+
+### enterTribeHouse
+
+▸ **enterTribeHouse**(): void
+
+Joins the tribe house.
+
+**Returns:** void
+
+___
+
 ### getChannelPlayers
 
 ▸ **getChannelPlayers**(`channelName`: string): Promise<[Player](player.md)[]\>
@@ -225,33 +252,6 @@ Name | Type | Default value |
 ------ | ------ | ------ |
 `channelName` | string | - |
 `permanent` | boolean | true |
-
-**Returns:** void
-
-___
-
-### joinRoom
-
-▸ **joinRoom**(`name`: string, `options`: { auto?: boolean ; community?: number ; password?: string  }): void
-
-Sends a request to the server to join a room with specific name.
-
-#### Parameters:
-
-Name | Type |
------- | ------ |
-`name` | string |
-`options` | { auto?: boolean ; community?: number ; password?: string  } |
-
-**Returns:** void
-
-___
-
-### joinTribeHouse
-
-▸ **joinTribeHouse**(): void
-
-Joins the tribe house.
 
 **Returns:** void
 

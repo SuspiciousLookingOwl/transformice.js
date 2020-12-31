@@ -233,6 +233,14 @@ Emitted when a player dies
 
 ___
 
+### roomPlayerEnter
+
+•  **roomPlayerEnter**: (player: [RoomPlayer](../classes/roomplayer.md)) => void
+
+Emitted when a new player entered the room.
+
+___
+
 ### roomPlayerEnterHole
 
 •  **roomPlayerEnterHole**: (player: [RoomPlayer](../classes/roomplayer.md), order: number, time: number) => void
@@ -246,14 +254,6 @@ ___
 •  **roomPlayerGetCheese**: (player: [RoomPlayer](../classes/roomplayer.md)) => void
 
 Emitted when a player get the cheese
-
-___
-
-### roomPlayerJoin
-
-•  **roomPlayerJoin**: (player: [RoomPlayer](../classes/roomplayer.md)) => void
-
-Emitted when a new player has joined.
 
 ___
 

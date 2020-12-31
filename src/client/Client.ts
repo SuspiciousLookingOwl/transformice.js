@@ -369,8 +369,8 @@ class Client extends EventEmitter {
 	/**
 	 * Joins the tribe house.
 	 */
-	joinTribeHouse() {
-		this.main.send(identifiers.joinTribeHouse, new ByteArray());
+	enterTribeHouse() {
+		this.main.send(identifiers.enterTribeHouse, new ByteArray());
 	}
 
 	/**
@@ -459,7 +459,7 @@ class Client extends EventEmitter {
 	/**
 	 * Sends a request to the server to join a room with specific name.
 	 */
-	joinRoom(name: string, options: { auto?: boolean; community?: number; password?: string }) {
+	enterRoom(name: string, options: { auto?: boolean; community?: number; password?: string }) {
 		options = {
 			auto: false,
 			password: undefined,

@@ -113,9 +113,9 @@ interface ClientEvents {
 	 */
 	roomPlayerLeave: (player: Player) => void;
 	/**
-	 * Emitted when a new player has joined.
+	 * Emitted when a new player entered the room.
 	 */
-	roomPlayerJoin: (player: RoomPlayer) => void;
+	roomPlayerEnter: (player: RoomPlayer) => void;
 	/**
 	 * Emitted when a player dies
 	 */

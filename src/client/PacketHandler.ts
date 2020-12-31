@@ -137,14 +137,14 @@ class PacketHandler {
 		this.emit("roomPlayersUpdate", this.room.playerList, before);
 	}
 
-	static [identifiers.roomPlayerJoin](this: Client, _conn: Connection, packet: ByteArray) {
+	static [identifiers.roomPlayerEnter](this: Client, _conn: Connection, packet: ByteArray) {
 		const player = new RoomPlayer(this).read(packet);
 		if (this.room.getPlayer(player.pcode)) {
 			this.room.updatePlayer(player);
 			this.emit("roomPlayerUpdate", player, this.room.getPlayer(player.pcode));
 		} else {
 			this.room.addPlayer(player);
-			this.emit("roomPlayerJoin", player);
+			this.emit("roomPlayerEnter", player);
 		}
 	}
 

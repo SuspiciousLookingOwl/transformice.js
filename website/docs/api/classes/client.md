@@ -49,6 +49,14 @@ Name | Type |
 
 ## Properties
 
+### channels
+
+•  **channels**: string[]
+
+The client's joined channels.
+
+___
+
 ### community
 
 •  **community**: number

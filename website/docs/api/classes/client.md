@@ -342,7 +342,7 @@ ___
 
 ### requestProfile
 
-▸ **requestProfile**(`username`: string): Promise<void\>
+▸ **requestProfile**(`username`: string): void
 
 Request profile
 
@@ -354,7 +354,7 @@ Name | Type |
 ------ | ------ |
 `username` | string |
 
-**Returns:** Promise<void\>
+**Returns:** void
 
 ___
 

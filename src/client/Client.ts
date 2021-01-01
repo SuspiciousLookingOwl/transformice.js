@@ -81,6 +81,10 @@ class Client extends EventEmitter {
 	 */
 	room!: Room;
 	/**
+	 * The client's joined channels.
+	 */
+	channels: string[];
+	/**
 	 * The client's player.
 	 */
 	player!: RoomPlayer;
@@ -119,6 +123,7 @@ class Client extends EventEmitter {
 		this.autoReconnect = options?.autoReconnect ?? true;
 		this.language = options?.language || languages.en;
 		this.whoList = {};
+		this.channels = [];
 
 		this.loops = {};
 		this.tribulleId = 0;

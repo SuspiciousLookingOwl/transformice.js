@@ -106,7 +106,7 @@ class TribullePacketHandler {
 	static [tribulle.channelLeave](this: Client, packet: ByteArray) {
 		const channelName = packet.readUTF();
 		const index = this.channels.findIndex((c) => c === channelName);
-		if (index >= 0) this.channels.slice(index, 1);
+		if (index >= 0) this.channels.splice(index, 1);
 		this.emit("channelLeave", channelName);
 	}
 

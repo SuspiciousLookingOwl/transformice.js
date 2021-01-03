@@ -8,13 +8,13 @@ declare const process: {
 		TFM_ID: string;
 		TFM_TOKEN: string;
 
-		USERNAME: string;
-		PASSWORD: string;
+		TFM_USERNAME: string;
+		TFM_PASSWORD: string;
 	};
 };
 
 describe("Transformice Client", () => {
-	const client = new Client(process.env.USERNAME, process.env.PASSWORD, {
+	const client = new Client(process.env.TFM_USERNAME, process.env.TFM_PASSWORD, {
 		autoReconnect: false,
 	});
 

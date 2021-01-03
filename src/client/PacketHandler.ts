@@ -63,6 +63,15 @@ class PacketHandler {
 		if (this.bulle && this.bulle.open) this.bulle.close();
 
 		this.bulle = new Connection(this.identificationKeys, this.messageKeys);
+		this.bulle.on("error", async (err: Error) => {
+			this.emit("connectionError", err);
+			if (this.autoReconnect) {
+				await new Promise((r) => setTimeout(r, 5 * 1000));
+				this.restart();
+			} else {
+				throw Error("Connection Closed");
+			}
+		});
 		this.bulle.on("data", (conn: Connection, packet: ByteArray) => {
 			this.handlePacket(conn, packet);
 		});

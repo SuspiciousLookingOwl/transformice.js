@@ -69,7 +69,7 @@ class Client extends EventEmitter {
 	private loops: Partial<{ heartbeat: NodeJS.Timeout }>;
 	private tribulleId: number;
 	private password: string;
-	private autoReconnect: boolean;
+	protected autoReconnect: boolean;
 	protected whoList: Record<number, string>;
 
 	/**

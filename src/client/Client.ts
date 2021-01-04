@@ -316,14 +316,12 @@ class Client extends EventEmitter {
 		});
 		this.main.once("close", async () => {
 			if (this.autoReconnect) {
-				await new Promise((r) => setTimeout(r, 5 * 1000));
 				this.restart();
 			}
 		});
 		this.main.on("error", async (err: Error) => {
 			this.emit("connectionError", err);
 			if (this.autoReconnect) {
-				await new Promise((r) => setTimeout(r, 5 * 1000));
 				this.restart();
 			}
 		});
@@ -362,6 +360,7 @@ class Client extends EventEmitter {
 	async restart() {
 		this.emit("restart");
 		this.disconnect();
+		await new Promise((r) => setTimeout(r, 15 * 1000));
 		this.connect();
 	}
 

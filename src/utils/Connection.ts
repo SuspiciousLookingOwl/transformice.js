@@ -110,8 +110,8 @@ export default class Connection extends EventEmitter {
 	 * Close the connection.
 	 */
 	close() {
-		if (this.open) {
-			this.open = false;
+		this.open = false;
+		if (!this.socket.destroyed) {
 			this.socket.removeAllListeners();
 			this.socket.destroy();
 		}

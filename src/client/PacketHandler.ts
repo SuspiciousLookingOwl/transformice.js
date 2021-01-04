@@ -68,8 +68,6 @@ class PacketHandler {
 			if (this.autoReconnect) {
 				await new Promise((r) => setTimeout(r, 5 * 1000));
 				this.restart();
-			} else {
-				throw Error("Connection Closed");
 			}
 		});
 		this.bulle.on("data", (conn: Connection, packet: ByteArray) => {

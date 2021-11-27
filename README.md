@@ -1,5 +1,7 @@
 # Transformice.js (WIP)
 
+### This library is no longer maintained, check out [cheeseformice/transformice.js](https://github.com/cheeseformice/transformice.js) for a mantained work
+
 NodeJs Client for Transformice with full Typescript support.
 
 [Read the docs](https://transformice-js.netlify.app/docs/) 
